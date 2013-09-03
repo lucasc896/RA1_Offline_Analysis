@@ -22,9 +22,14 @@ class Btag_Calc(object):
         self.Analysis = analysis
         self.analysis_category = analysis_category
         self.btag_multiplicity = btag_measure
+
+
+        """
+        Initially takes the calc_file to determine btag,mistage rates on a ht bin by bin basis 
+        """
         self.Btag_Rate(btag_measure)
         
-        #Use to produce Btag - Mistage plots
+        #Use to produce Btag - Mistage plots Uncomment to produce them
         #self.DiMuon_Fit(self.Btag_Efficiencies,"Muon_Z0","Mistag")
         #self.DiMuon_Fit(self.Btag_Efficiencies,"Muon_Z2","Mistag")
         #self.DiMuon_Fit(self.Btag_Efficiencies,"Muon_Z0","Btag")
@@ -63,6 +68,12 @@ class Btag_Calc(object):
         #for num,entry in sorted(dictionary[sample].iteritems()):
         #        self.Btag_Efficiencies[sample][num]["Mistag_Efficiency"] = fit.GetParameter(0)
 
+
+
+   """
+   Makes dictionary same way as in Numbercrucher but forumla MC yields instead of straight from histogram
+
+   """
    def Make_Dict(self,settings,samples,number):
         
         htbins = settings["dirs"]
@@ -91,16 +102,19 @@ class Btag_Calc(object):
                          
                         if sample_dir == subdirect.GetName() and fi[2] != "Data":  
                             for subkey in subdirect.GetListOfKeys():
+                                # Calculate formula yields with alphaT cut in place
                                 if fi[3] =="Had" or fi[3] == "Photon" or (str(lower) == "0.55" and self.Keep_AlphaT == "True") :
                                     if subkey.GetName() == "Matched_vs_Matched_noB_vs_c_alphaT_%s" %self.analysis_category: 
                                       plot = file.Get(sample_dir+"/"+subkey.GetName())
+                                # Without formula yields in place
                                 else: 
                                     if subkey.GetName() == "Matched_vs_Matched_noB_vs_c_%s" %self.analysis_category: 
                                       plot = file.Get(sample_dir+"/"+subkey.GetName())
-                                
+                              
                    if fi[2] != "Data": 
                         table_entries += self.Make_Prediction(plot,fi[3],fi[2],number,dir.split('_')[0],lower)
                         del plot
+                   # Data yields still taken straight from histogram
                    else: table_entries += self.Data_Yield(fi[0],fi[1],dir,lower,higher,fi[2],fi[3])
               file.Close()
         table_entries += "}"
@@ -128,6 +142,49 @@ class Btag_Calc(object):
           normal.a.Close()
       return table_string    
 
+
+
+   """
+   Formula method is implemented here. 
+
+   We take 
+   . 3d histogram containing  num b-jets vs num c-jets vs num light-jets
+   . b-tagging eff
+   . c-tagging eff
+   . light-tagging eff
+
+   For a given number of btags eg. 1 btag, and ht bin eg. 275-325
+
+   We then loop through 3d histogram and say:
+
+      . given I only want 1 btag 
+      . given all these tagging efficiencies i have determined
+
+   What is the probability overall I will get 1 btag
+
+   i.e in  2b,1c,0-light jets with a bin yield of 1
+
+   I could have
+
+
+   2 x 
+   
+   1b - b-tagged
+   1c + 1 b  - not tagged
+
+   or 
+
+   1 c - b-tagged
+   2b - not tagged
+
+   If i calculate the binomial probabilities of this to happen (Done in b-combo) and say get a probability of 60% then the yield i would get for 1-btag would be
+
+   0.6 * 1  = 0.6.
+
+   I do this for all bins the 3d plane and produce a final yield and scale it up to the luminosity of the sample
+
+
+   """
    def Make_Prediction(self,plot,sample,category,btag_number,htbin,alphaT):  
       
         def bcombo(b, s,charm, e, m,c, hist):
@@ -188,6 +245,21 @@ class Btag_Calc(object):
         table_string =" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%(yield_pred*(10*Luminosity),error_pred*(Luminosity*10),category,sample,alphaT)
         return table_string
   
+
+   """
+   Btag Rates are calculated here 
+
+   For example for c-jets in htbin  375-475
+
+   We take  :
+
+        GenJetPt_c_nBgen_all - All c-jets in this HT bin are recorded here with the weight of the event.
+        Btagged_GenJetPt_c_nBgen_SFlight_Medium_all  - All c-jets which have also fired the b-tagged. The weight of these is corrected to that as measured in data.
+                                                       i.e weight * data_correction_factor. 
+                                                       Removing SFlight_Medium will give you uncorrected weights. Used for some sanity check studies.
+
+   Divide the integral of 1 by 2 and store this efficiency in a dictionary. 
+   """
 
    def Btag_Rate(self,btag_measurement):
         self.Btag_Efficiencies = {'Had_Z0':{},'Muon_Z0':{},'DiMuon':{},'Had_Z2':{},'Muon_Z2':{},'Photon':{},'DiLepton_Z0':{},'DiLepton_Z2':{}}

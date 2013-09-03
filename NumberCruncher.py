@@ -13,34 +13,37 @@ from Closure_Tests import *
 from Btag_calculation_v3 import *
 from Calculation_Template_v4 import *
 
+
+"""
+This is where Trigger corrections are applied to MC. 
+"""
+
 def MC_Scaler(htbin,alphat_slice,mc_yield,sample = '',error = '',Analysis = '',btagbin = ''):
 
-    if Analysis == "7TeV":	  
-        AlphaT_Scale = {"200_0.55":float(0.83),"275_0.55":float(0.83),"325_0.55":float(0.96),"375_0.55":float(0.99),"475_0.55":float(1.0),"575_0.55":1.,"675_0.55":1.,"775_0.55":1.,"875_0.55":1.,"575_0.53":float(0.970),"675_0.53":float(0.970),"775_0.53":float(0.970),"875_0.53":float(0.970),"775_0.52":1.,"875_0.52":1.}
-        AlphaT_Error = {"200_0.55":float(0.018),"275_0.55":float(0.018),"325_0.55":float(0.01),"375_0.55":float(0.01),"475_0.55":float(0.048),"575_0.55":float(0.048),"675_0.55":float(0.048),"775_0.55":float(0.048),"875_0.55":float(0.048),"575_0.53":float(0.05),"675_0.53":float(0.05),"775_0.53":float(0.05),"875_0.53":float(0.05),"775_0.52":float(0.207),"875_0.52":float(0.207)}
-        DiMuon_Scale = {"200":float(1.0),"275":float(1.0),"325":float(1.0),"375":float(0.95),"475":float(0.95),"575":float(0.96),"675":float(0.96),"775":float(0.96),"875":float(0.97)}
-        muon_eff = 0.913
-  
     if Analysis == "8TeV":
-        AlphaT_Scale = {"150_0.55":float(0.700),"200_0.55":float(0.700),"275_0.55":float(0.90),"325_0.55":float(0.99),"375_0.55":float(0.99),"475_0.55":float(0.99),"575_0.55":1.,"675_0.55":1.,"775_0.55":1.,"875_0.55":1.,"975_0.55":1.,"1075_0.55":1.,"575_0.53":float(0.970),"675_0.53":float(0.970),"775_0.53":float(0.970),"875_0.53":float(0.970),"775_0.52":1.,"875_0.52":1.}
-        AlphaT_Error = {"150_0.55":float(0.003),"200_0.55":float(0.003),"275_0.55":float(0.011),"325_0.55":float(0.009),"375_0.55":float(0.011),"475_0.55":float(0.032),"575_0.55":float(0.059),"675_0.55":float(0.059),"775_0.55":float(0.059),"875_0.55":float(0.059),"975_0.55":float(0.059),"1075_0.55":float(0.059),"575_0.53":float(0.05),"675_0.53":float(0.05),"775_0.53":float(0.05),"875_0.53":float(0.05),"775_0.52":float(0.207),"875_0.52":float(0.207)}
+        AlphaT_Scale = {"150_0.55":float(0.700),"200_0.55":float(0.700),"275_0.55":float(0.90),"325_0.55":float(0.99),"375_0.55":float(0.99),"475_0.55":float(0.99),"575_0.55":1.,"675_0.55":1.,"775_0.55":1.,"875_0.55":1.,"975_0.55":1.,"1075_0.55":1.}
+        AlphaT_Error = {"150_0.55":float(0.003),"200_0.55":float(0.003),"275_0.55":float(0.011),"325_0.55":float(0.009),"375_0.55":float(0.011),"475_0.55":float(0.032),"575_0.55":float(0.059),"675_0.55":float(0.059),"775_0.55":float(0.059),"875_0.55":float(0.059),"975_0.55":float(0.059),"1075_0.55":float(0.059)}
         DiMuon_Scale = {"150":float(0.95),"200":float(0.95),"275":float(0.96),"325":float(0.96),"375":float(0.96),"475":float(0.96),"575":float(0.97),"675":float(0.97),"775":float(0.98),"875":float(0.98),"975":float(0.98),"1075":float(0.98)}
         muon_eff = 0.88
    
     scale_factor = htbin +'_'+ alphat_slice
     if mc_yield == 0: return float(mc_yield)
+
     if sample == "Muon":
       if error:
         return float((error*muon_eff)*math.sqrt(((mc_yield/error)*(mc_yield/error))+((0.01/muon_eff)*(0.01/muon_eff))))
-      else:return float(mc_yield*muon_eff)  
+      else:return float(mc_yield*muon_eff) 
+ 
     elif sample == "DiMuon":
         if error: return float((error*DiMuon_Scale[htbin])*math.sqrt(((mc_yield/error)*(mc_yield/error))+((0.01/DiMuon_Scale[htbin])*(0.01/DiMuon_Scale[htbin]))))
         else: return float(mc_yield*DiMuon_Scale[htbin])
+
     elif sample == "Had":
       if alphat_slice == '0.01': scale_factor = htbin +'_0.55'
       if error: 
         return float((error*AlphaT_Scale[scale_factor])*math.sqrt(((mc_yield/error)*(mc_yield/error))+((AlphaT_Error[scale_factor]/AlphaT_Scale[scale_factor])*(AlphaT_Error[scale_factor]/AlphaT_Scale[scale_factor]))))
       else:return float(mc_yield*AlphaT_Scale[scale_factor])
+
     else: return mc_yield
 
 
@@ -70,6 +73,11 @@ class Number_Extractor(object):
     self.btagbin = {"Inclusive":1,"Zero_btags":1,"One_btag":2,"Two_btags":3,"Three_btags":4,"More_Than_Three_btag":5}
 
     print "Analysis conducted for %s" %self.Analysis
+
+    """
+    Lumonosities are passed from config file and set here to be applied to MC
+    """
+
     if Split_Lumi == "True":
         print "Multiple Luminosity being used" 
         for key in self.Settings["Multi_Lumi"]:
@@ -81,17 +89,26 @@ class Number_Extractor(object):
     print self.Lumi_List
     r.gROOT.SetBatch(True)
     if Template: 
-        Template_Calc(sample_settings,sample_list,Template,float(self.Settings["Lumo"]),self.Systematic,Working_Point)
+      # For Template method not used in RA1 analysis
+      Template_Calc(sample_settings,sample_list,Template,float(self.Settings["Lumo"]),self.Systematic,Working_Point)
         return
     if Calculation: 
+      # When formula method is used (Standard RA1), samples are passed onto Btag_Calc class in btag_calculation.
       self.return_dict = Btag_Calc(sample_settings,sample_list,Calculation,number,AlphaT,self.Lumi_List,self.Analysis,self.analysis_category).Make_Dict(sample_settings,sample_list,number) 
       self.Form_Vanilla = "Formula"
     else:
+      # Uncorrected yields are produced here. Used as sanity check as formula method == uncorreced yields for inclusive btag multiplicity or else something has gone wrong
       self.Form_Vanilla = "Vanilla"
       self.Create_Dictionary(sample_settings,sample_list)
     self.Prediction_Maker(sample_settings,self.return_dict)
 
   def Create_Dictionary(self,settings,samples):
+        
+         """
+         This is where dictionary is created for Uncorrected yields. 
+         We loop through all samples and all HT bins and pull out the integral of the number of btags histogram to determine the yields and error.
+         Same process is done in Btag_Calc but the yields are calculated through a formula rather than just pull the number from a histogram
+         """
          print "In uncorrected yields"
          table_entries = "{" 
          for key,fi in sorted(samples.iteritems()):
@@ -118,13 +135,17 @@ class Number_Extractor(object):
                     normal.a.Close()
          
          table_entries +="}"
+         # Do a literal eval to turn this string into a dictionary
          self.return_dict = ast.literal_eval(table_entries)
          return self.return_dict
 
   def Prediction_Maker(self,settings,dict):
 
-      
-      self.bins = tuple(settings["bins"]+["200_upwards"])
+      """
+      This is where the the initial dictionary we created above is sorted into individual processes and selections to make it easier to put into tables and sort for closure tests. 
+      """
+ 
+      if self.CombineBins == "True": : self.bins = tuple(settings["bins"]+["200_upwards"])
       entries = ('Data','MCYield','Tot_Error','SM_Stat_Error','TTbar','WJets','Zinv','DY','DiBoson','SingleTop','Photon','Btag','SampleName','JetCategory','AlphaT')
       yields = ('Yield','Error')      
       self.process = ["TTbar","WJets","Zinv","DY","DiBoson","SingleTop","Photon"]      
@@ -149,6 +170,13 @@ class Number_Extractor(object):
         self.OSOF_Yield_Per_Bin = dict.fromkeys(self.bins)
         self.OSSF_Yield_Per_Bin = dict.fromkeys(self.bins)
 
+
+        """
+        Create these empty dictionaries to be filled.
+        eg. Had_Yield_Per_Bin. Will include all SM processes + Data yields in the format
+        { "Data":0  , "SampleName":"Had",JetCategory:"all",AlphaT:0.55,TTbar:{Yield:0,Error:0}..... etc
+        """
+
         dictionaries = [ self.Had_Yield_Per_Bin, self.Had_Muon_Yield_Per_Bin,self.Had_Zinv_Yield_Per_Bin,self.Muon_Yield_Per_Bin, self.Photon_Yield_Per_Bin, self.DiMuon_Yield_Per_Bin,self.DiLepton_Yield_Per_Bin, self.SSOF_Yield_Per_Bin,self.SSSF_Yield_Per_Bin, self.OSOF_Yield_Per_Bin, self.OSSF_Yield_Per_Bin]
 
         # List of Dictionaries for Jad's Closure Tests
@@ -168,32 +196,17 @@ class Number_Extractor(object):
                 dicto[key][SM] = dict.fromkeys(yields,0) 
                 dicto[key][SM]['Process_Error'] = []
 
+        # Take mean point of each HT bin for MHT_MET sideband correction
         meanbin_dict = {"150":178.2,"200":235.2,"275":297.5,"325":347.5,"375":416.4,"475":517.3,"575":618.4,"675":716.9,"775":819.9,"875":919.,"975":1019.,"1075":1289.}
- 
+
+        # Loop through dictionary created from CreateDictionary or Btag_Calc.MakeDict() 
         for entry,fi in dict.iteritems():
           
-           
+          """
+          Apply derived MHT_MET sidebands here for each of the different samples
+          """ 
           if str(fi['AlphaT']) == str(slices).split('_')[0] :
            
-            """ 
-            if dict[entry]["SampleType"] in ["Zinv","DY","Photon"]:
-             
-              dict[entry]["Yield"] = (float(dict[entry]["Yield"])*0.9103)
-              dict[entry]["Error"] =  (float(dict[entry]["Error"])*0.9103)          
- 
-            if dict[entry]["SampleType"] in ["WJets"]:
-             
-              dict[entry]["Yield"] = (float(dict[entry]["Yield"])*0.8785)
-              dict[entry]["Error"] =  (float(dict[entry]["Error"])*0.8785)
-
-            if dict[entry]["SampleType"] in ["TTbar","SingleTop","DiBoson"]:
-
-              dict[entry]["Yield"] = (float(dict[entry]["Yield"])*1.205)
-              dict[entry]["Error"] =  (float(dict[entry]["Error"])*1.205)
-            
-            
-            """
-            
             midht = meanbin_dict[dict[entry]["HT"]]
 
             if dict[entry]["SampleType"] in ["Photon"]:
@@ -328,12 +341,19 @@ class Number_Extractor(object):
                   self.OSSF_Yield_Per_Bin[dict[entry]["HT"]]["Tot_Error"].append(Error)
                   self.OSSF_Yield_Per_Bin[dict[entry]["HT"]]["MCYield"] += dict[entry]["Yield"]
 
+
+        """
+        Calculate total MC error by adding in quadrature the errors from each of the individual SM processed
+        """
         for bin in self.Muon_Yield_Per_Bin: 
           for sample in dictionaries: 
             try:  sample[bin]["SM_Stat_Error"] = math.sqrt(reduce(lambda x,y : x+y,map(lambda x: x*x, sample[bin]["Tot_Error"])))
             except TypeError: pass
 
 
+        """
+        Apply Trigger corrections here
+        """
         if self.Trigger_Scaling == "True":
           print "Apply MC Correction For Scaling"
           for bin in self.Muon_Yield_Per_Bin:
@@ -347,6 +367,13 @@ class Number_Extractor(object):
                  sample[bin][SM]["Yield"] = MC_Scaler(bin,sample[bin]['AlphaT'],sample[bin][SM]["Yield"],sample = sample[bin]["SampleName"],Analysis = self.Analysis,btagbin = self.number )
                  sample[bin][SM]["Error"] = MC_Scaler(bin,sample[bin]['AlphaT'],sample[bin][SM]["Error"],sample = sample[bin]["SampleName"],error = sample[bin][SM]["Yield"],Analysis = self.Analysis, btagbin = self.number )
 
+
+        """
+        This is where we sum up the total yields across all HT bins. Still deciding wether to use as an overall residual correction. 
+        Can just be used to determine overall Data/MC ratio.
+        Turn combine bins off if you don't want to include it 
+        """
+        
         if self.CombineBins == "True":
             for sample in dictionaries:
                 for bin in settings["bins"] :
@@ -364,6 +391,10 @@ class Number_Extractor(object):
 
         if self.Make_Closure_Tests == "True" or self.Make_Root_Stats_File == "True":pass
         
+        """
+        Now we make all the tex tables from all the smaller dictionaries we have created
+        """
+ 
         else:
 
           if self.Feasibility == "True":
@@ -429,16 +460,29 @@ class Number_Extractor(object):
             
         # Additional Functions Jads Closure Tests, Stat File Root Maker
         if self.Make_Closure_Tests != "True" and self.Make_Root_Stats_File != "True":self.Make_End()
+
         #Make Output Root File
+        # This outputs all the dictionaries to root files if this option is specified. Trigger corrections are not applied here. Ted does them himself.
         if self.Make_Root_Stats_File == "True":
           self.Begin_Stats_Root_Output(self.Settings,analysis = analysis_type)
           self.Format_Stats_Root_Output(dictionaries,settings, analysis = analysis_type)
+
+        # This outputs the dictionaries used in Closure tests to an output file if the closure test option is specified
         if self.Make_Closure_Tests == "True" :self.Jad_Output(jad_dictionaries)    
 
   def Jad_Output(self,input):
     for file in input: 
         self.c_file.append(file)
 
+
+  """
+  This is used in the MHT/MET sideband method. A pure MC ratio is produced of WJets,TTbar etc with other processes subtracted away.
+  
+  eg. Data/MC(WJets) =  (Data - (TTbar,singletop,DY...) ) / WJets 
+
+  This is used to check purity of process in a certain b-tag,jet mutiplicity and also we take these ratios and put it into the MHT/MET fit
+
+  """ 
 
   def MC_Ratio(self,dicto,*pureprocess):
 
@@ -478,6 +522,10 @@ class Number_Extractor(object):
         
          self.Dict_For_Table[bin]['RatioError'] = self.Dict_For_Table[bin]['MCRatio'] * sqrt( pow(mc_error,2) + pow(data_error,2) )  
 
+
+  """
+  This function produced Translation factors between selections and also the Data prediction and its error
+  """
 
   def Table_Prep(self,control,test,comb="",comb_test="",category="",make_hist=""):
 
@@ -529,7 +577,14 @@ class Number_Extractor(object):
           except ZeroDivisionError: self.Combination_Pred_Table[bin]['Pred_Error'] = 0
 
       #if make_hist : self.Translation_Plots(make_hist,trans_num ,trans_error,self.Settings)
-    
+   
+
+
+  """
+  This created the initial root file to be filled with empty histograms. They are in a format that Ted can read from easily. 
+  Format_Stats_Root_Output parses the dictionaries and fills the histogram with yields and errors
+
+  """
   def Begin_Stats_Root_Output(self,settings,analysis = ''): 
       Lumi = (self.Settings["Lumo"]*1000)
       directories = []
@@ -572,7 +627,6 @@ class Number_Extractor(object):
 
       samples = ["Data","MCYield",] + self.process #"TTbar","WJets","Zinv","DY","SingleTop","DiBoson","Photon"] 
       HT_List = []
-      Btag_Slices = [0,1,2,3,4,5]
       for num in settings["dirs"] : HT_List.append(int(num.split('_')[0]))
       HT_List.append(int(settings["dirs"][-1].split('_')[0]) + (int(settings["dirs"][-1].split('_')[0]) - int (settings["dirs"][-2].split('_')[0])))
 
@@ -592,12 +646,17 @@ class Number_Extractor(object):
                 plots.Write("",r.TObject.kOverwrite)
 
       return 
-         
+     
+
+  """
+  Tables are make here. Latex_Table produces the output tex table with rows being the information you want to include in the table
+  label is what obviously the title of the row and entryFunc is the list which contains the MC yields, process yield you want to display
+
+  """
+ 
   def Produce_Tables(self,dict,category="",dict2 = ""):
    
       print "\n\nMaking Tables for %s" % category
-
-      
 
       if category == "Had_Tables": self.Latex_Table(dict,caption = "Had Yields and MC Breakdown",
             rows = [ {"label": r'''Hadronic yield data''',       "entryFunc":self.MakeList(dict,"Data")},

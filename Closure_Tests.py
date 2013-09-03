@@ -47,8 +47,12 @@ class Jad_Compute(object):
     for j in self.settings["bins"]: self.axis.append(int(j))
     self.axis.append(int(self.settings["bins"][-1]) + 100)
     '''
-    option reduce, fits the line from 375 upwards. Used if making closure tests with photons as they are no lower 2 bins. Another example where reduce is used if comparing 
-    just the high stats mu-had control samples for the full dataset. Just change the option in the box accordingly. Used for classic mode only.
+    Closure Tests are defined here. Follow same format to add additional tests and add it to test_dicts
+
+    Jetcat is used to look at differences between jet multiplcity cateogires. This is passed from Prediction RA1
+    Classic is not really used anymore
+
+    option reduce, fits the line from 375 upwards. Used if making closure tests with photons as they are no lower 3 bins.  Just change the option in the box accordingly.
     '''
 
     if self.JetCat == "True":
@@ -102,6 +106,15 @@ class Jad_Compute(object):
 
 
       test_dicts = [test_2,test_24,test_22,test_3,test_5,test_6,test_12,test_80,test_20,test_21]
+
+
+    """
+    We loop through all the dictionaries passed to closure tests from Numbercruncher here and if they fit the category we want to produce a closure test for we pass onto Fill_Dictionary. 
+
+   AlphaT = 0.01 means no alphaT cut
+   Jetcat 2 = 2,3 Jets - 3 = >= 4 Jets
+
+    """
     for self.file in dict_list:
       
        for self.entry in self.axis_dir:
@@ -237,7 +250,6 @@ class Jad_Compute(object):
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'More_Than_One_btag':
             self.Fill_Dictionary(test_25,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
 
-    self.spread_counter = 0
     for test in test_dicts:
        if self.JetCat == "True":
         print test
@@ -247,9 +259,12 @@ class Jad_Compute(object):
         self.Make_Plots(test['MCS'],test['MCSE'],test['MCC'],test['MCCE'],test['DC'],test['DS'],test['option'],test['box'],test['plot_title'],test['scale'],test['file_name'],reduce = test['reduce'],spread = test['spread'])
        else:
         print test
-        #self.Make_Plots(test['MCS'],test['MCSE'],test['MCC'],test['MCCE'],test['DC'],test['DS'],test['option'],test['box'],test['plot_title'],test['scale'],test['file_name'],reduce = test['reduce'],spread = test['spread'],dc_error =test['DCE'],ds_error=test['DSE'])
         self.Make_Plots(test['MCS'],test['MCSE'],test['MCC'],test['MCCE'],test['DC'],test['DS'],test['option'],test['box'],test['plot_title'],test['scale'],test['file_name'],reduce = test['reduce'],spread = test['spread'])
 
+
+  """
+  Fills control/'signal' with the yields which are used by Make_Plots to construct measure of spread
+  """
 
   def Fill_Dictionary(self,closure_dictionary,Control = '',Signal = '',Not_Do = ''):
           
@@ -264,26 +279,14 @@ class Jad_Compute(object):
 
           return closure_dictionary
  
-  def Fill_MC_Dictionary(self,closure_dictionary,Control = '',Signal = '',Control_1 = '',Signal_1 = ''):
-          
-          if self.file[self.entry]['SampleName'] == Control and Control:
-            closure_dictionary['DC'].append(self.file[self.entry]['MCYield'])
-            closure_dictionary['DCE'].append(self.file[self.entry]['SM_Stat_Error'])
-          elif self.file[self.entry]['SampleName'] == Signal and Signal:
-            closure_dictionary['DS'].append(self.file[self.entry]['MCYield'])
-            closure_dictionary['DSE'].append(self.file[self.entry]['SM_Stat_Error'])
-
-          elif self.file[self.entry]['SampleName'] == Control_1:
-            closure_dictionary['MCC'].append(self.file[self.entry]['MCYield'])
-            closure_dictionary['MCCE'].append(self.file[self.entry]['SM_Stat_Error'])
-          elif self.file[self.entry]['SampleName'] == Signal_1:
-            closure_dictionary['MCS'].append(self.file[self.entry]['MCYield'])
-            closure_dictionary['MCSE'].append(self.file[self.entry]['SM_Stat_Error'])
-
-          return closure_dictionary 
+  
+  """
+  Closure test made here
+  """
 
   def Make_Plots(self,MCS,MCSE,MCC,MCCE,DC,DS,option,box = '',plot_title='',scale='',file_name='',reduce='',spread='',dc_error='',ds_error=''):
 
+     # Reduce == true for Photon closure tests
      if reduce == "True": hist_low = 375
      else: hist_low = float(self.settings["bins"][0])
 
@@ -364,7 +367,10 @@ class Jad_Compute(object):
         #bv.SetFillColor(kGray) 
         #bv.Draw()
         #data.Draw("p")
-        
+     
+     """
+     Straight lin is fitted to closure test here between all HT bins
+     """ 
      fit = r.TF1("fit","pol0",hist_low , float(self.settings["bins"][-1])+100.0)
      data.Fit(fit,"R")
      fit.SetLineColor(2)

@@ -64,7 +64,7 @@ eg "nMuon":("./May_11_root_Files/Muon_Data","btag_two_OneMuon_","Data","Muon"),
 if n at start of name entry then the file is data and will no be scaled to luminosity.
 first argument is path to root file
 second argument is prefix to ht bin. i.e OneMuon_275_325
-third argument is data/mc type, i.e. Data, WJets250 - MC relating to the binned WJets 250-300 HT sample
+third argument is data/mc type, i.e. Data, WJets - MC relating to the SM Process
 fourth argument is sample Type, Had/DiMuon/Muon. 
 
 the only thing that will have to be changed is the second argument depending on wether you are running btag multiplicity/baseline
@@ -503,6 +503,15 @@ inclusive_samples = {
 
     }
 
+"""
+These are the files used to calculate the btag,mistag rate per HT bin for each of the different processes.
+
+Z0 - WJets, DY, Zinv
+Z2 - TTbar, DiBoson, SingleTop
+
+"""
+
+
 calc_file = {
      "mchadz2":("../MASTER_ROOT_FILES/Root_Files_ISR_PU_Applied/Had_Z2.root","Had_Z2",""),
      "mchadz0":("../MASTER_ROOT_FILES/Root_Files_ISR_PU_Applied/Had_Z0.root","Had_Z0",""),
@@ -553,7 +562,7 @@ if __name__=="__main__":
 
     #settings["dirs"] = ["150_200"] + settings["dirs"]
     #settings["bins"] = ["150"] + settings["bins"]
-    print settings
+    
     print" ==================  \n Making MC Clamping Normalisation Yields \n ====================  \n"
     Number_Extractor(settings,btag_zero_normalisation,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption = "MCNormalisation")
     Number_Extractor(settings,btag_zero_normalisation,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="all",RunOption = "MCNormalisation")
