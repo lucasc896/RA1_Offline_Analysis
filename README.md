@@ -5,7 +5,7 @@ Can be loosely called a framework, but in reality is a poor implementation of py
 
 ------------------------
 
-Prediction RA1 - Config file, file paths to file directories are set here
+Prediction RA1 - Config file, file paths to file directories are set here \n
 Run_All...    - bash scripts to automatically produce all usual required RA1 outputs
 
 -------------------------
