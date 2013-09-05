@@ -91,7 +91,7 @@ class Number_Extractor(object):
     if Template: 
       # For Template method not used in RA1 analysis
       Template_Calc(sample_settings,sample_list,Template,float(self.Settings["Lumo"]),self.Systematic,Working_Point)
-        return
+      return
     if Calculation: 
       # When formula method is used (Standard RA1), samples are passed onto Btag_Calc class in btag_calculation.
       self.return_dict = Btag_Calc(sample_settings,sample_list,Calculation,number,AlphaT,self.Lumi_List,self.Analysis,self.analysis_category).Make_Dict(sample_settings,sample_list,number) 
@@ -145,7 +145,7 @@ class Number_Extractor(object):
       This is where the the initial dictionary we created above is sorted into individual processes and selections to make it easier to put into tables and sort for closure tests. 
       """
  
-      if self.CombineBins == "True": : self.bins = tuple(settings["bins"]+["200_upwards"])
+      if self.CombineBins == "True": self.bins = tuple(settings["bins"]+["200_upwards"])
       entries = ('Data','MCYield','Tot_Error','SM_Stat_Error','TTbar','WJets','Zinv','DY','DiBoson','SingleTop','Photon','Btag','SampleName','JetCategory','AlphaT')
       yields = ('Yield','Error')      
       self.process = ["TTbar","WJets","Zinv","DY","DiBoson","SingleTop","Photon"]      
@@ -389,12 +389,13 @@ class Number_Extractor(object):
                 except TypeError: pass
 
 
-        if self.Make_Closure_Tests == "True" or self.Make_Root_Stats_File == "True":pass
+        
         
         """
         Now we make all the tex tables from all the smaller dictionaries we have created
         """
- 
+        if self.Make_Closure_Tests == "True" or self.Make_Root_Stats_File == "True":pass
+        
         else:
 
           if self.Feasibility == "True":
