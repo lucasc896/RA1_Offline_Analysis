@@ -64,7 +64,8 @@ class Number_Extractor(object):
     self.c_file = c_file
     self.Make_2D_Histos = Trans_Plots
     self.number = number
-    self.CombineBins = "True"#Combine
+    if Stats == "True" or Closure == "True": self.CombineBins = "False"
+    else : self.CombineBins = "True"
     self.analysis_category = Analysis_category
     self.Lumi_List = {"Had":0,"Muon":0,"DiMuon":0,"Photon":0,"OSOF":0,"OSSF":0,"SSOF":0,"SSSF":0}
     self.btag_names = {"Zero_btags":"eq0","One_btag":"eq1","Two_btags":"eq2","Three_btags":"eq3","More_Than_Zero_btag":"gr0","More_Than_One_btag":"gr1","Inclusive":"Inc","More_Than_Three_btag":"eq4"}
@@ -146,6 +147,7 @@ class Number_Extractor(object):
       """
  
       if self.CombineBins == "True": self.bins = tuple(settings["bins"]+["200_upwards"])
+      else : self.bins = tuple(settings["bins"]) 
       entries = ('Data','MCYield','Tot_Error','SM_Stat_Error','TTbar','WJets','Zinv','DY','DiBoson','SingleTop','Photon','Btag','SampleName','JetCategory','AlphaT')
       yields = ('Yield','Error')      
       self.process = ["TTbar","WJets","Zinv","DY","DiBoson","SingleTop","Photon"]      
@@ -208,37 +210,45 @@ class Number_Extractor(object):
           if str(fi['AlphaT']) == str(slices).split('_')[0] :
            
             midht = meanbin_dict[dict[entry]["HT"]]
-
+            
             if dict[entry]["SampleType"] in ["Photon"]:
 
               scalefactor = 0.996212 - 0.0003764*(midht) # ISR PU 1.14 sf
               #scalefactor = 0.8716 - 0.00005568*(midht) # IS PU Parton  1.15 sf
-              dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*1.14)
-              dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*1.14)          
+
+              scalefactor = 1.18857 - 0.000787131*(midht) # FullDataset 1.26 sf
+
+              dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*1.26)
+              dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*1.26)          
 
 
             if dict[entry]["SampleType"] in ["Zinv","DY"]:
             
-              scalefactor = 0.996212 - 0.0003764*(midht) # ISR PU 1.05 sf
+              #scalefactor = 0.996212 - 0.0003764*(midht) # ISR PU 1.05 sf
               #scalefactor = 0.8716 - 0.00005568*(midht) # IS PU Parton  1.05 sf
-              dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*1.05)
-              dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*1.05)          
+              scalefactor = 1.18857 - 0.000787131*(midht) # FullDataset 1.08 sf
+
+              dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*1.08)
+              dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*1.08)          
  
             if dict[entry]["SampleType"] in ["WJets"]:
             
-              scalefactor = 0.989713 - (0.00034799*midht) # ISR PU 0.95 sf
+              #scalefactor = 0.989713 - (0.00034799*midht) # ISR PU 0.95 sf
               #scalefactor = 0.90123 - 0.0000971045*midht # ISR PU Parton 0.95 sf
-              dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*0.95)
-              dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*0.5)
+              scalefactor = 0.976123 - (0.000405802*midht) # FullDataset 1.01 sf
+
+              dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*1.01)
+              dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*1.01)
 
             if dict[entry]["SampleType"] in ["TTbar"]:
 
-              scalefactor = 1.132 - (0.000431469*midht) # sf 1.03
+              #scalefactor = 1.132 - (0.000431469*midht) # sf 1.03
+              scalefactor = 1.17202 - (0.000598786*midht) #FullDataset sf 1.09
 
-              dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*1.03)
-              dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*1.03)
+              dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*1.09)
+              dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*1.09)
            
-
+            
             Error = float(dict[entry]["Error"]) 
             if dict[entry]["SampleType"] == "Data":
               if dict[entry]["Category"] == "Had": 
