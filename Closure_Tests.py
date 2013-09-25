@@ -21,6 +21,7 @@ class Jad_Compute(object):
       self.JetCat = jetcat
       self.settings = settings
       self.jetmult = jet_mult
+      self.dict_list = dict_list
       self.MakeVectors(dict_list)
       
   def MakeVectors(self,dict_list):
@@ -81,7 +82,7 @@ class Jad_Compute(object):
     else:
       
       #mumu to mumu
-      test_4 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -3.,'box' : "False",'plot_title':"#mu#mu + jets (no #alpha_{T}) #rightarrow #mu#mu + jets (#alpha_{T}>0.55)",'scale':None , 'reduce':"False",'file_name':'Btag_dimuon_to_dimuon_with_without_alphaT','spread':"False"}
+      test_4 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -3.,'box' : "False",'plot_title':"#mu#mu + jets (#alpha_{T} < 0.55) #rightarrow #mu#mu + jets (#alpha_{T}>0.55)",'scale':None , 'reduce':"False",'file_name':'Btag_dimuon_to_dimuon_with_without_alphaT','spread':"False"}
       test_7 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -7.,'box' : "False",'plot_title':"#mu#mu + jets (0-b-tag) #rightarrow #mu#mu + jets (2-b-tag) (no #alpha_{T})",'scale':None , 'reduce':"False",'file_name':'Btag_dimuon_zero_to_dimuon_two_no_alphaT_Cut','spread':"False"}
       test_14 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -14.,'box' : "False",'plot_title':"#mu#mu + jets (0-b-tag) #rightarrow #mu#mu + jets (1-b-tag) (no #alpha_{T})",'scale': None , 'reduce':"False",'file_name':'Btag_mumu_zero_mmuu_one_no_alphaT_Cut','spread':"False" }
 
@@ -97,7 +98,7 @@ class Jad_Compute(object):
       test_25 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -23.,'box' : "True", 'plot_title':"#mu + jets (>=1-btag) #rightarrow #mu#mu + jets (>=2-btag)(no #alphaT) ",'scale':None,'reduce':"False",'file_name':'Btag_greater_zero_mu_to_dimuon_greater_one_no_alphaT_Cut','spread':'True' }
 
       #mu to mu
-      test_3 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "False",'plot_title':"#mu + jets (no #alpha_{T}) #rightarrow #mu + jets (#alpha_{T}>0.55)",'scale':None , 'reduce':"False", 'file_name':'Btag_mu_to_mu_with_without_alphaT','spread':"False" }
+      test_3 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "False",'plot_title':"#mu + jets (#alpha_{T} < 0.55) #rightarrow #mu + jets (#alpha_{T}>0.55)",'scale':None , 'reduce':"False", 'file_name':'Btag_mu_to_mu_with_without_alphaT','spread':"False" }
       test_5 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -4.,'box' : "False",'plot_title':"#mu + jets (0-b-tag) #rightarrow #mu + jets (1-b-tag) (no #alpha_{T})",'scale': None , 'reduce':"False",'file_name':'Btag_mu_zero_mu_one_no_alphaT_Cut','spread':"False" } 
       test_6 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",'plot_title':"#mu + jets (0-b-tag) #rightarrow #mu + jets (>1-b-tag) (no #alpha_{T})",'scale':None , 'reduce':"False",'file_name':'Btag_mu_zero_mu_greater_one_no_alphaT_Cut','spread':"False"   }
       test_12 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -11.,'box' : "False",'plot_title':"#mu + jets (1-b-tag) #rightarrow #mu + jets (2-b-tag) (no #alpha_{T})",'scale': None , 'reduce':"False",'file_name':'Btag_mu_one_mu_two_no_alphaT_Cut','spread':"False"   }
@@ -105,7 +106,7 @@ class Jad_Compute(object):
       test_80 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",'plot_title':"#mu + jets (0-b-tag) #rightarrow #mu + jets (2-b-tag) (no #alpha_{T})",'scale':None , 'reduce':"False",'file_name':'Btag_mu_zero_mu_two_no_alphaT_Cut','spread':"False"   }
 
 
-      test_dicts = [test_2,test_24,test_22,test_3,test_5,test_6,test_12,test_80,test_20,test_21]
+      test_dicts = [test_3,test_4]#[test_2,test_24,test_22,test_3,test_5,test_6,test_12,test_80,test_20,test_21]
 
 
     """
@@ -183,12 +184,12 @@ class Jad_Compute(object):
             self.Fill_Dictionary(test_2,Control = "Muon", Signal = "DiMuon") 
 
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' :
-            self.Fill_Dictionary(test_3,Control = "Muon", Signal = "Muon",Not_Do = 'Signal') 
+            self.Fill_Dictionary(test_3,Control = "Muon", Signal = "Muon",Not_Do = 'Signal',Subtract = True,AlphaT="0.55",Btag="Inclusive",SampleName = "Muon") 
           if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'Inclusive' :
             self.Fill_Dictionary(test_3,Control = "Muon", Signal = "Muon",Not_Do = 'Control')         
 
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' :
-            self.Fill_Dictionary(test_4,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Signal') 
+            self.Fill_Dictionary(test_4,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Signal',Subtract = True,AlphaT="0.55",Btag="Inclusive",SampleName = "DiMuon") 
           if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'Inclusive' :
             self.Fill_Dictionary(test_4,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
 
@@ -266,16 +267,29 @@ class Jad_Compute(object):
   Fills control/'signal' with the yields which are used by Make_Plots to construct measure of spread
   """
 
-  def Fill_Dictionary(self,closure_dictionary,Control = '',Signal = '',Not_Do = ''):
+  def Fill_Dictionary(self,closure_dictionary,Control = '',Signal = '',Not_Do = '',Subtract = '',AlphaT = '',Btag = '',SampleName = ''):
+         
+          subtract_mc = 0
+          subtract_error = 0
+          subtract_data = 0
+          
+          if Subtract == True:
+                for subfile in self.dict_list:
+                   if subfile[self.entry]['AlphaT'] == AlphaT and subfile[self.entry]['Btag'] == Btag and subfile[self.entry]['SampleName'] == SampleName:
+
+                     subtract_mc = subfile[self.entry]['MCYield']
+                     subtract_error = subfile[self.entry]['SM_Stat_Error']
+                     subtract_data = subfile[self.entry]['Data']
+                     print AlphaT,Btag,self.entry,subtract_data
           
           if self.file[self.entry]['SampleName'] == Control and Not_Do != 'Control':
-            closure_dictionary['MCC'].append(self.file[self.entry]['MCYield'])
-            closure_dictionary['MCCE'].append(self.file[self.entry]['SM_Stat_Error'])
-            closure_dictionary['DC'].append(self.file[self.entry]['Data'])
+            closure_dictionary['MCC'].append(self.file[self.entry]['MCYield']-subtract_mc)
+            closure_dictionary['MCCE'].append(self.file[self.entry]['SM_Stat_Error']-subtract_error)
+            closure_dictionary['DC'].append(self.file[self.entry]['Data']-subtract_data)
           elif self.file[self.entry]['SampleName'] == Signal and Not_Do != 'Signal':
-            closure_dictionary['MCS'].append(self.file[self.entry]['MCYield'])
-            closure_dictionary['MCSE'].append(self.file[self.entry]['SM_Stat_Error'])
-            closure_dictionary['DS'].append(self.file[self.entry]['Data'])
+            closure_dictionary['MCS'].append(self.file[self.entry]['MCYield']-subtract_mc)
+            closure_dictionary['MCSE'].append(self.file[self.entry]['SM_Stat_Error']-subtract_error)
+            closure_dictionary['DS'].append(self.file[self.entry]['Data']-subtract_data)
 
           return closure_dictionary
  

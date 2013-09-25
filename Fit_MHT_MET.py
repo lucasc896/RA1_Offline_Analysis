@@ -169,10 +169,10 @@ side.Fit(fit_side,"R")
 
 
 fit_side.Draw("SAME")
-signal.Draw("SAMEP")
-fit_signal.Draw("SAME")
+#signal.Draw("SAMEP")
+#fit_signal.Draw("SAME")
 
-c1.SaveAs("./sideband_zero_wjets_both.png")
+c1.SaveAs("./sideband_zero_wjets.png")
 
 signal_dimuon.GetYaxis().SetRangeUser(0.0,1.9)
 signal_dimuon.GetXaxis().SetRangeUser(150,1500)
@@ -194,11 +194,11 @@ side_dimuon.Draw("AP")
 fit_side_dimuon = r.TF1("fit","pol1", htbin[fitstart]-50, htbin[fitlength])
 side_dimuon.Fit(fit_side_dimuon,"R")
 
-signal_dimuon.Draw("SAMEP")
-fit_signal_dimuon.Draw("SAME")
+#signal_dimuon.Draw("SAMEP")
+#fit_signal_dimuon.Draw("SAME")
 fit_side_dimuon.Draw("SAME")
 
-c1.SaveAs("./sideband_zero_dimuon_both.png")
+c1.SaveAs("./sideband_zero_dimuon.png")
 
 signal_ttbar.GetXaxis().SetRangeUser(150,1500)
 signal_ttbar.GetYaxis().SetRangeUser(0.0,1.9)
@@ -221,8 +221,8 @@ fit_side_ttbar = r.TF1("fit","pol1", htbin[fitstart]-50, htbin[fitlength])
 side_ttbar.Fit(fit_side_ttbar,"R")
 
 fit_side_ttbar.Draw("SAME")
-signal_ttbar.Draw("SAMEP")
-fit_signal_ttbar.Draw("SAME")
+#signal_ttbar.Draw("SAMEP")
+#fit_signal_ttbar.Draw("SAME")
 
-c1.SaveAs("./sideband_two_ttbar_both.png")
+c1.SaveAs("./sideband_two_ttbar.png")
 

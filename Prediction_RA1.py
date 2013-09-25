@@ -29,8 +29,9 @@ settings = {
   "plots":["AlphaT_",],  # Histogram that Yields are taken from
   "AlphaTSlices":["0.55_20"], # AlphaT Slices
   "Lumo":18.30, # Luminosity in fb
-  "Multi_Lumi":{'Had':18.30,'Muon':19.152,'DiMuon':19.152,'Photon':19.514},  # Different Luminosity per sample, used when SplitLumi = True
-  "Analysis":"8TeV" # Differentiate between 7 and 8 TeV analysis i.e. uses alphaT cut in lowest two bins if 7TeV is selected
+  "Multi_Lumi":{'Had':18.30,'Muon':19.152,'DiMuon':19.152,'Photon':19.180},  # Different Luminosity per sample, used when SplitLumi = True
+  "Analysis":"8TeV", # Differentiate between 7 and 8 TeV analysis i.e. uses alphaT cut in lowest two bins if 7TeV is selected
+  "MHTMET":"True"
       }
 
 
@@ -41,12 +42,14 @@ def ensure_dir(dir):
 def Directory_Maker():
      
     print "\n Making RA1 Directories"
-    folder_options = {'NormalisationTables':args.m,'ClosureTests':args.c,'TexFiles':args.n,'TexFiles':args.n,'RootFiles':args.r,'Templates':args.t  }
+    folder_options = {'NormalisationTables':args.m,'ClosureTests':args.c,'TexFiles':args.n,'TexFilesuncorrected':args.u,'RootFiles':args.r,'Templates':args.t  }
     folders = []
 
     for key,fi in folder_options.iteritems():
         print folder_options
-        if fi != None and fi != False: folders.append(key)
+        if fi != None and fi != False: 
+          if key == "TexFilesuncorrected": folders.append("TexFiles")
+          else: folders.append(key)
 
     dir_stamp = "RA1_Documents_"+strftime("%d_%b")
     ensure_dir(dir_stamp)
@@ -560,8 +563,8 @@ if __name__=="__main__":
 
   if args.m :
 
-    #settings["dirs"] = ["150_200"] + settings["dirs"]
-    #settings["bins"] = ["150"] + settings["bins"]
+    settings["dirs"] = ["150_200"] + settings["dirs"]
+    settings["bins"] = ["150"] + settings["bins"]
     
     print" ==================  \n Making MC Clamping Normalisation Yields \n ====================  \n"
     Number_Extractor(settings,btag_zero_normalisation,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption = "MCNormalisation")
@@ -578,11 +581,11 @@ if __name__=="__main__":
     for j in args.n:
        print " ========= Jet Mult %s ======== " %j
        Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
-       Number_Extractor(settings,btag_zero_samples,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
-       Number_Extractor(settings,btag_one_samples,"One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
-       Number_Extractor(settings,btag_two_samples,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
-       Number_Extractor(settings,btag_three_samples,"Three_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
-       Number_Extractor(settings,btag_more_than_three_samples,"More_Than_Three_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
+       #Number_Extractor(settings,btag_zero_samples,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
+       #Number_Extractor(settings,btag_one_samples,"One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
+       #Number_Extractor(settings,btag_two_samples,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
+       #Number_Extractor(settings,btag_three_samples,"Three_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
+       #Number_Extractor(settings,btag_more_than_three_samples,"More_Than_Three_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
 
   if args.u : 
 
@@ -592,11 +595,11 @@ if __name__=="__main__":
     for j in ["all","2","3"]:
       print " ========= Jet Mult %s ======== " %j
       Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category=j)
-      #Number_Extractor(settings,btag_zero_uncorrected_samples,"Zero_btags",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category=j)
-      #Number_Extractor(settings,btag_one_uncorrected_samples,"One_btag",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category=j)
-      #Number_Extractor(settings,btag_two_uncorrected_samples,"Two_btags",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category=j)
-      #Number_Extractor(settings,btag_three_uncorrected_samples,"Three_btags",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category=j)
-      #Number_Extractor(settings,btag_more_than_three_uncorrected_samples,"More_Than_Three_btag",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category= j)
+      Number_Extractor(settings,btag_zero_uncorrected_samples,"Zero_btags",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category=j)
+      Number_Extractor(settings,btag_one_uncorrected_samples,"One_btag",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category=j)
+      Number_Extractor(settings,btag_two_uncorrected_samples,"Two_btags",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category=j)
+      Number_Extractor(settings,btag_three_uncorrected_samples,"Three_btags",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category=j)
+      Number_Extractor(settings,btag_more_than_three_uncorrected_samples,"More_Than_Three_btag",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category= j)
 
   if args.r : 
  

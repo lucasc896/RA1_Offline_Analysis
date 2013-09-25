@@ -21,7 +21,7 @@ This is where Trigger corrections are applied to MC.
 def MC_Scaler(htbin,alphat_slice,mc_yield,sample = '',error = '',Analysis = '',btagbin = ''):
 
     if Analysis == "8TeV":
-        AlphaT_Scale = {"150_0.55":float(0.700),"200_0.55":float(0.700),"275_0.55":float(0.90),"325_0.55":float(0.99),"375_0.55":float(0.99),"475_0.55":float(0.99),"575_0.55":1.,"675_0.55":1.,"775_0.55":1.,"875_0.55":1.,"975_0.55":1.,"1075_0.55":1.}
+        AlphaT_Scale = {"150_0.55":float(0.700),"200_0.55":float(0.800),"275_0.55":float(0.90),"325_0.55":float(0.99),"375_0.55":float(0.99),"475_0.55":float(0.99),"575_0.55":1.,"675_0.55":1.,"775_0.55":1.,"875_0.55":1.,"975_0.55":1.,"1075_0.55":1.}
         AlphaT_Error = {"150_0.55":float(0.003),"200_0.55":float(0.003),"275_0.55":float(0.011),"325_0.55":float(0.009),"375_0.55":float(0.011),"475_0.55":float(0.032),"575_0.55":float(0.059),"675_0.55":float(0.059),"775_0.55":float(0.059),"875_0.55":float(0.059),"975_0.55":float(0.059),"1075_0.55":float(0.059)}
         DiMuon_Scale = {"150":float(0.95),"200":float(0.95),"275":float(0.96),"325":float(0.96),"375":float(0.96),"475":float(0.96),"575":float(0.97),"675":float(0.97),"775":float(0.98),"875":float(0.98),"975":float(0.98),"1075":float(0.98)}
         muon_eff = 0.88
@@ -49,7 +49,7 @@ def MC_Scaler(htbin,alphat_slice,mc_yield,sample = '',error = '',Analysis = '',b
 
 class Number_Extractor(object):
 
-  def __init__(self,sample_settings,sample_list,number,c_file = "",Triggers = "",Closure = "",Stats = "",AlphaT='',Trans_Plots = '',Calculation = '',Split_Lumi = '',Analysis_category = '',Template = '',Combine = '',Do_sys = '',Working_Point = '',Feasibility = "",RunOption = ""):
+  def __init__(self,sample_settings,sample_list,number,c_file = "",Triggers = "",Closure = "",Stats = "",AlphaT='',Trans_Plots = '',Calculation = '',Split_Lumi = '',Analysis_category = '',Template = '',Combine = '',Do_sys = '',Working_Point = '',Feasibility = "",RunOption = "",Sitv = "False"):
 
     print "\n\nGetting Numbers\n\n"
     self.Systematic = Do_sys
@@ -64,8 +64,11 @@ class Number_Extractor(object):
     self.c_file = c_file
     self.Make_2D_Histos = Trans_Plots
     self.number = number
-    if Stats == "True" or Closure == "True": self.CombineBins = "False"
-    else : self.CombineBins = "True"
+    self.sitv = Sitv
+    self.MHTMETcorrection = sample_settings["MHTMET"]
+    print " MHTMET Correction Applied :  %s" %self.MHTMETcorrection
+    if self.RunOption == "MCNormalisation": self.CombineBins = "True"
+    else : self.CombineBins = "False"
     self.analysis_category = Analysis_category
     self.Lumi_List = {"Had":0,"Muon":0,"DiMuon":0,"Photon":0,"OSOF":0,"OSSF":0,"SSOF":0,"SSSF":0}
     self.btag_names = {"Zero_btags":"eq0","One_btag":"eq1","Two_btags":"eq2","Three_btags":"eq3","More_Than_Zero_btag":"gr0","More_Than_One_btag":"gr1","Inclusive":"Inc","More_Than_Three_btag":"eq4"}
@@ -148,7 +151,7 @@ class Number_Extractor(object):
  
       if self.CombineBins == "True": self.bins = tuple(settings["bins"]+["200_upwards"])
       else : self.bins = tuple(settings["bins"]) 
-      entries = ('Data','MCYield','Tot_Error','SM_Stat_Error','TTbar','WJets','Zinv','DY','DiBoson','SingleTop','Photon','Btag','SampleName','JetCategory','AlphaT')
+      entries = ('Data','MCYield','Tot_Error','SM_Stat_Error','TTbar','WJets','Zinv','DY','DiBoson','SingleTop','Photon','Btag','SampleName','JetCategory','AlphaT','SITV')
       yields = ('Yield','Error')      
       self.process = ["TTbar","WJets","Zinv","DY","DiBoson","SingleTop","Photon"]      
       analysis_type = "%s" %("Feasibility" if self.Feasibility == "True" else "RA1")
@@ -194,6 +197,7 @@ class Number_Extractor(object):
             dicto[key]['Tot_Error'] = []
             dicto[key]['Btag'] = self.number
             dicto[key]['JetCategory'] = self.analysis_category
+            dicto[key]['SITV'] = self.sitv
             for SM in self.process:
                 dicto[key][SM] = dict.fromkeys(yields,0) 
                 dicto[key][SM]['Process_Error'] = []
@@ -211,42 +215,44 @@ class Number_Extractor(object):
            
             midht = meanbin_dict[dict[entry]["HT"]]
             
-            if dict[entry]["SampleType"] in ["Photon"]:
+            if self.MHTMETcorrection == "True": 
+              
+              if dict[entry]["SampleType"] in ["Photon"]:
 
-              scalefactor = 0.996212 - 0.0003764*(midht) # ISR PU 1.14 sf
-              #scalefactor = 0.8716 - 0.00005568*(midht) # IS PU Parton  1.15 sf
+                #scalefactor = 0.996212 - 0.0003764*(midht) # ISR PU 1.14 sf
+                #scalefactor = 0.8716 - 0.00005568*(midht) # IS PU Parton  1.15 sf
 
-              scalefactor = 1.18857 - 0.000787131*(midht) # FullDataset 1.26 sf
+                scalefactor = 1.18857 - 0.000787131*(midht) # FullDataset 1.28 sf
 
-              dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*1.26)
-              dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*1.26)          
+                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*1.28)
+                dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*1.28)          
 
 
-            if dict[entry]["SampleType"] in ["Zinv","DY"]:
-            
-              #scalefactor = 0.996212 - 0.0003764*(midht) # ISR PU 1.05 sf
-              #scalefactor = 0.8716 - 0.00005568*(midht) # IS PU Parton  1.05 sf
-              scalefactor = 1.18857 - 0.000787131*(midht) # FullDataset 1.08 sf
+              if dict[entry]["SampleType"] in ["Zinv","DY"]:
+              
+                #scalefactor = 0.996212 - 0.0003764*(midht) # ISR PU 1.05 sf
+                #scalefactor = 0.8716 - 0.00005568*(midht) # IS PU Parton  1.05 sf
+                scalefactor = 1.18857 - 0.000787131*(midht) # FullDataset 1.08 sf
 
-              dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*1.08)
-              dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*1.08)          
- 
-            if dict[entry]["SampleType"] in ["WJets"]:
-            
-              #scalefactor = 0.989713 - (0.00034799*midht) # ISR PU 0.95 sf
-              #scalefactor = 0.90123 - 0.0000971045*midht # ISR PU Parton 0.95 sf
-              scalefactor = 0.976123 - (0.000405802*midht) # FullDataset 1.01 sf
+                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*1.08)
+                dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*1.08)          
+   
+              if dict[entry]["SampleType"] in ["WJets"]:
+              
+                #scalefactor = 0.989713 - (0.00034799*midht) # ISR PU 0.95 sf
+                #scalefactor = 0.90123 - 0.0000971045*midht # ISR PU Parton 0.95 sf
+                scalefactor = 0.976123 - (0.000405802*midht) # FullDataset 1.01 sf
 
-              dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*1.01)
-              dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*1.01)
+                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*1.01)
+                dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*1.01)
 
-            if dict[entry]["SampleType"] in ["TTbar"]:
+              if dict[entry]["SampleType"] in ["TTbar"]:
 
-              #scalefactor = 1.132 - (0.000431469*midht) # sf 1.03
-              scalefactor = 1.17202 - (0.000598786*midht) #FullDataset sf 1.09
+                #scalefactor = 1.132 - (0.000431469*midht) # sf 1.03
+                scalefactor = 1.17202 - (0.000598786*midht) #FullDataset sf 1.09
 
-              dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*1.09)
-              dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*1.09)
+                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*1.09)
+                dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*1.09)
            
             
             Error = float(dict[entry]["Error"]) 
@@ -439,13 +445,13 @@ class Number_Extractor(object):
               self.Table_Prep(self.Muon_Yield_Per_Bin,self.Had_Yield_Per_Bin,make_hist = "Total_SM")
               self.Produce_Tables(self.Dict_For_Table,category = "Total_SM")
             
-              self.Table_Prep(self.Muon_Yield_Per_Bin,self.Had_Muon_Yield_Per_Bin,make_hist = "Muon")
-              self.Produce_Tables(self.Dict_For_Table,category = "Muon")
+              self.Table_Prep(self.Muon_Yield_Per_Bin,self.Had_Muon_Yield_Per_Bin)
+              self.Produce_Tables(self.Dict_For_Table,category = "Muon_WJet_TTbar")
             
-              self.Table_Prep(self.Photon_Yield_Per_Bin,self.Had_Zinv_Yield_Per_Bin,make_hist = "Photon_Zinv")
+              self.Table_Prep(self.Photon_Yield_Per_Bin,self.Had_Zinv_Yield_Per_Bin)
               self.Produce_Tables(self.Dict_For_Table,category = "Photon_Zinv")
             
-              self.Table_Prep(self.DiMuon_Yield_Per_Bin,self.Had_Zinv_Yield_Per_Bin,make_hist = "Di_Muon_Zinv")
+              self.Table_Prep(self.DiMuon_Yield_Per_Bin,self.Had_Zinv_Yield_Per_Bin)
               self.Produce_Tables(self.Dict_For_Table,category = "Di_Muon_Zinv")
             
               self.Table_Prep(self.Muon_Yield_Per_Bin,self.DiMuon_Yield_Per_Bin)
@@ -759,7 +765,14 @@ class Number_Extractor(object):
                     {"label": r'''$\mu +$ jets data''',       "entryFunc":self.MakeList(dict,"Data_Pred")},
                     {"label":r'''Total SM prediction''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error")},
                     {"label": r'''Hadronic data''',       "entryFunc":self.MakeList(dict,"Data")},])
-           
+       
+      if category == "Muon_WJet_TTbar": self.Latex_Table(dict,caption = "WJet, TTbar prediction from Muon sample ", 
+            rows = [{"label": r'''Hadronic selection MC''',"entryFunc": self.MakeList(self.Had_Muon_Yield_Per_Bin,"MCYield","SM_Stat_Error")},
+                    {"label": r'''$\mu +$ jets MC''',         "entryFunc":self.MakeList(self.Muon_Yield_Per_Bin,"MCYield","SM_Stat_Error")},
+                    {"label": r'''Translation factor''', "entryFunc":self.MakeList(dict,"Trans","Trans_Error")},
+                    {"label": r'''$\mu  +$ jets data''',       "entryFunc":self.MakeList(dict,"Data_Pred")},
+                    {"label": r'''t$\bar{t}$ + W prediction from $\mu +$ jets''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error")}])
+    
       if category == "Photon_DiMuon": self.Latex_Table(dict,caption = "Photon to predict DiMuon closure test", 
             rows = [{"label": r'''$\mu\bar{\mu} +$ jets MC''',"entryFunc": self.MakeList(self.DiMuon_Yield_Per_Bin,"MCYield","SM_Stat_Error")},
                     {"label": r''' $\gamma +$ jets MC''',         "entryFunc":self.MakeList(self.Photon_Yield_Per_Bin,"MCYield","SM_Stat_Error")},
