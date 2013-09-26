@@ -82,6 +82,7 @@ class Btag_Calc(object):
 
     for key,fi in sorted(samples.iteritems()):
       i = 0
+      file = r.TFile("%s.root"%fi[0])
       for dir in settings['dirs']:
         if fi[3] == "Photon" and dir == "150_200": continue
         for alphat in settings['AlphaTSlices']:
@@ -91,8 +92,6 @@ class Btag_Calc(object):
           i+=1
           table_entries += "{\"HT\":\"%s\","%(dir.split('_')[0])          
           sample_dir = fi[1]+dir
-
-          file = r.TFile("%s.root"%fi[0])
           
           if fi[2] != "Data":
             # Calculate formula yields with alphaT cut in place
@@ -102,14 +101,17 @@ class Btag_Calc(object):
             else: 
               plot = file.Get("%s/Matched_vs_Matched_noB_vs_c_%s" % (sample_dir, self.analysis_category))
 
-          if fi[2] != "Data": 
+          if fi[2] != "Data":
+            if "0x0" in str(plot):
+              print ">>> Error in Btag_Calc::Make_Dict: 'plot' not found."
+              exit()
             table_entries += self.Make_Prediction(plot,fi[3],fi[2],number,dir.split('_')[0],lower)
             del plot
          # Data yields still taken straight from histogram
           else:
             table_entries += self.Data_Yield(fi[0],fi[1],dir,lower,higher,fi[2],fi[3])
         
-          file.Close()
+      file.Close()
     
     table_entries += "}"
     return_dict = ast.literal_eval(table_entries)
@@ -118,23 +120,32 @@ class Btag_Calc(object):
  
    
   def Data_Yield(self,file,dir_path,dir,lower,higher,sample_type,category):
+    
     for histName in self.settings['plots']:
       histName = str(histName+self.analysis_category)
-      checkht = dir
       dir = dir_path+dir
       normal =  GetSumHist(File = ["%s.root"%file], Directories = [dir], Hist = histName, Col = r.kBlack, Norm = None, LegendText = "nBtag")  
       normal.HideOverFlow()
+      
       if self.Keep_AlphaT == "True" and str(lower)=="0.55": 
         err = r.Double(0.0)
-        if category != "Had": normal.hObj.IntegralAndError(int(float(lower)/0.01)+1,int(float(higher)/0.01),err)
-        else: normal.hObj.IntegralAndError(int(float(0.55)/0.01)+1,int(float(higher)/0.01),err)
+        
+        if category != "Had":
+          normal.hObj.IntegralAndError(int(float(lower)/0.01)+1,int(float(higher)/0.01),err)
+        else:
+          normal.hObj.IntegralAndError(int(float(0.55)/0.01)+1,int(float(higher)/0.01),err)
+      
         table_string =" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(0.55)/0.01)+1,int(float(10)/0.01)) if category =="Had" else (normal.hObj.Integral(int(float(lower)/0.01)+1,int(float(higher)/0.01)))),err,sample_type,category,lower)
       else:
         err = r.Double(0.0)
-        if category == "Had" :normal.hObj.IntegralAndError(int(float(lower)/0.01)+1,int(float(higher)/0.01),err)
-        else: normal.hObj.IntegralAndError(1,2000,err)
+        if category == "Had":
+          normal.hObj.IntegralAndError(int(float(lower)/0.01)+1,int(float(higher)/0.01),err)
+        else:
+          normal.hObj.IntegralAndError(1,2000,err)
         table_string =" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(0.55)/0.01)+1,int(float(higher)/0.01)) if category =="Had" else (normal.hObj.Integral())),err,sample_type,category,lower)
+     
       normal.a.Close()
+    
     return table_string    
 
 
@@ -180,9 +191,9 @@ class Btag_Calc(object):
 
 
   """
-  def Make_Prediction(self,plot,sample,category,btag_number,htbin,alphaT):  
+  def Make_Prediction(self, plot, sample, category, btag_number, htbin, alphaT):  
       
-    def bcombo(b, s,charm, e, m,c, hist):
+    def bcombo(b, s, charm, e, m, c, hist):
 
       Nb = b;
       Ns = s;
