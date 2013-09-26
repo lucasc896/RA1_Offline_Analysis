@@ -106,7 +106,7 @@ class Jad_Compute(object):
       test_80 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",'plot_title':"#mu + jets (0-b-tag) #rightarrow #mu + jets (2-b-tag) (no #alpha_{T})",'scale':None , 'reduce':"False",'file_name':'Btag_mu_zero_mu_two_no_alphaT_Cut','spread':"False"   }
 
 
-      test_dicts = [test_3,test_4]#[test_2,test_24,test_22,test_3,test_5,test_6,test_12,test_80,test_20,test_21]
+      test_dicts = [test_4,test_2,test_24,test_22,test_3,test_5,test_6,test_12,test_80,test_20,test_21]
 
 
     """
@@ -280,7 +280,6 @@ class Jad_Compute(object):
                      subtract_mc = subfile[self.entry]['MCYield']
                      subtract_error = subfile[self.entry]['SM_Stat_Error']
                      subtract_data = subfile[self.entry]['Data']
-                     print AlphaT,Btag,self.entry,subtract_data
           
           if self.file[self.entry]['SampleName'] == Control and Not_Do != 'Control':
             closure_dictionary['MCC'].append(self.file[self.entry]['MCYield']-subtract_mc)
