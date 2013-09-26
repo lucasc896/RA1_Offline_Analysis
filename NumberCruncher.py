@@ -4,7 +4,7 @@ import ROOT as r
 import logging,itertools
 import os,fnmatch,sys
 import glob, errno
-from time import strftime
+from time import strftime, time
 from optparse import OptionParser
 import array, ast
 from math import *
@@ -51,6 +51,9 @@ class Number_Extractor(object):
 
   def __init__(self,sample_settings,sample_list,number,c_file = "",Triggers = "",Closure = "",Stats = "",AlphaT='',Trans_Plots = '',Calculation = '',Split_Lumi = '',Analysis_category = '',Template = '',Combine = '',Do_sys = '',Working_Point = '',Feasibility = "",RunOption = ""):
 
+    from time import time
+    self.baseTime = time()
+
     print "\n\nGetting Numbers\n\n"
     self.Systematic = Do_sys
     self.Settings = sample_settings
@@ -64,8 +67,8 @@ class Number_Extractor(object):
     self.c_file = c_file
     self.Make_2D_Histos = Trans_Plots
     self.number = number
-    if Stats == "True" or Closure == "True": self.CombineBins = "False"
-    else : self.CombineBins = "True"
+    if self.RunOption == "MCNormalisation" : self.CombineBins = "True"
+    else: self.CombineBins = "False"
     self.analysis_category = Analysis_category
     self.Lumi_List = {"Had":0,"Muon":0,"DiMuon":0,"Photon":0,"OSOF":0,"OSSF":0,"SSOF":0,"SSSF":0}
     self.btag_names = {"Zero_btags":"eq0","One_btag":"eq1","Two_btags":"eq2","Three_btags":"eq3","More_Than_Zero_btag":"gr0","More_Than_One_btag":"gr1","Inclusive":"Inc","More_Than_Three_btag":"eq4"}
@@ -74,7 +77,6 @@ class Number_Extractor(object):
     self.btagbin = {"Inclusive":1,"Zero_btags":1,"One_btag":2,"Two_btags":3,"Three_btags":4,"More_Than_Three_btag":5}
 
     print "Analysis conducted for %s" %self.Analysis
-
     """
     Lumonosities are passed from config file and set here to be applied to MC
     """
@@ -88,7 +90,6 @@ class Number_Extractor(object):
         print "Single Luminosity of All Samples is %s fb\n\n" %self.Settings["Lumo"]
         for entry in self.Lumi_List: self.Lumi_List[entry] = self.Settings["Lumo"]
     print self.Lumi_List
-    r.gROOT.SetBatch(True)
     if Template: 
       # For Template method not used in RA1 analysis
       Template_Calc(sample_settings,sample_list,Template,float(self.Settings["Lumo"]),self.Systematic,Working_Point)
@@ -367,15 +368,15 @@ class Number_Extractor(object):
         if self.Trigger_Scaling == "True":
           print "Apply MC Correction For Scaling"
           for bin in self.Muon_Yield_Per_Bin:
-             for sample in dictionaries:
+            for sample in dictionaries:
                
-               sample[bin]["MCYield"] = MC_Scaler(bin,sample[bin]['AlphaT'],sample[bin]["MCYield"],sample = sample[bin]["SampleName"],Analysis = self.Analysis,btagbin = self.number )
-               sample[bin]["SM_Stat_Error"] = MC_Scaler(bin,sample[bin]['AlphaT'],sample[bin]["SM_Stat_Error"],sample = sample[bin]["SampleName"],error = sample[bin]["MCYield"],Analysis = self.Analysis, btagbin = self.number )
+              sample[bin]["MCYield"] = MC_Scaler(bin,sample[bin]['AlphaT'],sample[bin]["MCYield"],sample = sample[bin]["SampleName"],Analysis = self.Analysis,btagbin = self.number )
+              sample[bin]["SM_Stat_Error"] = MC_Scaler(bin,sample[bin]['AlphaT'],sample[bin]["SM_Stat_Error"],sample = sample[bin]["SampleName"],error = sample[bin]["MCYield"],Analysis = self.Analysis, btagbin = self.number )
                
-               for SM in self.process:
+              for SM in self.process:
                
-                 sample[bin][SM]["Yield"] = MC_Scaler(bin,sample[bin]['AlphaT'],sample[bin][SM]["Yield"],sample = sample[bin]["SampleName"],Analysis = self.Analysis,btagbin = self.number )
-                 sample[bin][SM]["Error"] = MC_Scaler(bin,sample[bin]['AlphaT'],sample[bin][SM]["Error"],sample = sample[bin]["SampleName"],error = sample[bin][SM]["Yield"],Analysis = self.Analysis, btagbin = self.number )
+                sample[bin][SM]["Yield"] = MC_Scaler(bin,sample[bin]['AlphaT'],sample[bin][SM]["Yield"],sample = sample[bin]["SampleName"],Analysis = self.Analysis,btagbin = self.number )
+                sample[bin][SM]["Error"] = MC_Scaler(bin,sample[bin]['AlphaT'],sample[bin][SM]["Error"],sample = sample[bin]["SampleName"],error = sample[bin][SM]["Yield"],Analysis = self.Analysis, btagbin = self.number )
 
 
         """
@@ -420,12 +421,12 @@ class Number_Extractor(object):
 
             if self.RunOption == "MCNormalisation":  
 
-                self.MC_Ratio(self.Muon_Yield_Per_Bin,"WJets","TTbar")
-                self.Produce_Tables(self.Dict_For_Table,category = "Muon_Tables")
-                self.MC_Ratio(self.DiMuon_Yield_Per_Bin,"DY")
-                self.Produce_Tables(self.Dict_For_Table,category = "DiMuon_Tables")
-                self.MC_Ratio(self.Photon_Yield_Per_Bin)
-                self.Produce_Tables(self.Dict_For_Table,category = "Photon_Tables")
+              self.MC_Ratio(self.Muon_Yield_Per_Bin,"WJets","TTbar")
+              self.Produce_Tables(self.Dict_For_Table,category = "Muon_Tables")
+              self.MC_Ratio(self.DiMuon_Yield_Per_Bin,"DY")
+              self.Produce_Tables(self.Dict_For_Table,category = "DiMuon_Tables")
+              self.MC_Ratio(self.Photon_Yield_Per_Bin)
+              self.Produce_Tables(self.Dict_For_Table,category = "Photon_Tables")
 
 
             else:
