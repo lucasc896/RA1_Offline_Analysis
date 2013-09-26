@@ -15,13 +15,13 @@ class Jad_Compute(object):
   
   def __init__(self,settings,dict_list,Lumo = "",classic = "",jetcat = "",jet_mult = ""):
 
-      print "\n\n Now Computing Jad Translation Plots\n\n"
-      self.Lumo = Lumo
-      self.Classic = classic
-      self.JetCat = jetcat
-      self.settings = settings
-      self.jetmult = jet_mult
-      self.MakeVectors(dict_list)
+    print "\n\n Now Computing Jad Translation Plots\n\n"
+    self.Lumo = Lumo
+    self.Classic = classic
+    self.JetCat = jetcat
+    self.settings = settings
+    self.jetmult = jet_mult
+    self.MakeVectors(dict_list)
       
   def MakeVectors(self,dict_list):
     r.gROOT.ProcessLine(".L tdrstyle.C")
@@ -252,13 +252,13 @@ class Jad_Compute(object):
 
     for test in test_dicts:
        if self.JetCat == "True":
-        print test
+        # print test
         self.Make_Plots(test['MCS'],test['MCSE'],test['MCC'],test['MCCE'],test['DC'],test['DS'],test['option'],test['box'],test['plot_title'],test['scale'],test['file_name'],reduce = test['reduce'],spread = test['spread'])
         
        elif self.Classic == "True":
         self.Make_Plots(test['MCS'],test['MCSE'],test['MCC'],test['MCCE'],test['DC'],test['DS'],test['option'],test['box'],test['plot_title'],test['scale'],test['file_name'],reduce = test['reduce'],spread = test['spread'])
        else:
-        print test
+        # print test
         self.Make_Plots(test['MCS'],test['MCSE'],test['MCC'],test['MCCE'],test['DC'],test['DS'],test['option'],test['box'],test['plot_title'],test['scale'],test['file_name'],reduce = test['reduce'],spread = test['spread'])
 
 
@@ -303,6 +303,7 @@ class Jad_Compute(object):
         
         j = 0
         offset = (self.axis[i+1]-self.axis[i])/2.0
+        
         #Prediction
         try: prediction = ((MCS[i] / MCC[i]) * DC[i])
         except ZeroDivisionError: prediction = 0.0
