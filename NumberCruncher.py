@@ -206,6 +206,10 @@ class Number_Extractor(object):
         # Take mean point of each HT bin for MHT_MET sideband correction
         meanbin_dict = {"150":178.2,"200":235.2,"275":297.5,"325":347.5,"375":416.4,"475":517.3,"575":618.4,"675":716.9,"775":819.9,"875":919.,"975":1019.,"1075":1289.}
 
+        correction_factors = {'775': {'WJets': {'Correction': 0.64340559024949506, 'Error': 0.025173711670053014}, 'TTbar': {'Correction': 0.69374291672306865, 'Error': 0.061739168909783371}, 'DY': {'Correction': 0.66593575915723469, 'Error': 0.076039960431377771}}, '150': {'WJets': {'Correction': 0.90380868649372859, 'Error': 0.010229557535701412}, 'TTbar': {'Correction': 1.0680665793720683, 'Error': 0.033513977482678474}, 'DY': {'Correction': 0.90525005563513883, 'Error': 0.029135953140267436}}, '975': {'WJets': {'Correction': 0.56261042668049566, 'Error': 0.034663112814916713}, 'TTbar': {'Correction': 0.57760166499575716, 'Error': 0.088117650729789235}, 'DY': {'Correction': 0.59168380897997008, 'Error': 0.10490484043777346}}, '875': {'WJets': {'Correction': 0.60319061933192675, 'Error': 0.029873803940809993}, 'TTbar': {'Correction': 0.63593478992157915, 'Error': 0.07479745299254123}, 'DY': {'Correction': 0.62897760615589404, 'Error': 0.090350238066029293}}, '200': {'WJets': {'Correction': 0.88067797668241277, 'Error': 0.0084424927326850474}, 'TTbar': {'Correction': 1.0348166981643498, 'Error': 0.027222811671515277}, 'DY': {'Correction': 0.88399259124486207, 'Error': 0.02349473008298689}}, '675': {'WJets': {'Correction': 0.68520318868046903, 'Error': 0.02037154389218699}, 'TTbar': {'Correction': 0.75382603539666526, 'Error': 0.048440120147728173}, 'DY': {'Correction': 0.70434837024843633, 'Error': 0.061371127488360877}}, '475': {'WJets': {'Correction': 0.76620125321272559, 'Error': 0.01169608637548657}, 'TTbar': {'Correction': 0.87025895274860599, 'Error': 0.025143611356439763}, 'DY': {'Correction': 0.77878678941158064, 'Error': 0.034533050042142639}}, '575': {'WJets': {'Correction': 0.72517467844212868, 'Error': 0.015927912986835845}, 'TTbar': {'Correction': 0.81128416344859999, 'Error': 0.036262350826656561}, 'DY': {'Correction': 0.7410827604667215, 'Error': 0.047713629793532934}}, '1075': {'WJets': {'Correction': 0.45304390652163162, 'Error': 0.04771746510506801}, 'TTbar': {'Correction': 0.42010222769603778, 'Error': 0.12443907413254611}, 'DY': {'Correction': 0.49099055660497531, 'Error': 0.14450431041652143}}, '275': {'WJets': {'Correction': 0.85539651666057126, 'Error': 0.0072613111742462081}, 'TTbar': {'Correction': 0.99847516133556269, 'Error': 0.021492256158750427}, 'DY': {'Correction': 0.86075855560426151, 'Error': 0.019784516261131695}}, '325': {'WJets': {'Correction': 0.83510642033485571, 'Error': 0.0071679324751279362}, 'TTbar': {'Correction': 0.96930859887265175, 'Error': 0.018506199594173101}, 'DY': {'Correction': 0.84211165701629953, 'Error': 0.019657109235429113}}, '375': {'WJets': {'Correction': 0.80714666759801967, 'Error': 0.0083232502183881781}, 'TTbar': {'Correction': 0.92911707579876035, 'Error': 0.018180212731800389}, 'DY': {'Correction': 0.81641623076208791, 'Error': 0.023667891499540902}}}
+
+        
+
         # Loop through dictionary created from CreateDictionary or Btag_Calc.MakeDict() 
         for entry,fi in dict.iteritems():
           
@@ -217,45 +221,65 @@ class Number_Extractor(object):
             midht = meanbin_dict[dict[entry]["HT"]]
             
             if self.MHTMETcorrection == "True": 
-              
+             
+              err_stat = 0.0
+              err_fit = 0.0
+             
+              try: err_stat = pow(float(dict[entry]["Error"])/dict[entry]["Yield"] ,2)
+              except ZeroDivisionError : pass
+ 
               if dict[entry]["SampleType"] in ["Photon"]:
 
-                #scalefactor = 0.996212 - 0.0003764*(midht) # ISR PU 1.14 sf
-                #scalefactor = 0.8716 - 0.00005568*(midht) # IS PU Parton  1.15 sf
+                """
+                corr_factor = correction_factors[dict[entry]["HT"]]["DY"]["Correction"] # 1.31
+                corr_err = correction_factors[dict[entry]["HT"]]["DY"]["Error"] # 1.31
 
-                scalefactor = 1.18857 - 0.000787131*(midht) # FullDataset 1.28 sf
+                dict[entry]["Error"] = (dict[entry]["Yield"]*corr_factor*1.31)  * math.sqrt( err_stat  + pow(corr_err/corr_factor, 2))   
+                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*corr_factor*1.31)
+                """
 
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*1.28)
-                dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*1.28)          
-
+                dict[entry]["Error"] = float(dict[entry]["Error"])*1.05 # New
+                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*1.05) #New
 
               if dict[entry]["SampleType"] in ["Zinv","DY"]:
-              
-                #scalefactor = 0.996212 - 0.0003764*(midht) # ISR PU 1.05 sf
-                #scalefactor = 0.8716 - 0.00005568*(midht) # IS PU Parton  1.05 sf
-                scalefactor = 1.18857 - 0.000787131*(midht) # FullDataset 1.08 sf
+                
+                """
+                corr_factor = correction_factors[dict[entry]["HT"]]["DY"]["Correction"] # 1.09 in HT 150-200 
+                corr_err = correction_factors[dict[entry]["HT"]]["DY"]["Error"] # 1.09 in HT 150-200
 
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*1.08)
-                dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*1.08)          
-   
+                dict[entry]["Error"] = (dict[entry]["Yield"]*corr_factor*1.09)  * math.sqrt( err_stat  + pow(corr_err/corr_factor, 2))   
+                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*corr_factor*1.09)
+                """
+                
+                #dict[entry]["Error"] = float(dict[entry]["Error"])*0.90 #New
+                #dict[entry]["Yield"] = (float(dict[entry]["Yield"])*0.90) #New
+
               if dict[entry]["SampleType"] in ["WJets"]:
-              
-                #scalefactor = 0.989713 - (0.00034799*midht) # ISR PU 0.95 sf
-                #scalefactor = 0.90123 - 0.0000971045*midht # ISR PU Parton 0.95 sf
-                scalefactor = 0.976123 - (0.000405802*midht) # FullDataset 1.01 sf
-
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*1.01)
-                dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*1.01)
-
-              if dict[entry]["SampleType"] in ["TTbar"]:
-
-                #scalefactor = 1.132 - (0.000431469*midht) # sf 1.03
-                scalefactor = 1.17202 - (0.000598786*midht) #FullDataset sf 1.09
-
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*scalefactor*1.09)
-                dict[entry]["Error"] =  (float(dict[entry]["Error"])*scalefactor*1.09)
-           
             
+                """ 
+                corr_factor = correction_factors[dict[entry]["HT"]]["WJets"]["Correction"] # 1.04, 1.01 for Full HT Range 
+                corr_err = correction_factors[dict[entry]["HT"]]["WJets"]["Error"] # 1.04, 1.01 for Full HT Range
+
+                dict[entry]["Error"] = (dict[entry]["Yield"]*corr_factor*1.04)  * math.sqrt( err_stat  + pow(corr_err/corr_factor, 2))   
+                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*corr_factor*1.04)
+                """
+
+                dict[entry]["Error"] = float(dict[entry]["Error"])*0.95
+                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*0.95)
+
+              if dict[entry]["SampleType"] in ["TTbar","SingleTop"]:
+
+                """
+                corr_factor = correction_factors[dict[entry]["HT"]]["TTbar"]["Correction"] # 1.15 , 1.10 for Full HT Range
+                corr_err = correction_factors[dict[entry]["HT"]]["TTbar"]["Error"] # 1.15
+
+                dict[entry]["Error"] = (dict[entry]["Yield"]*corr_factor*1.15)  * math.sqrt( err_stat  + pow(corr_err/corr_factor, 2))   
+                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*corr_factor*1.15)
+                """
+
+                dict[entry]["Error"] = float(dict[entry]["Error"])*1.23 #New
+                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*1.23) #New
+
             Error = float(dict[entry]["Error"]) 
             if dict[entry]["SampleType"] == "Data":
               if dict[entry]["Category"] == "Had": 

@@ -3,7 +3,7 @@
 import argparse
 parser = argparse.ArgumentParser(description ='Produce RA1 Results')
 parser.add_argument('-c',help= 'Make RA1 Closure Tests, Choose all, 2 or 3 or jetcat',nargs='+', type =str)
-parser.add_argument('-u',help= 'Make RA1 Tables Uncorrected Yields',action="store_true")
+parser.add_argument('-u',help= 'Make RA1 Tables Uncorrected Yields', nargs='+', type =str)
 parser.add_argument('-m',help= 'Make RA1 MC Normalisation Tables',action="store_true")
 parser.add_argument('-r',help= 'Make RA1 Root Files, Choose all, 2 or 3',nargs='+',type=str)
 parser.add_argument('-n',help= 'Make RA1 Tables, Choose all, 2 or 3',nargs='+',type =str)
@@ -41,8 +41,12 @@ settings = {
 Set some variables for file access
 '''
 
-rootDirectory = "../../rootfiles/FULLDATASET_Root_Files/FullDataset_Root_Files_Correct_PU"
+#rootDirectory = "../FULLDATASET_ROOTFILES/FullDataset_Root_Files_MHTMET_Inverted"
+#rootDirectory = "../FULLDATASET_ROOTFILES/FullDataset_Root_Files_Correct_PU"
 # rootDirectory = "../../rootfiles/Root_Files_20Sept_Full2013_Parked_SITV"
+rootDirectory = "../Oct_21_Root_Files"
+
+
 rootDirectoryNorm = rootDirectory
 
 def ensure_dir(dir):
@@ -186,6 +190,28 @@ btag_more_than_zero_normalisation = {
      "ncPhoton":(rootDirectoryNorm+"/Photon_Data","btag_morethanzero_Photon_","Data","Photon"),
 
     }
+
+btag_more_than_one_normalisation = {
+
+    "nMuon":(rootDirectoryNorm+"/Muon_Data","btag_morethanone_OneMuon_","Data","Muon"),
+     "mcMuonW1":(rootDirectoryNorm+"/Muon_WJets","OneMuon_","WJets","Muon"),
+     "mcMuonttbar":(rootDirectoryNorm+"/Muon_TTbar","OneMuon_","TTbar","Muon"),
+     "mcMuonzinv":(rootDirectoryNorm+"/Muon_Zinv","OneMuon_","Zinv","Muon"),
+     "mcMuonsingt":(rootDirectoryNorm+"/Muon_SingleTop","OneMuon_","SingleTop","Muon"),
+     "mcMuondiboson":(rootDirectoryNorm+"/Muon_DiBoson","OneMuon_","DiBoson","Muon"),
+     "mcMuonDY":(rootDirectoryNorm+"/Muon_DY","OneMuon_","DY","Muon"),
+    "nDiMuon":(rootDirectoryNorm+"/Muon_Data","btag_morethanone_DiMuon_","Data","DiMuon"),
+     "mcDiMuonW1":(rootDirectoryNorm+"/Muon_WJets","DiMuon_","WJets","DiMuon"),
+     "mcDiMuonttbar":(rootDirectoryNorm+"/Muon_TTbar","DiMuon_","TTbar","DiMuon"),
+     "mcDiMuonzinv":(rootDirectoryNorm+"/Muon_Zinv","DiMuon_","Zinv","DiMuon"),
+     "mcDiMuonsingt":(rootDirectoryNorm+"/Muon_SingleTop","DiMuon_","SingleTop","DiMuon"),
+     "mcDiMuondiboson":(rootDirectoryNorm+"/Muon_DiBoson","DiMuon_","DiBoson","DiMuon"),
+     "mcDiMuonDY":(rootDirectoryNorm+"/Muon_DY","DiMuon_","DY","DiMuon"),
+     "mcPhoton":(rootDirectoryNorm+"/Photon_MC","Photon_","Photon","Photon"),
+     "ncPhoton":(rootDirectoryNorm+"/Photon_Data","btag_morethanone_Photon_","Data","Photon"),
+
+    }
+
 
 
 btag_two_normalisation = {
@@ -575,13 +601,20 @@ if __name__=="__main__":
 
     settings["dirs"] = ["150_200"] + settings["dirs"]
     settings["bins"] = ["150"] + settings["bins"]
+    #settings["dirs"] = ["275_325","325_375","375_475","475_575","575_675","675_775","775_875","875_975","975_1075","1075"]  #HT Bins
+    #settings["bins"] = ["275","325","375","475","575","675","775","875","975","1075"]  #HT Bins
+
     
     print" ==================  \n Making MC Clamping Normalisation Yields \n ====================  \n"
     Number_Extractor(settings,btag_zero_normalisation,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption = "MCNormalisation")
-    Number_Extractor(settings,btag_zero_normalisation,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="all",RunOption = "MCNormalisation")
-    Number_Extractor(settings,btag_more_than_zero_normalisation,"More_Than_Zero_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="3",RunOption = "MCNormalisation")
+    #Number_Extractor(settings,btag_zero_normalisation,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="all",RunOption = "MCNormalisation")
+    #Number_Extractor(settings,btag_more_than_zero_normalisation,"More_Than_Zero_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="3",RunOption = "MCNormalisation")
+    #Number_Extractor(settings,btag_more_than_one_normalisation,"More_Than_One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption = "MCNormalisation")
+    #Number_Extractor(settings,btag_more_than_one_normalisation,"More_Than_One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="3",RunOption = "MCNormalisation")
+    #Number_Extractor(settings,btag_more_than_one_normalisation,"More_Than_One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="all",RunOption = "MCNormalisation")
+
     Number_Extractor(settings,btag_two_normalisation,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="all",RunOption ="MCNormalisation")
-    Number_Extractor(settings,btag_two_normalisation,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="3",RunOption ="MCNormalisation")
+    #Number_Extractor(settings,btag_two_normalisation,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="3",RunOption ="MCNormalisation")
 
 
   if args.n : 
@@ -591,18 +624,18 @@ if __name__=="__main__":
     for j in args.n:
        print " ========= Jet Mult %s ======== " %j
        Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
-       #Number_Extractor(settings,btag_zero_samples,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
-       #Number_Extractor(settings,btag_one_samples,"One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
-       #Number_Extractor(settings,btag_two_samples,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
-       #Number_Extractor(settings,btag_three_samples,"Three_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
-       #Number_Extractor(settings,btag_more_than_three_samples,"More_Than_Three_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
+       Number_Extractor(settings,btag_zero_samples,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
+       Number_Extractor(settings,btag_one_samples,"One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
+       Number_Extractor(settings,btag_two_samples,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
+       Number_Extractor(settings,btag_three_samples,"Three_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
+       Number_Extractor(settings,btag_more_than_three_samples,"More_Than_Three_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
 
   if args.u : 
 
     print" ==================  \n Making Tables Uncorrected Yields \n ====================  \n"
     settings["plots"] = ["Number_Btags_"]
     
-    for j in ["all","2","3"]:
+    for j in args.u:
       print " ========= Jet Mult %s ======== " %j
       Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category=j)
       Number_Extractor(settings,btag_zero_uncorrected_samples,"Zero_btags",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category=j)

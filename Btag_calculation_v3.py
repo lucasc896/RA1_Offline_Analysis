@@ -24,12 +24,12 @@ class Btag_Calc(object):
     self.Analysis = analysis
     self.analysis_category = analysis_category
     self.btag_multiplicity = btag_measure
-
+    
     """
     Initially takes the calc_file to determine btag,mistage rates on a ht bin by bin basis 
     """
     self.Btag_Rate(btag_measure)
-    
+
     #Use to produce Btag - Mistage plots Uncomment to produce them
     #self.DiMuon_Fit(self.Btag_Efficiencies,"Muon_Z0","Mistag")
     #self.DiMuon_Fit(self.Btag_Efficiencies,"Muon_Z2","Mistag")
@@ -192,7 +192,7 @@ class Btag_Calc(object):
 
   """
   def Make_Prediction(self, plot, sample, category, btag_number, htbin, alphaT):  
-      
+     
     def bcombo(b, s, charm, e, m, c, hist):
 
       Nb = b;
@@ -200,9 +200,9 @@ class Btag_Calc(object):
       Nc = charm;
 
       #here you set the upper limits for the loop...
-      Nbmax = 4 #hist.GetNbinsX()
+      Nbmax = hist.GetNbinsX()
       Nsmax = hist.GetNbinsY()
-      Ncmax = 4 #hist.GetNbinsZ()
+      Ncmax = hist.GetNbinsZ()
 
       #this is the result to return...
       final_yield = 0.0
