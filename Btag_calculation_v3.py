@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from ROOT import *
 import ROOT as r
 import logging,itertools
 import os,fnmatch,sys
@@ -11,6 +10,8 @@ from math import *
 from plottingUtils import *
 import time
 from sys import exit
+
+r.gROOT.SetBatch(r.kTRUE)
 
 class Btag_Calc(object):
         
@@ -211,9 +212,9 @@ class Btag_Calc(object):
         for y in range(Ns,Nsmax):
           for z in range(Nc,Ncmax):
             if hist.GetBinContent(x+1,y+1,z+1) == 0 : continue
-            final_yield += hist.GetBinContent(x+1, y+1,z+1) * TMath.Binomial(x,b) * pow(e,b) * pow(1.0 - e, x-b) * TMath.Binomial(y,s) * pow(m,s) * pow(1.0 - m, y-s) * TMath.Binomial(z,charm) * pow(c,charm) * pow(1.0 - c, z-charm)
+            final_yield += hist.GetBinContent(x+1, y+1,z+1) * r.TMath.Binomial(x,b) * pow(e,b) * pow(1.0 - e, x-b) * r.TMath.Binomial(y,s) * pow(m,s) * pow(1.0 - m, y-s) * r.TMath.Binomial(z,charm) * pow(c,charm) * pow(1.0 - c, z-charm)
 
-            final_error += pow(hist.GetBinError(x+1, y+1,z+1) * TMath.Binomial(x,b) * pow(e,b) * pow(1.0 - e, x-b) * TMath.Binomial(y,s) * pow(m,s) * pow(1.0 - m, y-s) * TMath.Binomial(z,charm) * pow(c,charm) * pow(1.0 - c, z-charm) ,2)
+            final_error += pow(hist.GetBinError(x+1, y+1,z+1) * r.TMath.Binomial(x,b) * pow(e,b) * pow(1.0 - e, x-b) * r.TMath.Binomial(y,s) * pow(m,s) * pow(1.0 - m, y-s) * r.TMath.Binomial(z,charm) * pow(c,charm) * pow(1.0 - c, z-charm) ,2)
 
       return(final_yield,final_error)
 
