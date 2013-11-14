@@ -18,15 +18,17 @@ from Calculation_Template_v4 import *
 This is where Trigger corrections are applied to MC. 
 """
 
-def MC_Scaler(htbin,alphat_slice,mc_yield,sample = '',error = '',Analysis = '',btagbin = ''):
+def MC_Scaler(htbin,jetmult,mc_yield,sample = '',error = '',Analysis = '',btagbin = ''):
 
     if Analysis == "8TeV":
-        AlphaT_Scale = {"150_0.55":float(0.700),"200_0.55":float(0.800),"275_0.55":float(0.90),"325_0.55":float(0.99),"375_0.55":float(0.99),"475_0.55":float(0.99),"575_0.55":1.,"675_0.55":1.,"775_0.55":1.,"875_0.55":1.,"975_0.55":1.,"1075_0.55":1.}
-        AlphaT_Error = {"150_0.55":float(0.003),"200_0.55":float(0.003),"275_0.55":float(0.011),"325_0.55":float(0.009),"375_0.55":float(0.011),"475_0.55":float(0.032),"575_0.55":float(0.059),"675_0.55":float(0.059),"775_0.55":float(0.059),"875_0.55":float(0.059),"975_0.55":float(0.059),"1075_0.55":float(0.059)}
+        AlphaT_Scale = {"200_2":float(0.816),"275_2":float(0.901),"200_3":float(0.665),"275_3":float(0.666),"325_2":float(0.988),"325_3":float(0.971),"375_2":float(0.994),"375_3":float(0.988),"475_2":float(0.99),"575_2":1.,"675_2":1.,"775_2":1.,"875_2":1.,"975_2":1.,"1075_2":1.,"475_3":float(0.99),"575_3":1.,"675_3":1.,"775_3":1.,"875_3":1.,"975_3":1.,"1075_3":1.}
+        AlphaT_Error = {"200_2":float(0.004),"200_3":float(0.033),"275_2":float(0.004),"275_3":float(0.013),"325_2":float(0.002),"325_3":float(0.008),"375_2":float(0.002),"375_3":float(0.006),"475_2":float(0.002),"575_2":float(0.002),"675_2":float(0.002),"775_2":float(0.002),"875_2":float(0.002),"975_2":float(0.002),"1075_2":float(0.002),"475_3":float(0.005),"575_3":float(0.005),"675_3":float(0.005),"775_3":float(0.005),"875_3":float(0.005),"975_3":float(0.005),"1075_3":float(0.005)}
         DiMuon_Scale = {"150":float(0.95),"200":float(0.95),"275":float(0.96),"325":float(0.96),"375":float(0.96),"475":float(0.96),"575":float(0.97),"675":float(0.97),"775":float(0.98),"875":float(0.98),"975":float(0.98),"1075":float(0.98)}
         muon_eff = 0.88
    
-    scale_factor = htbin +'_'+ alphat_slice
+   
+    scale_factor = htbin +'_'+ jetmult
+    if jetmult == "all" : scale_factor = htbin +'_2'
     if mc_yield == 0: return float(mc_yield)
 
     if sample == "Muon":
@@ -39,7 +41,6 @@ def MC_Scaler(htbin,alphat_slice,mc_yield,sample = '',error = '',Analysis = '',b
         else: return float(mc_yield*DiMuon_Scale[htbin])
 
     elif sample == "Had":
-      if alphat_slice == '0.01': scale_factor = htbin +'_0.55'
       if error: 
         return float((error*AlphaT_Scale[scale_factor])*math.sqrt(((mc_yield/error)*(mc_yield/error))+((AlphaT_Error[scale_factor]/AlphaT_Scale[scale_factor])*(AlphaT_Error[scale_factor]/AlphaT_Scale[scale_factor]))))
       else:return float(mc_yield*AlphaT_Scale[scale_factor])
@@ -238,8 +239,12 @@ class Number_Extractor(object):
                 dict[entry]["Yield"] = (float(dict[entry]["Yield"])*corr_factor*1.31)
                 """
 
-                dict[entry]["Error"] = float(dict[entry]["Error"])*1.05 # New
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*1.05) #New
+                #dict[entry]["Error"] = float(dict[entry]["Error"])*0.91 # New
+                #dict[entry]["Yield"] = (float(dict[entry]["Yield"])*0.91) #New
+        
+                dict[entry]["Error"] = float(dict[entry]["Error"])*1.13 # New Procedure
+                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*1.13) #New Procedure
+
 
               if dict[entry]["SampleType"] in ["Zinv","DY"]:
                 
@@ -250,9 +255,16 @@ class Number_Extractor(object):
                 dict[entry]["Error"] = (dict[entry]["Yield"]*corr_factor*1.09)  * math.sqrt( err_stat  + pow(corr_err/corr_factor, 2))   
                 dict[entry]["Yield"] = (float(dict[entry]["Yield"])*corr_factor*1.09)
                 """
+               
+                dict[entry]["Error"] = float(dict[entry]["Error"])*0.94 #New Procedure
+                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*0.94) #New Procedure
+
+              #if dict[entry]["SampleType"] in ["Zinv"]:
                 
-                #dict[entry]["Error"] = float(dict[entry]["Error"])*0.90 #New
-                #dict[entry]["Yield"] = (float(dict[entry]["Yield"])*0.90) #New
+              #  dict[entry]["Error"] = float(dict[entry]["Error"])*1.225 #New Procedure
+              #  dict[entry]["Yield"] = (float(dict[entry]["Yield"])*1.225) #New Procedure
+
+
 
               if dict[entry]["SampleType"] in ["WJets"]:
             
@@ -264,8 +276,13 @@ class Number_Extractor(object):
                 dict[entry]["Yield"] = (float(dict[entry]["Yield"])*corr_factor*1.04)
                 """
 
-                dict[entry]["Error"] = float(dict[entry]["Error"])*0.95
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*0.95)
+                #dict[entry]["Error"] = float(dict[entry]["Error"])*0.92
+                #dict[entry]["Yield"] = (float(dict[entry]["Yield"])*0.92)
+
+                dict[entry]["Error"] = float(dict[entry]["Error"])*0.88 #New Procedure
+                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*0.88) #New Procedure
+                
+
 
               if dict[entry]["SampleType"] in ["TTbar","SingleTop"]:
 
@@ -277,8 +294,12 @@ class Number_Extractor(object):
                 dict[entry]["Yield"] = (float(dict[entry]["Yield"])*corr_factor*1.15)
                 """
 
-                dict[entry]["Error"] = float(dict[entry]["Error"])*1.23 #New
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*1.23) #New
+                #dict[entry]["Error"] = float(dict[entry]["Error"])*1.32 #New
+                #dict[entry]["Yield"] = (float(dict[entry]["Yield"])*1.32) #New
+
+                dict[entry]["Error"] = float(dict[entry]["Error"])*1.21 #New Procedure
+                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*1.21) #New Procedure
+
 
             Error = float(dict[entry]["Error"]) 
             if dict[entry]["SampleType"] == "Data":
@@ -400,13 +421,13 @@ class Number_Extractor(object):
           for bin in self.Muon_Yield_Per_Bin:
             for sample in dictionaries:
                
-              sample[bin]["MCYield"] = MC_Scaler(bin,sample[bin]['AlphaT'],sample[bin]["MCYield"],sample = sample[bin]["SampleName"],Analysis = self.Analysis,btagbin = self.number )
-              sample[bin]["SM_Stat_Error"] = MC_Scaler(bin,sample[bin]['AlphaT'],sample[bin]["SM_Stat_Error"],sample = sample[bin]["SampleName"],error = sample[bin]["MCYield"],Analysis = self.Analysis, btagbin = self.number )
+              sample[bin]["MCYield"] = MC_Scaler(bin,self.analysis_category,sample[bin]["MCYield"],sample = sample[bin]["SampleName"],Analysis = self.Analysis,btagbin = self.number )
+              sample[bin]["SM_Stat_Error"] = MC_Scaler(bin,self.analysis_category,sample[bin]["SM_Stat_Error"],sample = sample[bin]["SampleName"],error = sample[bin]["MCYield"],Analysis = self.Analysis, btagbin = self.number )
                
               for SM in self.process:
                
-                sample[bin][SM]["Yield"] = MC_Scaler(bin,sample[bin]['AlphaT'],sample[bin][SM]["Yield"],sample = sample[bin]["SampleName"],Analysis = self.Analysis,btagbin = self.number )
-                sample[bin][SM]["Error"] = MC_Scaler(bin,sample[bin]['AlphaT'],sample[bin][SM]["Error"],sample = sample[bin]["SampleName"],error = sample[bin][SM]["Yield"],Analysis = self.Analysis, btagbin = self.number )
+                sample[bin][SM]["Yield"] = MC_Scaler(bin,self.analysis_category, sample[bin][SM]["Yield"],sample = sample[bin]["SampleName"],Analysis = self.Analysis,btagbin = self.number )
+                sample[bin][SM]["Error"] = MC_Scaler(bin,self.analysis_category,sample[bin][SM]["Error"],sample = sample[bin]["SampleName"],error = sample[bin][SM]["Yield"],Analysis = self.Analysis, btagbin = self.number )
 
 
         """
