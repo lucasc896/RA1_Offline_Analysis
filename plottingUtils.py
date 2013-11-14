@@ -6,12 +6,13 @@ PlottingUtils.py
 Created by Bryn Mathias on 2011-09-30.
 """
 
-
 import sys
 import os
 import ROOT as r
 import math
 import array
+
+r.gROOT.SetBatch(r.kTRUE)
 
 def MakeCumu(inHist):
     cumulativeHist = inHist.Clone()
