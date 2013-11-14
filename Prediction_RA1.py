@@ -12,7 +12,6 @@ parser.add_argument('-j',help= 'Set jet categories fit to default 2,3,4,>=5', na
 parser.add_argument('-d',help= 'For debug use', action="store_true")
 args = parser.parse_args()
 
-from ROOT import *
 import ROOT as r
 import logging,itertools
 import os,fnmatch,sys
@@ -24,6 +23,8 @@ from plottingUtils import *
 from NumberCruncher import *
 from time import strftime, time
 
+r.gROOT.SetBatch(r.kTRUE)
+
 baseTime = time()
 
 settings = {
@@ -34,15 +35,15 @@ settings = {
   "Lumo":18.30, # Luminosity in fb
   "Multi_Lumi":{'Had':18.30,'Muon':19.152,'DiMuon':19.152,'Photon':19.180},  # Different Luminosity per sample, used when SplitLumi = True
   "Analysis":"8TeV", # Differentiate between 7 and 8 TeV analysis i.e. uses alphaT cut in lowest two bins if 7TeV is selected
-  "MHTMET":"True"
+  "MHTMET":"False"
       }
 
 '''
 Set some variables for file access
 '''
 
-rootDirectory = "../../rootfiles/FULLDATASET_Root_Files/FullDataset_Root_Files_Correct_PU"
-# rootDirectory = "../../rootfiles/Root_Files_20Sept_Full2013_Parked_SITV"
+
+rootDirectory = "../../rootfiles/Root_Files_14Nov_Full2013_Parked_newHadd"
 rootDirectoryNorm = rootDirectory
 
 def ensure_dir(dir):
@@ -56,7 +57,7 @@ def Directory_Maker():
     folders = []
 
     for key,fi in folder_options.iteritems():
-        print folder_options
+        # print folder_options
         if fi != None and fi != False: 
           if key == "TexFilesuncorrected": folders.append("TexFiles")
           else: folders.append(key)
@@ -591,11 +592,11 @@ if __name__=="__main__":
     for j in args.n:
        print " ========= Jet Mult %s ======== " %j
        Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
-       #Number_Extractor(settings,btag_zero_samples,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
-       #Number_Extractor(settings,btag_one_samples,"One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
-       #Number_Extractor(settings,btag_two_samples,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
-       #Number_Extractor(settings,btag_three_samples,"Three_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
-       #Number_Extractor(settings,btag_more_than_three_samples,"More_Than_Three_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
+       Number_Extractor(settings,btag_zero_samples,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
+       Number_Extractor(settings,btag_one_samples,"One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
+       Number_Extractor(settings,btag_two_samples,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
+       Number_Extractor(settings,btag_three_samples,"Three_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
+       Number_Extractor(settings,btag_more_than_three_samples,"More_Than_Three_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
 
   if args.u : 
 
@@ -635,8 +636,19 @@ if __name__=="__main__":
       Number_Extractor(settings,inclusive_samples,"Inclusive",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="all")
       Jad_Compute(settings,CLOSURE_TESTS,classic ="False",Lumo = settings["Lumo"],jetcat = "True")
 
+    if "sitv" in args.c:
+      print " ======= Making SITV closure tests ========"
+      CLOSURE_TESTS = []
+      Number_Extractor(settings,btag_more_than_one_samples,"Inclusive",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="2")
+      Number_Extractor(settings,btag_more_than_one_samples,"Inclusive",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="3")
+      Number_Extractor(settings,btag_more_than_one_samples,"Inclusive",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="all")
+      print CLOSURE_TESTS
+      exit()
+      Jad_Compute(settings,CLOSURE_TESTS,classic ="False",Lumo = settings["Lumo"],jetcat = "False", sitv = "True")
+
     for j in args.c:
       if "jetcat" in args.c : continue
+      if "sitv" in args.c : continue
       print " ======  Jet Mult %s  ========= \n"%j
       CLOSURE_TESTS = []
       Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category=j)
@@ -651,8 +663,8 @@ if __name__=="__main__":
 
   if args.d:
     print" ==================  \n In DEBUG mode \n ====================  \n"
-
-    Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = [],Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="all")
+    CLOSURE_TESTS = []
+    Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="all")
 
   print "\n", "*"*52
   print "\tTotal Analysis time: ", time()-baseTime
