@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from ROOT import *
 import ROOT as r
 import logging,itertools
 import os,fnmatch,sys
@@ -10,6 +9,7 @@ import array, ast
 from math import *
 from plottingUtils import *
 
+r.gROOT.SetBatch(r.kTRUE)
 
 class Jad_Compute(object):
   
@@ -105,6 +105,9 @@ class Jad_Compute(object):
 
       test_80 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",'plot_title':"#mu + jets (0-b-tag) #rightarrow #mu + jets (2-b-tag) (no #alpha_{T})",'scale':None , 'reduce':"False",'file_name':'Btag_mu_zero_mu_two_no_alphaT_Cut','spread':"False"   }
 
+      test_69 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",
+                'plot_title':"passed SITV (#mu + jets, >=1 b-tag) #rightarrow failed SITV (#mu + jets, >=1 b-tag) (no #alpha_{T})",
+                'scale':None , 'reduce':"False",'file_name':'Btag_mu_zero_mu_two_no_alphaT_Cut','spread':"False"}
 
       test_dicts = [test_4,test_2,test_24,test_22,test_3,test_5,test_6,test_12,test_80,test_20,test_21]
 
@@ -250,6 +253,12 @@ class Jad_Compute(object):
             self.Fill_Dictionary(test_25,Control = "Muon", Signal = "Muon",Not_Do = 'Signal') 
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'More_Than_One_btag':
             self.Fill_Dictionary(test_25,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
+
+          # for SITV test
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'More_Than_One_btag':
+            self.Fill_Dictionary(test_69,Control = "Muon", Signal = "Muon",Not_Do = 'Signal') 
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'More_Than_One_btag':
+            self.Fill_Dictionary(test_69,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
 
     for test in test_dicts:
        if self.JetCat == "True":
