@@ -28,21 +28,20 @@ r.gROOT.SetBatch(r.kTRUE)
 baseTime = time()
 
 settings = {
-  "dirs":["200_275","275_325","325_375","375_475","475_575","575_675","675_775","775_875","875_975","975_1075","1075"],  #HT Bins
-  "bins":["200","275","325","375","475","575","675","775","875","975","1075"],  #HT Bins
-  "plots":["AlphaT_",],  # Histogram that Yields are taken from
-  "AlphaTSlices":["0.55_20"], # AlphaT Slices
-  "Lumo":18.30, # Luminosity in fb
-  "Multi_Lumi":{'Had':18.30,'Muon':19.152,'DiMuon':19.152,'Photon':19.180},  # Different Luminosity per sample, used when SplitLumi = True
-  "Analysis":"8TeV", # Differentiate between 7 and 8 TeV analysis i.e. uses alphaT cut in lowest two bins if 7TeV is selected
-  "MHTMET":"False"
-      }
+        "dirs":["200_275","275_325","325_375","375_475","475_575","575_675","675_775","775_875","875_975","975_1075","1075"],  #HT Bins
+        "bins":["200","275","325","375","475","575","675","775","875","975","1075"],  #HT Bins
+        "plots":["AlphaT_",],  # Histogram that Yields are taken from
+        "AlphaTSlices":["0.55_20"], # AlphaT Slices
+        "Lumo":18.493, # Luminosity in fb
+        "Multi_Lumi":{'Had':18.493,'Muon':19.131,'DiMuon':19.131,'Photon':19.120},  # Different Luminosity per sample, used when SplitLumi = True
+        "Analysis":"8TeV", # Differentiate between 7 and 8 TeV analysis i.e. uses alphaT cut in lowest two bins if 7TeV is selected
+        "MHTMET":"True"
+    }
 
 '''
 Set some variables for file access
 '''
-
-rootDirectory = "../../rootfiles/Root_Files_14Nov_Full2013_Parked_newHadd"
+rootDirectory = "../../rootfiles/test_space"
 rootDirectoryNorm = rootDirectory
 
 def ensure_dir(dir):
@@ -603,6 +602,7 @@ if __name__=="__main__":
     
     print" ==================  \n Making MC Clamping Normalisation Yields \n ====================  \n"
     Number_Extractor(settings,btag_zero_normalisation,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption = "MCNormalisation")
+    Number_Extractor(settings,btag_zero_normalisation,"Zero_btags",Triggers = "True",AlphaT="True",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption = "MCNormalisation")
     #Number_Extractor(settings,btag_zero_normalisation,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="all",RunOption = "MCNormalisation")
     #Number_Extractor(settings,btag_more_than_zero_normalisation,"More_Than_Zero_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="3",RunOption = "MCNormalisation")
     #Number_Extractor(settings,btag_more_than_one_normalisation,"More_Than_One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption = "MCNormalisation")
@@ -692,6 +692,9 @@ if __name__=="__main__":
   if args.d:
     print" ==================  \n In DEBUG mode \n ====================  \n"
     CLOSURE_TESTS = []
+    Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="1")
+    Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="2")
+    Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="3")
     Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="all")
 
   print "\n", "*"*52
