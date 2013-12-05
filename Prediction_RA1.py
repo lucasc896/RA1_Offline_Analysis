@@ -608,6 +608,7 @@ if __name__=="__main__":
     
     print" ==================  \n Making MC Clamping Normalisation Yields \n ====================  \n"
     Number_Extractor(settings,btag_zero_normalisation,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption = "MCNormalisation")
+    Number_Extractor(settings,btag_zero_normalisation,"Zero_btags",Triggers = "True",AlphaT="True",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption = "MCNormalisation")
     #Number_Extractor(settings,btag_zero_normalisation,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="all",RunOption = "MCNormalisation")
     #Number_Extractor(settings,btag_more_than_zero_normalisation,"More_Than_Zero_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="3",RunOption = "MCNormalisation")
     #Number_Extractor(settings,btag_more_than_one_normalisation,"More_Than_One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption = "MCNormalisation")
@@ -696,9 +697,11 @@ if __name__=="__main__":
   if args.d:
     print" ==================  \n In DEBUG mode \n ====================  \n"
     CLOSURE_TESTS = []
-    # Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="all")
-    Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="all")
 
+    Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="1")
+    Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="2")
+    Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="3")
+    Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="all")
 
   print "\n", "*"*52
   print "\tTotal Analysis time: ", time()-baseTime
