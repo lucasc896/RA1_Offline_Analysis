@@ -21,9 +21,43 @@ This is where Trigger corrections are applied to MC.
 def MC_Scaler(htbin,jetmult,mc_yield,sample = '',error = '',Analysis = '',btagbin = ''):
 
     if Analysis == "8TeV":
-        AlphaT_Scale = {"200_2":float(0.816),"275_2":float(0.901),"200_3":float(0.665),"275_3":float(0.666),"325_2":float(0.988),"325_3":float(0.971),"375_2":float(0.994),"375_3":float(0.988),"475_2":float(0.99),"575_2":1.,"675_2":1.,"775_2":1.,"875_2":1.,"975_2":1.,"1075_2":1.,"475_3":float(0.99),"575_3":1.,"675_3":1.,"775_3":1.,"875_3":1.,"975_3":1.,"1075_3":1.}
-        AlphaT_Error = {"200_2":float(0.004),"200_3":float(0.033),"275_2":float(0.004),"275_3":float(0.013),"325_2":float(0.002),"325_3":float(0.008),"375_2":float(0.002),"375_3":float(0.006),"475_2":float(0.002),"575_2":float(0.002),"675_2":float(0.002),"775_2":float(0.002),"875_2":float(0.002),"975_2":float(0.002),"1075_2":float(0.002),"475_3":float(0.005),"575_3":float(0.005),"675_3":float(0.005),"775_3":float(0.005),"875_3":float(0.005),"975_3":float(0.005),"1075_3":float(0.005)}
-        DiMuon_Scale = {"150":float(0.95),"200":float(0.95),"275":float(0.96),"325":float(0.96),"375":float(0.96),"475":float(0.96),"575":float(0.97),"675":float(0.97),"775":float(0.98),"875":float(0.98),"975":float(0.98),"1075":float(0.98)}
+        AlphaT_Scale = {"200_2":0.816,"200_3":0.665,
+                        "275_2":0.901,"275_3":0.666,
+                        "325_2":0.988,"325_3":0.971,
+                        "375_2":0.994,"375_3":0.988,
+                        "475_2":0.99,"475_3":0.99,
+                        "575_2":1.,"575_3":1.,
+                        "675_2":1.,"675_3":1.,
+                        "775_2":1.,"775_3":1.,
+                        "875_2":1.,"875_3":1.,
+                        "975_2":1.,"975_3":1.,
+                        "1075_2":1.,"1075_3":1.}
+                        
+        AlphaT_Error = {"200_2":0.004,"200_3":0.033,
+                        "275_2":0.004,"275_3":0.013,
+                        "325_2":0.002,"325_3":0.008,
+                        "375_2":0.002,"375_3":0.006,
+                        "475_2":0.002,"475_3":0.005,
+                        "575_2":0.002,"575_3":0.005,
+                        "675_2":0.002,"675_3":0.005,
+                        "775_2":0.002,"775_3":0.005,
+                        "875_2":0.002,"875_3":0.005,
+                        "975_2":0.002,"975_3":0.005,
+                        "1075_2":0.002,"1075_3":0.005}
+
+        DiMuon_Scale = {"150":0.95,
+                        "200":0.95,
+                        "275":0.96,
+                        "325":0.96,
+                        "375":0.96,
+                        "475":0.96,
+                        "575":0.97,
+                        "675":0.97,
+                        "775":0.98,
+                        "875":0.98,
+                        "975":0.98,
+                        "1075":0.98}
+
         muon_eff = 0.88
    
    
@@ -76,7 +110,7 @@ class Number_Extractor(object):
     self.analysis_category = Analysis_category
     self.Lumi_List = {"Had":0,"Muon":0,"DiMuon":0,"Photon":0,"OSOF":0,"OSSF":0,"SSOF":0,"SSSF":0}
     self.btag_names = {"Zero_btags":"eq0","One_btag":"eq1","Two_btags":"eq2","Three_btags":"eq3","More_Than_Zero_btag":"gr0","More_Than_One_btag":"gr1","Inclusive":"Inc","More_Than_Three_btag":"eq4"}
-    self.cat_names = {"2":"eq2_and_3","3":"greq4","all":"inclusive"}
+    self.cat_names = {"1":"eq2", "2":"eq3","3":"greq4","all":"inclusive"}
   
     self.btagbin = {"Inclusive":1,"Zero_btags":1,"One_btag":2,"Two_btags":3,"Three_btags":4,"More_Than_Three_btag":5}
 
@@ -159,7 +193,10 @@ class Number_Extractor(object):
       analysis_type = "%s" %("Feasibility" if self.Feasibility == "True" else "RA1")
 
       if self.Make_Closure_Tests != "True" and self.Make_Root_Stats_File != "True": 
-          self.table = open('./%s/%s_%s_Predictions_btags_%s_category_%s.tex' % ("TexFiles" if self.RunOption != "MCNormalisation" else "NormalisationTables" ,analysis_type,self.Form_Vanilla,self.btag_names[self.number],self.cat_names[self.analysis_category])  ,'w')
+          alphat_string = ""
+          if self.Keep_AlphaT == "True" : alphat_string = "_alphaTapplied"
+
+          self.table = open('./%s/%s_%s_Predictions_btags_%s_category_%s%s.tex' % ("TexFiles" if self.RunOption != "MCNormalisation" else "NormalisationTables" ,analysis_type,self.Form_Vanilla,self.btag_names[self.number],self.cat_names[self.analysis_category],alphat_string)  ,'w')
           self.Make_Preamble()
 
       for slices in settings['AlphaTSlices']:
@@ -225,80 +262,52 @@ class Number_Extractor(object):
              
               err_stat = 0.0
               err_fit = 0.0
-             
+
+              #Root_Files_28Nov_Full2013_Parked_noISRRW_fixedCode_v2
+              sf_dict = {
+                    "WJets": 0.9,
+                    "Photon": 0.88,
+                    "DY": 0.96,
+                    "Zinv": 0.96,
+                    "Top": 1.23,
+              }
+
+              #Root_Files_30Nov_Full2013_Parked_ISRRW_fixedCode
+              # sf_dict = {
+              #       "WJets": 0.91,
+              #       "Photon": 1.07,
+              #       "DY": 0.98,
+              #       "Zinv": 0.98,
+              #       "Top": 1.23,
+              # }
+
+              sf_dict = {
+                    "WJets": 0.92,
+                    "Photon": 0.96,
+                    "DY": 0.96,
+                    "Zinv": 0.96,
+                    "Top": 1.23,
+              }
+
               try: err_stat = pow(float(dict[entry]["Error"])/dict[entry]["Yield"] ,2)
               except ZeroDivisionError : pass
  
+              scale_factor = 1.
+
               if dict[entry]["SampleType"] in ["Photon"]:
-
-                """
-                corr_factor = correction_factors[dict[entry]["HT"]]["DY"]["Correction"] # 1.31
-                corr_err = correction_factors[dict[entry]["HT"]]["DY"]["Error"] # 1.31
-
-                dict[entry]["Error"] = (dict[entry]["Yield"]*corr_factor*1.31)  * math.sqrt( err_stat  + pow(corr_err/corr_factor, 2))   
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*corr_factor*1.31)
-                """
-
-                #dict[entry]["Error"] = float(dict[entry]["Error"])*0.91 # New
-                #dict[entry]["Yield"] = (float(dict[entry]["Yield"])*0.91) #New
-        
-                dict[entry]["Error"] = float(dict[entry]["Error"])*1.13 # New Procedure
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*1.13) #New Procedure
-
-
-              if dict[entry]["SampleType"] in ["Zinv","DY"]:
-                
-                """
-                corr_factor = correction_factors[dict[entry]["HT"]]["DY"]["Correction"] # 1.09 in HT 150-200 
-                corr_err = correction_factors[dict[entry]["HT"]]["DY"]["Error"] # 1.09 in HT 150-200
-
-                dict[entry]["Error"] = (dict[entry]["Yield"]*corr_factor*1.09)  * math.sqrt( err_stat  + pow(corr_err/corr_factor, 2))   
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*corr_factor*1.09)
-                """
-               
-                dict[entry]["Error"] = float(dict[entry]["Error"])*0.94 #New Procedure
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*0.94) #New Procedure
-
-              #if dict[entry]["SampleType"] in ["Zinv"]:
-                
-              #  dict[entry]["Error"] = float(dict[entry]["Error"])*1.225 #New Procedure
-              #  dict[entry]["Yield"] = (float(dict[entry]["Yield"])*1.225) #New Procedure
-
-
-
+                scale_factor = sf_dict["Photon"]
+              if dict[entry]["SampleType"] in ["DY"]:
+                scale_factor = sf_dict["DY"]
+              if dict[entry]["SampleType"] in ["Zinv"]:
+                scale_factor = sf_dict["Zinv"]
               if dict[entry]["SampleType"] in ["WJets"]:
-            
-                """ 
-                corr_factor = correction_factors[dict[entry]["HT"]]["WJets"]["Correction"] # 1.04, 1.01 for Full HT Range 
-                corr_err = correction_factors[dict[entry]["HT"]]["WJets"]["Error"] # 1.04, 1.01 for Full HT Range
-
-                dict[entry]["Error"] = (dict[entry]["Yield"]*corr_factor*1.04)  * math.sqrt( err_stat  + pow(corr_err/corr_factor, 2))   
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*corr_factor*1.04)
-                """
-
-                #dict[entry]["Error"] = float(dict[entry]["Error"])*0.92
-                #dict[entry]["Yield"] = (float(dict[entry]["Yield"])*0.92)
-
-                dict[entry]["Error"] = float(dict[entry]["Error"])*0.88 #New Procedure
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*0.88) #New Procedure
-                
-
-
+                scale_factor = sf_dict["WJets"]
               if dict[entry]["SampleType"] in ["TTbar","SingleTop"]:
+                scale_factor = sf_dict["Top"]
 
-                """
-                corr_factor = correction_factors[dict[entry]["HT"]]["TTbar"]["Correction"] # 1.15 , 1.10 for Full HT Range
-                corr_err = correction_factors[dict[entry]["HT"]]["TTbar"]["Error"] # 1.15
-
-                dict[entry]["Error"] = (dict[entry]["Yield"]*corr_factor*1.15)  * math.sqrt( err_stat  + pow(corr_err/corr_factor, 2))   
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*corr_factor*1.15)
-                """
-
-                #dict[entry]["Error"] = float(dict[entry]["Error"])*1.32 #New
-                #dict[entry]["Yield"] = (float(dict[entry]["Yield"])*1.32) #New
-
-                dict[entry]["Error"] = float(dict[entry]["Error"])*1.21 #New Procedure
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*1.21) #New Procedure
+              # apply weight factor
+              dict[entry]["Error"] = float(dict[entry]["Error"]) * scale_factor
+              dict[entry]["Yield"] = float(dict[entry]["Yield"]) * scale_factor
 
 
             Error = float(dict[entry]["Error"]) 
