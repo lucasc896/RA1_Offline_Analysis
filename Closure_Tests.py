@@ -111,12 +111,11 @@ class Jad_Compute(object):
 
       test_dicts = [test_4,test_2,test_24,test_22,test_3,test_5,test_6,test_12,test_80,test_20,test_21]
 
-
     """
     We loop through all the dictionaries passed to closure tests from Numbercruncher here and if they fit the category we want to produce a closure test for we pass onto Fill_Dictionary. 
 
-   AlphaT = 0.01 means no alphaT cut
-   Jetcat 2 = 2,3 Jets - 3 = >= 4 Jets
+    AlphaT = 0.01 means no alphaT cut
+    Jetcat 2 = 2,3 Jets - 3 = >= 4 Jets
 
     """
     for self.file in dict_list:
@@ -261,14 +260,11 @@ class Jad_Compute(object):
             self.Fill_Dictionary(test_69,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
 
     for test in test_dicts:
-       if self.JetCat == "True":
-        # print test
+      if self.JetCat == "True":
         self.Make_Plots(test['MCS'],test['MCSE'],test['MCC'],test['MCCE'],test['DC'],test['DS'],test['option'],test['box'],test['plot_title'],test['scale'],test['file_name'],reduce = test['reduce'],spread = test['spread'])
-        
-       elif self.Classic == "True":
+      elif self.Classic == "True":
         self.Make_Plots(test['MCS'],test['MCSE'],test['MCC'],test['MCCE'],test['DC'],test['DS'],test['option'],test['box'],test['plot_title'],test['scale'],test['file_name'],reduce = test['reduce'],spread = test['spread'])
-       else:
-        # print test
+      else:
         self.Make_Plots(test['MCS'],test['MCSE'],test['MCC'],test['MCCE'],test['DC'],test['DS'],test['option'],test['box'],test['plot_title'],test['scale'],test['file_name'],reduce = test['reduce'],spread = test['spread'])
 
 
@@ -277,29 +273,32 @@ class Jad_Compute(object):
   """
 
   def Fill_Dictionary(self,closure_dictionary,Control = '',Signal = '',Not_Do = '',Subtract = '',AlphaT = '',Btag = '',SampleName = ''):
-         
-          subtract_mc = 0
-          subtract_error = 0
-          subtract_data = 0
-          
-          if Subtract == True:
-                for subfile in self.dict_list:
-                   if subfile[self.entry]['AlphaT'] == AlphaT and subfile[self.entry]['Btag'] == Btag and subfile[self.entry]['SampleName'] == SampleName:
+    subtract_mc = 0
+    subtract_error = 0
+    subtract_data = 0
+    
+    if Subtract == True:
+      for subfile in self.dict_list:
+        if subfile[self.entry]['AlphaT'] == AlphaT and subfile[self.entry]['Btag'] == Btag and subfile[self.entry]['SampleName'] == SampleName:
 
-                     subtract_mc = subfile[self.entry]['MCYield']
-                     subtract_error = subfile[self.entry]['SM_Stat_Error']
-                     subtract_data = subfile[self.entry]['Data']
-          
-          if self.file[self.entry]['SampleName'] == Control and Not_Do != 'Control':
-            closure_dictionary['MCC'].append(self.file[self.entry]['MCYield']-subtract_mc)
-            closure_dictionary['MCCE'].append(self.file[self.entry]['SM_Stat_Error']-subtract_error)
-            closure_dictionary['DC'].append(self.file[self.entry]['Data']-subtract_data)
-          elif self.file[self.entry]['SampleName'] == Signal and Not_Do != 'Signal':
-            closure_dictionary['MCS'].append(self.file[self.entry]['MCYield']-subtract_mc)
-            closure_dictionary['MCSE'].append(self.file[self.entry]['SM_Stat_Error']-subtract_error)
-            closure_dictionary['DS'].append(self.file[self.entry]['Data']-subtract_data)
+          subtract_mc = subfile[self.entry]['MCYield']
+          subtract_error = subfile[self.entry]['SM_Stat_Error']
+          subtract_data = subfile[self.entry]['Data']
+    
+    if self.file[self.entry]['SampleName'] == Control and Not_Do != 'Control':
+      print "Control"
+      closure_dictionary['MCC'].append(self.file[self.entry]['MCYield']-subtract_mc)
+      closure_dictionary['MCCE'].append(self.file[self.entry]['SM_Stat_Error']-subtract_error)
+      closure_dictionary['DC'].append(self.file[self.entry]['Data']-subtract_data)
+    elif self.file[self.entry]['SampleName'] == Signal and Not_Do != 'Signal':
+      print "Signal"
+      closure_dictionary['MCS'].append(self.file[self.entry]['MCYield']-subtract_mc)
+      closure_dictionary['MCSE'].append(self.file[self.entry]['SM_Stat_Error']-subtract_error)
+      closure_dictionary['DS'].append(self.file[self.entry]['Data']-subtract_data)
 
-          return closure_dictionary
+    # print closure_dictionary
+
+    return closure_dictionary
  
   
   """
@@ -325,7 +324,7 @@ class Jad_Compute(object):
         
         j = 0
         offset = (self.axis[i+1]-self.axis[i])/2.0
-        
+
         #Prediction
         try: prediction = ((MCS[i] / MCC[i]) * DC[i])
         except ZeroDivisionError: prediction = 0.0
