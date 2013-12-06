@@ -35,13 +35,13 @@ settings = {
         "Lumo":18.493, # Luminosity in fb
         "Multi_Lumi":{'Had':18.493,'Muon':19.131,'DiMuon':19.131,'Photon':19.120},  # Different Luminosity per sample, used when SplitLumi = True
         "Analysis":"8TeV", # Differentiate between 7 and 8 TeV analysis i.e. uses alphaT cut in lowest two bins if 7TeV is selected
-        "MHTMET":"True"
+        "MHTMET":"False"
     }
 
 '''
 Set some variables for file access
 '''
-rootDirectory = "../../rootfiles/test_space"
+rootDirectory = "../../rootfiles/new_jetmulti_test"
 rootDirectoryNorm = rootDirectory
 
 def ensure_dir(dir):
@@ -51,7 +51,7 @@ def ensure_dir(dir):
 def Directory_Maker():
      
     print "\n Making RA1 Directories"
-    folder_options = {'NormalisationTables':args.m,'ClosureTests':args.c,'TexFiles':args.n,'TexFilesuncorrected':args.u,'RootFiles':args.r,'Templates':args.t  }
+    folder_options = {'NormalisationTables':args.m,'ClosureTests':args.c,'TexFiles':args.n,'TexFilesuncorrected':args.u,'RootFiles':args.r,'Templates':args.t,'NormalisationTables':args.d  }
     folders = []
 
     for key,fi in folder_options.iteritems():
@@ -691,11 +691,20 @@ if __name__=="__main__":
 
   if args.d:
     print" ==================  \n In DEBUG mode \n ====================  \n"
-    CLOSURE_TESTS = []
-    Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="1")
-    Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="2")
-    Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="3")
-    Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="all")
+    settings["AlphaTSlices"] = ["0.55_20","0.01_10"]
+    # CLOSURE_TESTS = []
+    # jetmulti = "1"
+    # Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category=jetmulti)
+    # Number_Extractor(settings,btag_one_samples,"One_btag",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category=jetmulti) 
+    # Number_Extractor(settings,btag_zero_samples,"Zero_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category=jetmulti)
+    # Number_Extractor(settings,btag_more_than_zero_samples,"More_Than_Zero_btag",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category=jetmulti)
+    # Number_Extractor(settings,btag_more_than_one_samples,"More_Than_One_btag",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category=jetmulti) 
+    # Number_Extractor(settings,inclusive_samples,"Inclusive",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category=jetmulti) 
+    # Jad_Compute(settings,CLOSURE_TESTS,Lumo = settings["Lumo"],classic="False",jetcat = "False",jet_mult = "_"+jetmulti)
+    Number_Extractor(settings,btag_two_normalisation,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="1",RunOption ="MCNormalisation")
+    Number_Extractor(settings,btag_two_normalisation,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption ="MCNormalisation")
+    Number_Extractor(settings,btag_two_normalisation,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="3",RunOption ="MCNormalisation")
+    Number_Extractor(settings,btag_two_normalisation,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="all",RunOption ="MCNormalisation")
 
   print "\n", "*"*52
   print "\tTotal Analysis time: ", time()-baseTime
