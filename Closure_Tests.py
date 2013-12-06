@@ -286,12 +286,10 @@ class Jad_Compute(object):
           subtract_data = subfile[self.entry]['Data']
     
     if self.file[self.entry]['SampleName'] == Control and Not_Do != 'Control':
-      print "Control"
       closure_dictionary['MCC'].append(self.file[self.entry]['MCYield']-subtract_mc)
       closure_dictionary['MCCE'].append(self.file[self.entry]['SM_Stat_Error']-subtract_error)
       closure_dictionary['DC'].append(self.file[self.entry]['Data']-subtract_data)
     elif self.file[self.entry]['SampleName'] == Signal and Not_Do != 'Signal':
-      print "Signal"
       closure_dictionary['MCS'].append(self.file[self.entry]['MCYield']-subtract_mc)
       closure_dictionary['MCSE'].append(self.file[self.entry]['SM_Stat_Error']-subtract_error)
       closure_dictionary['DS'].append(self.file[self.entry]['Data']-subtract_data)
