@@ -24,6 +24,9 @@ if len(sys.argv) < 2:
 	print ">>  e.g. ./make_latex_files.py <directory>"
 	sys.exit()
 
+# copy in tex headers
+cmds.getstatusoutput("cp *.tex %s" % sys.argv[1])
+
 change_op = Chdir(sys.argv[1])
 
 tex_files = glob.glob("RA1*.tex")
