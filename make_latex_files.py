@@ -44,7 +44,7 @@ for n, file_name in enumerate(tex_files):
 	if status[0] != 0:
 		print "Balls up on file: %s" % file_name
 		print status
-
+print_progress(100.)
 
 dvi_files = glob.glob("RA1*.dvi")
 
@@ -61,6 +61,7 @@ for n, file_name in enumerate(dvi_files):
 	if status[0] != 0:
 		print "Balls up on file: %s" % file_name
 		print status
+print_progress(100.)
 
 print "\n\n>>> Removing all files ['gz', 'aux', 'dvi', 'log']\n"
 status = cmds.getstatusoutput("rm *gz *aux *dvi *log")
