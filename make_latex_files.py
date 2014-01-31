@@ -63,5 +63,5 @@ for n, file_name in enumerate(dvi_files):
 		print status
 print_progress(100.)
 
-print "\n\n>>> Removing all files ['gz', 'aux', 'dvi', 'log']\n"
+print "\n\n>>> Cleaning up all files ['gz', 'aux', 'dvi', 'log']\n"
 status = cmds.getstatusoutput("rm *gz *aux *dvi *log")
