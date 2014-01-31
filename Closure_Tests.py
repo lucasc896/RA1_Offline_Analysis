@@ -183,6 +183,9 @@ class Jad_Compute(object):
 
         else:
 
+          # every instance of aT=0.01 is where a zero alphaT cut is asked for
+          # if we ran with an aT cut in muon sample, these would need to be changed (global switch)
+
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive':
             self.Fill_Dictionary(test_2,Control = "Muon", Signal = "DiMuon") 
 
@@ -191,6 +194,7 @@ class Jad_Compute(object):
           if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'Inclusive' :
             self.Fill_Dictionary(test_3,Control = "Muon", Signal = "Muon",Not_Do = 'Control')         
 
+            # turn off these with global alphaT
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' :
             self.Fill_Dictionary(test_4,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Signal',Subtract = True,AlphaT="0.55",Btag="Inclusive",SampleName = "DiMuon") 
           if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'Inclusive' :
