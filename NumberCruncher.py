@@ -13,7 +13,6 @@ from Closure_Tests import *
 from Btag_calculation_v3 import *
 from Calculation_Template_v4 import *
 
-
 """
 This is where Trigger corrections are applied to MC. 
 """
@@ -94,12 +93,14 @@ class Number_Extractor(object):
         print "Single Luminosity of All Samples is %s fb\n\n" %self.Settings["Lumo"]
         for entry in self.Lumi_List: self.Lumi_List[entry] = self.Settings["Lumo"]
     print self.Lumi_List
-    if Template: 
+    if Template:
       # For Template method not used in RA1 analysis
       Template_Calc(sample_settings,sample_list,Template,float(self.Settings["Lumo"]),self.Systematic,Working_Point)
       return
     if Calculation: 
       # When formula method is used (Standard RA1), samples are passed onto Btag_Calc class in btag_calculation.
+      # This fills up self.return_dict, which contains all the btag effs
+      # note, this is a call to the "Make_Dict" function of BtagCalc!
       self.return_dict = Btag_Calc(sample_settings,sample_list,Calculation,number,AlphaT,self.Lumi_List,self.Analysis,self.analysis_category).Make_Dict(sample_settings,sample_list,number) 
       self.Form_Vanilla = "Formula"
     else:
@@ -109,13 +110,15 @@ class Number_Extractor(object):
     self.Prediction_Maker(sample_settings,self.return_dict)
 
   def Create_Dictionary(self,settings,samples):
-        
+
          """
          This is where dictionary is created for Uncorrected yields. 
          We loop through all samples and all HT bins and pull out the integral of the number of btags histogram to determine the yields and error.
          Same process is done in Btag_Calc but the yields are calculated through a formula rather than just pull the number from a histogram
          """
          print "In uncorrected yields"
+         # print "number:", self.number
+         # print self.btagbin[self.number]
          table_entries = "{" 
          for key,fi in sorted(samples.iteritems()):
            i = 0
@@ -123,21 +126,26 @@ class Number_Extractor(object):
               fixed_dir = dir
               for alphat in settings['AlphaTSlices']:
                 dir = fixed_dir
-                lower = alphat.split('_')[0]
-                higher = alphat.split('_')[1]
+                lower = float(alphat.split('_')[0])
+                higher = float(alphat.split('_')[1])
                 table_entries += "\t\"%s_%d\"  : "%(key,i)
                 i+=1
                 table_entries += "{\"HT\":\"%s\","%(dir.split('_')[0])
                 for histName in settings['plots']:
-                    histName = str(histName+self.analysis_category) 
+                    histName = str(histName+self.analysis_category)
+                    # print histName
                     checkht = dir
                     dir = fi[1]+dir
                     Luminosity = self.Lumi_List[fi[3]]
                     normal =  GetSumHist(File = ["%s.root"%fi[0]], Directories = [dir], Hist = histName, Col = r.kBlack, Norm = None if "n" == key[0] else [float(Luminosity*1000)/100.], LegendText = "nBtag")  
                     normal.HideOverFlow()
                     err = r.Double(0.0)
-                    normal.hObj.IntegralAndError(self.btagbin[self.number],normal.hObj.GetNbinsX(),err)
-                    table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.GetBinContent(self.btagbin[self.number]) if self.number not in ["More_Than_Three_btag","Inclusive"] else normal.hObj.Integral(self.btagbin[self.number],normal.hObj.GetNbinsX())),(normal.hObj.GetBinError(self.btagbin[self.number]) if self.number not in ["More_Than_Three_btag","Inclusive"]  else err),fi[2],fi[3],lower)
+                    # normal.hObj.IntegralAndError(self.btagbin[self.number],normal.hObj.GetNbinsX(),err)
+                    lo_bin = normal.hObj.FindBin(lower)
+                    # print lower, lo_bin
+                    # val = normal.hObj.IntegralAndError(lo_bin,normal.hObj.GetNbinsX(),err)
+                    # table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.GetBinContent(self.btagbin[self.number]) if self.number not in ["More_Than_Three_btag","Inclusive"] else normal.hObj.Integral(self.btagbin[self.number],normal.hObj.GetNbinsX())),(normal.hObj.GetBinError(self.btagbin[self.number]) if self.number not in ["More_Than_Three_btag","Inclusive"]  else err),fi[2],fi[3],lower)
+                    table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(lo_bin,normal.hObj.GetNbinsX()) if str(checkht[0:3]) in ["275","325"] else (normal.hObj.Integral())),err,fi[2],fi[3],lower)
                     normal.a.Close()
          
          table_entries +="}"
@@ -145,22 +153,29 @@ class Number_Extractor(object):
          self.return_dict = ast.literal_eval(table_entries)
          return self.return_dict
 
+
+
+
   def Prediction_Maker(self,settings,dict):
 
       """
       This is where the the initial dictionary we created above is sorted into individual processes and selections to make it easier to put into tables and sort for closure tests. 
       """
  
-      if self.CombineBins == "True": self.bins = tuple(settings["bins"]+["200_upwards"])
-      else : self.bins = tuple(settings["bins"]) 
+      if self.CombineBins == "True":
+        self.bins = tuple(settings["bins"]+["200_upwards"])
+      else:
+        self.bins = tuple(settings["bins"])
+
       entries = ('Data','MCYield','Tot_Error','SM_Stat_Error','TTbar','WJets','Zinv','DY','DiBoson','SingleTop','Photon','Btag','SampleName','JetCategory','AlphaT','SITV')
-      yields = ('Yield','Error')      
+      yields = ('Yield','Error')
+
       self.process = ["TTbar","WJets","Zinv","DY","DiBoson","SingleTop","Photon"]      
       analysis_type = "%s" %("Feasibility" if self.Feasibility == "True" else "RA1")
 
       if self.Make_Closure_Tests != "True" and self.Make_Root_Stats_File != "True": 
-          self.table = open('./%s/%s_%s_Predictions_btags_%s_category_%s.tex' % ("TexFiles" if self.RunOption != "MCNormalisation" else "NormalisationTables" ,analysis_type,self.Form_Vanilla,self.btag_names[self.number],self.cat_names[self.analysis_category])  ,'w')
-          self.Make_Preamble()
+        self.table = open('./%s/%s_%s_Predictions_btags_%s_category_%s.tex' % ("TexFiles" if self.RunOption != "MCNormalisation" else "NormalisationTables" ,analysis_type,self.Form_Vanilla,self.btag_names[self.number],self.cat_names[self.analysis_category])  ,'w')
+        self.Make_Preamble()
 
       for slices in settings['AlphaTSlices']:
        
@@ -205,9 +220,9 @@ class Number_Extractor(object):
                 dicto[key][SM]['Process_Error'] = []
 
         # Take mean point of each HT bin for MHT_MET sideband correction
-        meanbin_dict = {"150":178.2,"200":235.2,"275":297.5,"325":347.5,"375":416.4,"475":517.3,"575":618.4,"675":716.9,"775":819.9,"875":919.,"975":1019.,"1075":1289.}
+        # meanbin_dict = {"150":178.2,"200":235.2,"275":297.5,"325":347.5,"375":416.4,"475":517.3,"575":618.4,"675":716.9,"775":819.9,"875":919.,"975":1019.,"1075":1289.}
 
-        correction_factors = {'775': {'WJets': {'Correction': 0.64340559024949506, 'Error': 0.025173711670053014}, 'TTbar': {'Correction': 0.69374291672306865, 'Error': 0.061739168909783371}, 'DY': {'Correction': 0.66593575915723469, 'Error': 0.076039960431377771}}, '150': {'WJets': {'Correction': 0.90380868649372859, 'Error': 0.010229557535701412}, 'TTbar': {'Correction': 1.0680665793720683, 'Error': 0.033513977482678474}, 'DY': {'Correction': 0.90525005563513883, 'Error': 0.029135953140267436}}, '975': {'WJets': {'Correction': 0.56261042668049566, 'Error': 0.034663112814916713}, 'TTbar': {'Correction': 0.57760166499575716, 'Error': 0.088117650729789235}, 'DY': {'Correction': 0.59168380897997008, 'Error': 0.10490484043777346}}, '875': {'WJets': {'Correction': 0.60319061933192675, 'Error': 0.029873803940809993}, 'TTbar': {'Correction': 0.63593478992157915, 'Error': 0.07479745299254123}, 'DY': {'Correction': 0.62897760615589404, 'Error': 0.090350238066029293}}, '200': {'WJets': {'Correction': 0.88067797668241277, 'Error': 0.0084424927326850474}, 'TTbar': {'Correction': 1.0348166981643498, 'Error': 0.027222811671515277}, 'DY': {'Correction': 0.88399259124486207, 'Error': 0.02349473008298689}}, '675': {'WJets': {'Correction': 0.68520318868046903, 'Error': 0.02037154389218699}, 'TTbar': {'Correction': 0.75382603539666526, 'Error': 0.048440120147728173}, 'DY': {'Correction': 0.70434837024843633, 'Error': 0.061371127488360877}}, '475': {'WJets': {'Correction': 0.76620125321272559, 'Error': 0.01169608637548657}, 'TTbar': {'Correction': 0.87025895274860599, 'Error': 0.025143611356439763}, 'DY': {'Correction': 0.77878678941158064, 'Error': 0.034533050042142639}}, '575': {'WJets': {'Correction': 0.72517467844212868, 'Error': 0.015927912986835845}, 'TTbar': {'Correction': 0.81128416344859999, 'Error': 0.036262350826656561}, 'DY': {'Correction': 0.7410827604667215, 'Error': 0.047713629793532934}}, '1075': {'WJets': {'Correction': 0.45304390652163162, 'Error': 0.04771746510506801}, 'TTbar': {'Correction': 0.42010222769603778, 'Error': 0.12443907413254611}, 'DY': {'Correction': 0.49099055660497531, 'Error': 0.14450431041652143}}, '275': {'WJets': {'Correction': 0.85539651666057126, 'Error': 0.0072613111742462081}, 'TTbar': {'Correction': 0.99847516133556269, 'Error': 0.021492256158750427}, 'DY': {'Correction': 0.86075855560426151, 'Error': 0.019784516261131695}}, '325': {'WJets': {'Correction': 0.83510642033485571, 'Error': 0.0071679324751279362}, 'TTbar': {'Correction': 0.96930859887265175, 'Error': 0.018506199594173101}, 'DY': {'Correction': 0.84211165701629953, 'Error': 0.019657109235429113}}, '375': {'WJets': {'Correction': 0.80714666759801967, 'Error': 0.0083232502183881781}, 'TTbar': {'Correction': 0.92911707579876035, 'Error': 0.018180212731800389}, 'DY': {'Correction': 0.81641623076208791, 'Error': 0.023667891499540902}}}
+        # correction_factors = {'775': {'WJets': {'Correction': 0.64340559024949506, 'Error': 0.025173711670053014}, 'TTbar': {'Correction': 0.69374291672306865, 'Error': 0.061739168909783371}, 'DY': {'Correction': 0.66593575915723469, 'Error': 0.076039960431377771}}, '150': {'WJets': {'Correction': 0.90380868649372859, 'Error': 0.010229557535701412}, 'TTbar': {'Correction': 1.0680665793720683, 'Error': 0.033513977482678474}, 'DY': {'Correction': 0.90525005563513883, 'Error': 0.029135953140267436}}, '975': {'WJets': {'Correction': 0.56261042668049566, 'Error': 0.034663112814916713}, 'TTbar': {'Correction': 0.57760166499575716, 'Error': 0.088117650729789235}, 'DY': {'Correction': 0.59168380897997008, 'Error': 0.10490484043777346}}, '875': {'WJets': {'Correction': 0.60319061933192675, 'Error': 0.029873803940809993}, 'TTbar': {'Correction': 0.63593478992157915, 'Error': 0.07479745299254123}, 'DY': {'Correction': 0.62897760615589404, 'Error': 0.090350238066029293}}, '200': {'WJets': {'Correction': 0.88067797668241277, 'Error': 0.0084424927326850474}, 'TTbar': {'Correction': 1.0348166981643498, 'Error': 0.027222811671515277}, 'DY': {'Correction': 0.88399259124486207, 'Error': 0.02349473008298689}}, '675': {'WJets': {'Correction': 0.68520318868046903, 'Error': 0.02037154389218699}, 'TTbar': {'Correction': 0.75382603539666526, 'Error': 0.048440120147728173}, 'DY': {'Correction': 0.70434837024843633, 'Error': 0.061371127488360877}}, '475': {'WJets': {'Correction': 0.76620125321272559, 'Error': 0.01169608637548657}, 'TTbar': {'Correction': 0.87025895274860599, 'Error': 0.025143611356439763}, 'DY': {'Correction': 0.77878678941158064, 'Error': 0.034533050042142639}}, '575': {'WJets': {'Correction': 0.72517467844212868, 'Error': 0.015927912986835845}, 'TTbar': {'Correction': 0.81128416344859999, 'Error': 0.036262350826656561}, 'DY': {'Correction': 0.7410827604667215, 'Error': 0.047713629793532934}}, '1075': {'WJets': {'Correction': 0.45304390652163162, 'Error': 0.04771746510506801}, 'TTbar': {'Correction': 0.42010222769603778, 'Error': 0.12443907413254611}, 'DY': {'Correction': 0.49099055660497531, 'Error': 0.14450431041652143}}, '275': {'WJets': {'Correction': 0.85539651666057126, 'Error': 0.0072613111742462081}, 'TTbar': {'Correction': 0.99847516133556269, 'Error': 0.021492256158750427}, 'DY': {'Correction': 0.86075855560426151, 'Error': 0.019784516261131695}}, '325': {'WJets': {'Correction': 0.83510642033485571, 'Error': 0.0071679324751279362}, 'TTbar': {'Correction': 0.96930859887265175, 'Error': 0.018506199594173101}, 'DY': {'Correction': 0.84211165701629953, 'Error': 0.019657109235429113}}, '375': {'WJets': {'Correction': 0.80714666759801967, 'Error': 0.0083232502183881781}, 'TTbar': {'Correction': 0.92911707579876035, 'Error': 0.018180212731800389}, 'DY': {'Correction': 0.81641623076208791, 'Error': 0.023667891499540902}}}
 
         
 
@@ -219,86 +234,36 @@ class Number_Extractor(object):
           """ 
           if str(fi['AlphaT']) == str(slices).split('_')[0] :
            
-            midht = meanbin_dict[dict[entry]["HT"]]
+            # midht = meanbin_dict[dict[entry]["HT"]]
             
             if self.MHTMETcorrection == "True": 
              
+              # I think the next 7 lines are now redundant...
               err_stat = 0.0
               err_fit = 0.0
              
               try: err_stat = pow(float(dict[entry]["Error"])/dict[entry]["Yield"] ,2)
               except ZeroDivisionError : pass
+
+              try: err_stat = pow(float(dict[entry]["Error"])/dict[entry]["Yield"] ,2)
+              except ZeroDivisionError : pass
  
+              scale_factor = 1.
+
               if dict[entry]["SampleType"] in ["Photon"]:
-
-                """
-                corr_factor = correction_factors[dict[entry]["HT"]]["DY"]["Correction"] # 1.31
-                corr_err = correction_factors[dict[entry]["HT"]]["DY"]["Error"] # 1.31
-
-                dict[entry]["Error"] = (dict[entry]["Yield"]*corr_factor*1.31)  * math.sqrt( err_stat  + pow(corr_err/corr_factor, 2))   
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*corr_factor*1.31)
-                """
-
-                #dict[entry]["Error"] = float(dict[entry]["Error"])*0.91 # New
-                #dict[entry]["Yield"] = (float(dict[entry]["Yield"])*0.91) #New
-        
-                dict[entry]["Error"] = float(dict[entry]["Error"])*1.13 # New Procedure
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*1.13) #New Procedure
-
-
-              if dict[entry]["SampleType"] in ["Zinv","DY"]:
-                
-                """
-                corr_factor = correction_factors[dict[entry]["HT"]]["DY"]["Correction"] # 1.09 in HT 150-200 
-                corr_err = correction_factors[dict[entry]["HT"]]["DY"]["Error"] # 1.09 in HT 150-200
-
-                dict[entry]["Error"] = (dict[entry]["Yield"]*corr_factor*1.09)  * math.sqrt( err_stat  + pow(corr_err/corr_factor, 2))   
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*corr_factor*1.09)
-                """
-               
-                dict[entry]["Error"] = float(dict[entry]["Error"])*0.94 #New Procedure
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*0.94) #New Procedure
-
-              #if dict[entry]["SampleType"] in ["Zinv"]:
-                
-              #  dict[entry]["Error"] = float(dict[entry]["Error"])*1.225 #New Procedure
-              #  dict[entry]["Yield"] = (float(dict[entry]["Yield"])*1.225) #New Procedure
-
-
-
+                scale_factor = settings["sb_corrs"]["Photon"]
+              if dict[entry]["SampleType"] in ["DY"]:
+                scale_factor = settings["sb_corrs"]["DY"]
+              if dict[entry]["SampleType"] in ["Zinv"]:
+                scale_factor = settings["sb_corrs"]["Zinv"]
               if dict[entry]["SampleType"] in ["WJets"]:
-            
-                """ 
-                corr_factor = correction_factors[dict[entry]["HT"]]["WJets"]["Correction"] # 1.04, 1.01 for Full HT Range 
-                corr_err = correction_factors[dict[entry]["HT"]]["WJets"]["Error"] # 1.04, 1.01 for Full HT Range
-
-                dict[entry]["Error"] = (dict[entry]["Yield"]*corr_factor*1.04)  * math.sqrt( err_stat  + pow(corr_err/corr_factor, 2))   
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*corr_factor*1.04)
-                """
-
-                #dict[entry]["Error"] = float(dict[entry]["Error"])*0.92
-                #dict[entry]["Yield"] = (float(dict[entry]["Yield"])*0.92)
-
-                dict[entry]["Error"] = float(dict[entry]["Error"])*0.88 #New Procedure
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*0.88) #New Procedure
-                
-
-
+                scale_factor = settings["sb_corrs"]["WJets"]
               if dict[entry]["SampleType"] in ["TTbar","SingleTop"]:
+                scale_factor = settings["sb_corrs"]["Top"]
 
-                """
-                corr_factor = correction_factors[dict[entry]["HT"]]["TTbar"]["Correction"] # 1.15 , 1.10 for Full HT Range
-                corr_err = correction_factors[dict[entry]["HT"]]["TTbar"]["Error"] # 1.15
-
-                dict[entry]["Error"] = (dict[entry]["Yield"]*corr_factor*1.15)  * math.sqrt( err_stat  + pow(corr_err/corr_factor, 2))   
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*corr_factor*1.15)
-                """
-
-                #dict[entry]["Error"] = float(dict[entry]["Error"])*1.32 #New
-                #dict[entry]["Yield"] = (float(dict[entry]["Yield"])*1.32) #New
-
-                dict[entry]["Error"] = float(dict[entry]["Error"])*1.21 #New Procedure
-                dict[entry]["Yield"] = (float(dict[entry]["Yield"])*1.21) #New Procedure
+              # apply weight factor
+              dict[entry]["Error"] = float(dict[entry]["Error"]) * scale_factor
+              dict[entry]["Yield"] = float(dict[entry]["Yield"]) * scale_factor
 
 
             Error = float(dict[entry]["Error"]) 
