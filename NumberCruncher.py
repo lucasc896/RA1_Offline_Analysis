@@ -142,10 +142,10 @@ class Number_Extractor(object):
                     err = r.Double(0.0)
                     # normal.hObj.IntegralAndError(self.btagbin[self.number],normal.hObj.GetNbinsX(),err)
                     lo_bin = normal.hObj.FindBin(lower)
-                    # print lower, lo_bin
-                    # val = normal.hObj.IntegralAndError(lo_bin,normal.hObj.GetNbinsX(),err)
+                    val = normal.hObj.IntegralAndError(lo_bin,normal.hObj.GetNbinsX(),err)
                     # table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.GetBinContent(self.btagbin[self.number]) if self.number not in ["More_Than_Three_btag","Inclusive"] else normal.hObj.Integral(self.btagbin[self.number],normal.hObj.GetNbinsX())),(normal.hObj.GetBinError(self.btagbin[self.number]) if self.number not in ["More_Than_Three_btag","Inclusive"]  else err),fi[2],fi[3],lower)
-                    table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(lo_bin,normal.hObj.GetNbinsX()) if str(checkht[0:3]) in ["275","325"] else (normal.hObj.Integral())),err,fi[2],fi[3],lower)
+                    # table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(lo_bin,normal.hObj.GetNbinsX()) if str(checkht[0:3]) in ["275","325"] else (normal.hObj.Integral())),err,fi[2],fi[3],lower)
+                    table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%(normal.hObj.Integral(lo_bin,normal.hObj.GetNbinsX()),err,fi[2],fi[3],lower)
                     normal.a.Close()
          
          table_entries +="}"
@@ -232,7 +232,9 @@ class Number_Extractor(object):
           """
           Apply derived MHT_MET sidebands here for each of the different samples
           """ 
-          if str(fi['AlphaT']) == str(slices).split('_')[0] :
+
+          # changed this to float comparison, so stop reliance on matching trailing zero's in strings
+          if float(fi['AlphaT']) == float(slices.split('_')[0]) :
            
             # midht = meanbin_dict[dict[entry]["HT"]]
             
