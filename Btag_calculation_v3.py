@@ -131,6 +131,7 @@ class Btag_Calc(object):
     for histName in self.settings['plots']:
       histName = str(histName+self.analysis_category)
       dir = dir_path+dir
+      # print dir, histName
       # likely no need to call GetSumHist, when only one histo is needed (and it does extra formatting) - not a big issue
       normal =  GetSumHist(File = ["%s.root"%file], Directories = [dir], Hist = histName, Col = r.kBlack, Norm = None, LegendText = "nBtag")  
       normal.HideOverFlow()
@@ -149,8 +150,9 @@ class Btag_Calc(object):
       
         table_string =" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(0.55)/0.01)+1,int(float(10)/0.01)) if category =="Had" else (normal.hObj.Integral(int(float(lower)/0.01)+1,int(float(higher)/0.01)))),err,sample_type,category,lower)
       else:
-        # not sure what this category is for...
+
         err = r.Double(0.0)
+
         if category == "Had":
           normal.hObj.IntegralAndError(int(float(lower)/0.01)+1,int(float(higher)/0.01),err)
         else:
@@ -274,7 +276,6 @@ class Btag_Calc(object):
     Luminosity = self.lumi_dict[sample]
     table_string =" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%(yield_pred*(10*Luminosity),error_pred*(Luminosity*10),category,sample,alphaT)
     
-    # return the predictions!
     return table_string
   
 
@@ -320,101 +321,91 @@ class Btag_Calc(object):
       for num,bin in enumerate(htbins):
         
         # note: fi[2] == "Photon_" never actually happens as it's been removed from btag_measurement
-        #skip to make sure never try to access a low Photon bin that doesn't exist
+        # skip to make sure never try to access a low Photon bin that doesn't exist
         if fi[2] == "Photon_" and bin in ["150_200","200_275","275_325","325_375"] : continue 
-        # REDUNDANT - pretty sure...
 
-        # loops over all directories - unnecessary!
-        # for entry in DirKeys:
-        #   # print entry
-        #   subdirect = file.FindObjectAny(entry.GetName())
-        #   # print subdirect
-        dir = fi[2]+bin
-        #   print dir, subdirect.GetName()
-        #   exit()
-        #   subdirect.GetName()
-        #   if dir == subdirect.GetName():
-        for subkey in [ "GenJetPt_nBgen_all", "GenJetPt_noB_nBgen_all", "GenJetPt_c_nBgen_all", "Btagged_GenJetPt_nBgen_SFb_Medium_all", "Btagged_GenJetPt_noB_nBgen_SFlight_Medium_all", "Btagged_GenJetPt_c_nBgen_SFlight_Medium_all"  ]:
-          #=========================================#
-          if subkey == "GenJetPt_nBgen_all":
-            err = r.Double(0.0)     
-            plot = file.Get(dir+"/"+subkey)
-            self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Btag_Efficiency"] = plot.Integral()
-            plot.IntegralAndError(1,10000,err)
-            
-            try:
-              self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Btag_Error"] = err/plot.Integral()
-            except ZeroDivisionError:
-              self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Btag_Error"] = 0
+        for entry in DirKeys:
+            subdirect = file.FindObjectAny(entry.GetName())
+            dir = fi[2]+bin
+            if dir == subdirect.GetName():
+              for subkey in [ "GenJetPt_nBgen_all", "GenJetPt_noB_nBgen_all", "GenJetPt_c_nBgen_all", "Btagged_GenJetPt_nBgen_SFb_Medium_all", "Btagged_GenJetPt_noB_nBgen_SFlight_Medium_all", "Btagged_GenJetPt_c_nBgen_SFlight_Medium_all"  ]:
+                #=========================================#
+                if subkey == "GenJetPt_nBgen_all":
+                  err = r.Double(0.0)     
+                  plot = file.Get(dir+"/"+subkey)
+                  self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Btag_Efficiency"] = plot.Integral()
+                  plot.IntegralAndError(1,10000,err)
+                  
+                  try:
+                    self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Btag_Error"] = err/plot.Integral()
+                  except ZeroDivisionError:
+                    self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Btag_Error"] = 0
 
-          if subkey == "Btagged_GenJetPt_nBgen_SFb_Medium_all":
-          #if subkey == "Btagged_GenJetPt_nBgen_Medium_all":
-            err = r.Double(0.0)
-            bplot = file.Get(dir+"/"+subkey)
-            try:
-              self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Btag_Efficiency'] = bplot.Integral()/(self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Btag_Efficiency'])
-            except ZeroDivisionError:
-              self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Btag_Efficiency'] = 0
-            bplot.IntegralAndError(1,10000,err)
-            try: 
-              self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Btag_Error"] = self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Btag_Efficiency']*sqrt(pow(self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Btag_Error"],2)+pow(err/bplot.Integral(),2))
-            except ZeroDivisionError:
-              self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Btag_Error"] = 0
+                if subkey == "Btagged_GenJetPt_nBgen_SFb_Medium_all":
+                  err = r.Double(0.0)
+                  bplot = file.Get(dir+"/"+subkey)
+                  try:
+                    self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Btag_Efficiency'] = bplot.Integral()/(self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Btag_Efficiency'])
+                  except ZeroDivisionError:
+                    self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Btag_Efficiency'] = 0
+                  bplot.IntegralAndError(1,10000,err)
+                  try: 
+                    self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Btag_Error"] = self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Btag_Efficiency']*sqrt(pow(self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Btag_Error"],2)+pow(err/bplot.Integral(),2))
+                  except ZeroDivisionError:
+                    self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Btag_Error"] = 0
 
 
-          #========================================#
-          if subkey == "GenJetPt_noB_nBgen_all":
-            mistag_plot = file.Get(dir+"/"+subkey)
-            err = r.Double(0.0)
-            self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Mistag_Efficiency'] = mistag_plot.Integral()
-            plot.IntegralAndError(1,10000,err)
-            
-            try:
-              self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Mistag_Error"] = err/mistag_plot.Integral()
-            except ZeroDivisionError:
-              self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Mistag_Error"] = 0
-          
-          if subkey == "Btagged_GenJetPt_noB_nBgen_SFlight_Medium_all":
-          #if subkey == "Btagged_GenJetPt_noB_nBgen_Medium_all":         
-            aplot = file.Get(dir+"/"+subkey)
-            err = r.Double(0.0)
-            try: self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Mistag_Efficiency'] = aplot.Integral()/(self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Mistag_Efficiency'])
-            except: self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Mistag_Efficiency'] = 0
-            aplot.IntegralAndError(1,10000,err)
-            
-            try:
-              self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Mistag_Error"] = self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Mistag_Efficiency']*sqrt(pow(self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Mistag_Error"],2)+pow(err/aplot.Integral(),2))
-            except ZeroDivisionError:
-              self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Mistag_Error"] = 0
+                #========================================#
+                if subkey == "GenJetPt_noB_nBgen_all":
+                  mistag_plot = file.Get(dir+"/"+subkey)
+                  err = r.Double(0.0)
+                  self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Mistag_Efficiency'] = mistag_plot.Integral()
+                  plot.IntegralAndError(1,10000,err)
+                  
+                  try:
+                    self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Mistag_Error"] = err/mistag_plot.Integral()
+                  except ZeroDivisionError:
+                    self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Mistag_Error"] = 0
+                
+                if subkey == "Btagged_GenJetPt_noB_nBgen_SFlight_Medium_all":
+                  aplot = file.Get(dir+"/"+subkey)
+                  err = r.Double(0.0)
+                  try: self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Mistag_Efficiency'] = aplot.Integral()/(self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Mistag_Efficiency'])
+                  except: self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Mistag_Efficiency'] = 0
+                  aplot.IntegralAndError(1,10000,err)
+                  
+                  try:
+                    self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Mistag_Error"] = self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Mistag_Efficiency']*sqrt(pow(self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Mistag_Error"],2)+pow(err/aplot.Integral(),2))
+                  except ZeroDivisionError:
+                    self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Mistag_Error"] = 0
 
 
-           #=======================================#
+                 #=======================================#
 
-          if subkey == "GenJetPt_c_nBgen_all":
-            ctag_plot = file.Get(dir+"/"+subkey)
-            err = r.Double(0.0)
-            self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Ctag_Efficiency'] =ctag_plot.Integral()
-            plot.IntegralAndError(1,10000,err)
-            try:
-              self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Ctag_Error"] = err/ctag_plot.Integral()
-            except ZeroDivisionError:
-              self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Ctag_Error"] = 0
+                if subkey == "GenJetPt_c_nBgen_all":
+                  ctag_plot = file.Get(dir+"/"+subkey)
+                  err = r.Double(0.0)
+                  self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Ctag_Efficiency'] =ctag_plot.Integral()
+                  plot.IntegralAndError(1,10000,err)
+                  try:
+                    self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Ctag_Error"] = err/ctag_plot.Integral()
+                  except ZeroDivisionError:
+                    self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Ctag_Error"] = 0
 
-          if subkey == "Btagged_GenJetPt_c_nBgen_SFlight_Medium_all":
-          #if subkey == "Btagged_GenJetPt_c_nBgen_Medium_all":
-            cplot = file.Get(dir+"/"+subkey)
-            err = r.Double(0.0)
-            try:
-              self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Ctag_Efficiency'] = cplot.Integral()/(self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Ctag_Efficiency'])
-            except ZeroDivisionError:
-              self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Ctag_Efficiency'] = 0
-            aplot.IntegralAndError(1,10000,err)
-            try:
-              self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Ctag_Error"] =  self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Ctag_Efficiency']*sqrt(pow(self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Ctag_Error"],2)+pow(err/cplot.Integral(),2))
-            except ZeroDivisionError:
-              self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Ctag_Error"] = 0
+                if subkey == "Btagged_GenJetPt_c_nBgen_SFlight_Medium_all":
+                  cplot = file.Get(dir+"/"+subkey)
+                  err = r.Double(0.0)
+                  try:
+                    self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Ctag_Efficiency'] = cplot.Integral()/(self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Ctag_Efficiency'])
+                  except ZeroDivisionError:
+                    self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Ctag_Efficiency'] = 0
+                  aplot.IntegralAndError(1,10000,err)
+                  try:
+                    self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Ctag_Error"] =  self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Ctag_Efficiency']*sqrt(pow(self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Ctag_Error"],2)+pow(err/cplot.Integral(),2))
+                  except ZeroDivisionError:
+                    self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Ctag_Error"] = 0
 
-           #=======================================#
+                 #=======================================#
   # print "$$$ SplitN:", time.time()-self.baseTime
 
 
