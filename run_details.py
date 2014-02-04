@@ -1,6 +1,6 @@
 def this_run():
 
-	selector = "28Jan_globalAlphaT"
+	selector = "18Dec_CorrFactors"
 
 	out_dict = {}
 
@@ -99,6 +99,7 @@ def this_run():
 
 	}
 
+	# a.k.a. the "19Dec" website files
 	out_dict["18Dec_CorrFactors"] = {
 		"path_name": "rootfiles/Root_Files_17Dec_Full2013_noISRRW_noSITV_fixedXS_fixedCode",
 		
@@ -159,6 +160,28 @@ def this_run():
 
 	}
 
+	out_dict["28Jan_globalAlphaT_v3"] = {
+
+		"path_name": "rootfiles/Root_Files_28Jan_Full2013_noISRRW_noSITV_fixedXS_globalAlphaT_fixedCode_v3",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrections, with alphaT in muon
+		"wj_corr": 0.91,
+		"dy_corr": 0.98,
+		"tt_corr": 1.26,
+
+		# old corrections, no alphaT in muon
+		# "wj_corr": 0.92,
+		# "dy_corr": 0.97,
+		# "tt_corr": 1.22,
+
+
+	}
+
 	out_dict["tmp"] = {
 
 		"path_name": "rootfiles/tmp",
@@ -168,14 +191,14 @@ def this_run():
 		"mu_lumi": 19.131,
 		"ph_lumi": 19.12,
 
-		"wj_corr": 1.01,
-		"dy_corr": 0.53,
-		"tt_corr": 1.30,
+		# "wj_corr": 1.01,
+		# "dy_corr": 0.53,
+		# "tt_corr": 1.30,
 
 		#testing values from 19Dec run!!
-		# "wj_corr": 0.92,
-		# "dy_corr": 0.97,
-		# "tt_corr": 1.22,
+		"wj_corr": 0.92,
+		"dy_corr": 0.97,
+		"tt_corr": 1.22,
 
 
 	}
