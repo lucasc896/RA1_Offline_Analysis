@@ -16,12 +16,12 @@ import ROOT as r
 import logging,itertools
 import os,fnmatch,sys
 import glob, errno
-from time import strftime
-import array  #, ast
+import array
 import math as m
+from time import strftime
 from plottingUtils import *
 from NumberCruncher import *
-from time import strftime, time
+from time import strftime, time, sleep
 from run_details import this_run
 
 r.gROOT.SetBatch(r.kTRUE)
@@ -32,7 +32,7 @@ settings = {
   "dirs":["200_275","275_325","325_375","375_475","475_575","575_675","675_775","775_875","875_975","975_1075","1075"],  #HT Bins
   "bins":["200","275","325","375","475","575","675","775","875","975","1075"],  #HT Bins
   "plots":["AlphaT_",],  # Histogram that Yields are taken from
-  "AlphaTSlices":["0.55_50", "0.56_50", "0.57_50", "0.58_50", "0.59_50", "0.60_50", "0._50"][:1], # AlphaT Slices, WARNING: this fucks up Formula Method!!
+  "AlphaTSlices":["0.55_50", "0.56_50", "0.57_50", "0.58_50", "0.59_50", "0.60_50"][:1], # AlphaT Slices, WARNING: this fucks up Formula Method!!
   "Lumo":this_run()["had_lumi"], # Luminosity in fb
   "Multi_Lumi":{'Had':this_run()["had_lumi"],'Muon':this_run()["mu_lumi"],'DiMuon':this_run()["mu_lumi"],'Photon':this_run()["ph_lumi"]},  # Different Luminosity per sample, used when SplitLumi = True
   "sb_corrs":{'WJets':this_run()["wj_corr"], "Photon":this_run()["dy_corr"], "Zinv":this_run()["dy_corr"], "DY":this_run()["dy_corr"], "Top":this_run()["tt_corr"]},
@@ -44,14 +44,19 @@ settings = {
 Set some variables for file access
 '''
 
+print ">> Opening directory:", this_run()["path_name"]
+sleep(3)
+
 rootDirectory = "../../" + this_run()["path_name"]
 rootDirectoryNorm = rootDirectory
 
 data_run_suf = ["", "_Run2012A", "_Run2012B", "_Run2012C", "_Run2012D", "_Run2012ABC", "_Run2012BC"][0]
 
 def ensure_dir(dir):
-        try: os.makedirs(dir)
-        except OSError as exc: pass
+        try:
+            os.makedirs(dir)
+        except OSError as exc:
+            pass
 
 def Directory_Maker():
      
@@ -67,14 +72,14 @@ def Directory_Maker():
 
     dir_stamp = "RA1_Documents_"+strftime("%d_%b")
     ensure_dir(dir_stamp)
-    base = os.getcwd()
     os.chdir(dir_stamp)
     owd = os.getcwd()
-    for path in folders:
 
+    for path in folders:
        print "Making Dir %s"%path
        ensure_dir(path)
        os.chdir(owd)
+
 '''
 Sample Dictionary Instructions
 eg "nMuon":("./May_11_root_Files/Muon_Data","btag_two_OneMuon_","Data","Muon"),
@@ -582,8 +587,7 @@ muon_template_samples = {
 
 if __name__=="__main__":
 
-
-  Directory_Maker() 
+  Directory_Maker()
 
   if args.t :
      WP = ["Loose","Medium","Tight"]
@@ -630,7 +634,6 @@ if __name__=="__main__":
   if args.u:
 
     print" ==================  \n Making Tables Uncorrected Yields \n ====================  \n"
-    # settings["plots"] = ["Number_Btags_"]
     
     for j in args.u:
       print " ========= Jet Mult %s ======== " %j
@@ -695,6 +698,7 @@ if __name__=="__main__":
     CLOSURE_TESTS = []
     # Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="all")
     Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="all")
+
 
   print "\n", "*"*52
   print "\tTotal Analysis time: ", time()-baseTime
