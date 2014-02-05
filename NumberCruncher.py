@@ -110,7 +110,7 @@ class Number_Extractor(object):
     self.analysis_category = Analysis_category
     self.Lumi_List = {"Had":0,"Muon":0,"DiMuon":0,"Photon":0,"OSOF":0,"OSSF":0,"SSOF":0,"SSSF":0}
     self.btag_names = {"Zero_btags":"eq0","One_btag":"eq1","Two_btags":"eq2","Three_btags":"eq3","More_Than_Zero_btag":"gr0","More_Than_One_btag":"gr1","Inclusive":"Inc","More_Than_Three_btag":"eq4"}
-    self.cat_names = {"1":"eq2", "2":"eq3","3":"greq4","all":"inclusive"}
+    self.cat_names = {"1":"eq2", "2":"eq3","3":"eq4","4":"greq5","all":"inclusive"} #change this to mess around with jet cats
   
     self.btagbin = {"Inclusive":1,"Zero_btags":1,"One_btag":2,"Two_btags":3,"Three_btags":4,"More_Than_Three_btag":5}
 
