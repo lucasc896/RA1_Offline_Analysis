@@ -23,6 +23,7 @@ from plottingUtils import *
 from NumberCruncher import *
 from time import strftime, time, sleep
 from run_details import this_run
+from make_latex_files import process_files
 
 r.gROOT.SetBatch(r.kTRUE)
 
@@ -44,7 +45,7 @@ settings = {
 Set some variables for file access
 '''
 
-print ">> Opening directory:", this_run()["path_name"]
+print "\n>> Opening directory:", this_run()["path_name"]
 sleep(3)
 
 rootDirectory = "../../" + this_run()["path_name"]
@@ -631,6 +632,8 @@ if __name__=="__main__":
       Number_Extractor(settings,btag_three_samples,"Three_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
       Number_Extractor(settings,btag_more_than_three_samples,"More_Than_Three_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
 
+      process_files(os.getcwd() +"/TexFiles")
+
   if args.u:
 
     print" ==================  \n Making Tables Uncorrected Yields \n ====================  \n"
@@ -643,6 +646,8 @@ if __name__=="__main__":
       Number_Extractor(settings,btag_two_uncorrected_samples,"Two_btags",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category=j)
       Number_Extractor(settings,btag_three_uncorrected_samples,"Three_btags",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category=j)
       Number_Extractor(settings,btag_more_than_three_uncorrected_samples,"More_Than_Three_btag",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category= j)
+
+      process_files(os.getcwd() +"/TexFiles")
 
   if args.r:
  
@@ -698,7 +703,6 @@ if __name__=="__main__":
     CLOSURE_TESTS = []
     # Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="all")
     Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="all")
-
 
   print "\n", "*"*52
   print "\tTotal Analysis time: ", time()-baseTime
