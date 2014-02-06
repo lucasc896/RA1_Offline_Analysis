@@ -1,6 +1,6 @@
 def this_run():
 
-	selector = "18Dec_CorrFactors"
+	selector = "28Jan_fineJetMulti"
 
 	out_dict = {}
 
@@ -181,6 +181,22 @@ def this_run():
 
 
 	}
+
+	
+	out_dict["28Jan_fineJetMulti"] = {
+
+		"path_name": "rootfiles/Root_Files_28Jan_Full2013_noISRRW_noSITV_fixedXS_fineJetMulti",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		"wj_corr": 0.92,
+		"dy_corr": 0.97,
+		"tt_corr": 1.22,
+	}
+
 
 	out_dict["tmp"] = {
 
