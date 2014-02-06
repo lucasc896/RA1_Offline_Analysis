@@ -1,3 +1,4 @@
+
 Directory contains all files necessary to run RA1 offline analysis. 
 
 Can be loosely called a framework, but in reality is a poor implementation of python classes. However it all works, but feel free to take, adapt and improve on this in future.
