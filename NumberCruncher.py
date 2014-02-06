@@ -17,7 +17,7 @@ from Calculation_Template_v4 import *
 This is where Trigger corrections are applied to MC. 
 """
 
-def MC_Scaler(htbin,jetmult,mc_yield,sample = '',error = '',Analysis = '',btagbin = ''):
+def MC_Scaler(htbin,jetmult,mc_yield,sample = '',error = '',Analysis = '',btagbin = '', alphat_slice = None):
 
     if Analysis == "8TeV":
         AlphaT_Scale = {"200_2":0.816,  "200_3":0.740,
@@ -58,11 +58,12 @@ def MC_Scaler(htbin,jetmult,mc_yield,sample = '',error = '',Analysis = '',btagbi
                         "1075":0.98}
         muon_eff = 0.88
 
-        # override some values for running with 0.6 alphaT cut
-        print ">>> WARNING: running with aT>0.6 trigger effs"
+        if float(alphat_slice.split("_")[0]) == 0.6:
+          # override some values for running with 0.6 alphaT cut
+          print ">>> WARNING: running with aT > 0.6 trigger effs"
 
-        AlphaT_Scale["275_2"] = 0.94
-        AlphaT_Scale["275_3"] = 0.74
+          AlphaT_Scale["275_2"] = 0.94
+          AlphaT_Scale["275_3"] = 0.74
    
    
     scale_factor = htbin +'_'+ jetmult
@@ -426,14 +427,14 @@ class Number_Extractor(object):
           print "Apply MC Correction For Scaling"
           for bin in self.Muon_Yield_Per_Bin:
             for sample in dictionaries:
-               
-              sample[bin]["MCYield"] = MC_Scaler(bin,self.analysis_category,sample[bin]["MCYield"],sample = sample[bin]["SampleName"],Analysis = self.Analysis,btagbin = self.number )
-              sample[bin]["SM_Stat_Error"] = MC_Scaler(bin,self.analysis_category,sample[bin]["SM_Stat_Error"],sample = sample[bin]["SampleName"],error = sample[bin]["MCYield"],Analysis = self.Analysis, btagbin = self.number )
+
+              sample[bin]["MCYield"] = MC_Scaler(bin,self.analysis_category,sample[bin]["MCYield"],sample = sample[bin]["SampleName"],Analysis = self.Analysis,btagbin = self.number, alphat_slice = slices )
+              sample[bin]["SM_Stat_Error"] = MC_Scaler(bin,self.analysis_category,sample[bin]["SM_Stat_Error"],sample = sample[bin]["SampleName"],error = sample[bin]["MCYield"],Analysis = self.Analysis, btagbin = self.number, alphat_slice = slices )
                
               for SM in self.process:
                
-                sample[bin][SM]["Yield"] = MC_Scaler(bin,self.analysis_category, sample[bin][SM]["Yield"],sample = sample[bin]["SampleName"],Analysis = self.Analysis,btagbin = self.number )
-                sample[bin][SM]["Error"] = MC_Scaler(bin,self.analysis_category,sample[bin][SM]["Error"],sample = sample[bin]["SampleName"],error = sample[bin][SM]["Yield"],Analysis = self.Analysis, btagbin = self.number )
+                sample[bin][SM]["Yield"] = MC_Scaler(bin,self.analysis_category, sample[bin][SM]["Yield"],sample = sample[bin]["SampleName"],Analysis = self.Analysis,btagbin = self.number, alphat_slice = slices )
+                sample[bin][SM]["Error"] = MC_Scaler(bin,self.analysis_category,sample[bin][SM]["Error"],sample = sample[bin]["SampleName"],error = sample[bin][SM]["Yield"],Analysis = self.Analysis, btagbin = self.number, alphat_slice = slices )
 
 
         """
