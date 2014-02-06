@@ -209,7 +209,6 @@ class Number_Extractor(object):
       analysis_type = "%s" %("Feasibility" if self.Feasibility == "True" else "RA1")
 
       if self.Make_Closure_Tests != "True" and self.Make_Root_Stats_File != "True": 
-
         self.table = open('./%s/%s_%s_Predictions_btags_%s_category_%s.tex' % ("TexFiles" if self.RunOption != "MCNormalisation" else "NormalisationTables" ,analysis_type,self.Form_Vanilla,self.btag_names[self.number],self.cat_names[self.analysis_category])  ,'w')
         self.Make_Preamble()
 

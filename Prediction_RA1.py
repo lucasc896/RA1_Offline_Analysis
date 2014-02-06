@@ -43,7 +43,6 @@ settings = {
 '''
 Set some variables for file access
 '''
-
 print "\n>> Opening directory:", this_run()["path_name"]
 sleep(3)
 
@@ -61,6 +60,7 @@ def ensure_dir(dir):
 def Directory_Maker():
      
     print "\n Making RA1 Directories"
+
     folder_options = {'NormalisationTables':args.m,'ClosureTests':args.c,'TexFiles':args.n,'TexFilesuncorrected':args.u,'RootFiles':args.r,'Templates':args.t,'TexFiles':args.d  }
     folders = []
 
@@ -698,7 +698,6 @@ if __name__=="__main__":
 
   if args.d:
     print" ==================  \n In DEBUG mode \n ====================  \n"
-
     settings["AlphaTSlices"] = ["0.55_20","0.01_10"]
     # CLOSURE_TESTS = []
     # jetmulti = "1"
