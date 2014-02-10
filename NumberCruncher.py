@@ -168,7 +168,6 @@ class Number_Extractor(object):
                 table_entries += "{\"HT\":\"%s\","%(dir.split('_')[0])
                 for histName in settings['plots']:
                     histName = str(histName+self.analysis_category)
-                    # print histName
                     checkht = dir
                     dir = fi[1]+dir
                     Luminosity = self.Lumi_List[fi[3]]
@@ -182,8 +181,8 @@ class Number_Extractor(object):
                     # table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(lo_bin,normal.hObj.GetNbinsX()) if str(checkht[0:3]) in ["275","325"] else (normal.hObj.Integral())),err,fi[2],fi[3],lower)
                     table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%(normal.hObj.Integral(lo_bin,normal.hObj.GetNbinsX()),err,fi[2],fi[3],lower)
                     normal.a.Close()
-         
          table_entries +="}"
+
          # Do a literal eval to turn this string into a dictionary
          self.return_dict = ast.literal_eval(table_entries)
          return self.return_dict
@@ -263,7 +262,7 @@ class Number_Extractor(object):
 
         # Loop through dictionary created from CreateDictionary or Btag_Calc.MakeDict() 
         for entry,fi in dict.iteritems():
-          
+
           """
           Apply derived MHT_MET sidebands here for each of the different samples
           """ 
@@ -272,38 +271,11 @@ class Number_Extractor(object):
           if float(fi['AlphaT']) == float(slices.split('_')[0]) :
            
             # midht = meanbin_dict[dict[entry]["HT"]]
-            
             if self.MHTMETcorrection == "True": 
              
               # I think the next 7 lines are now redundant...
               err_stat = 0.0
               err_fit = 0.0
-
-              #Root_Files_28Nov_Full2013_Parked_noISRRW_fixedCode_v2
-              sf_dict = {
-                    "WJets": 0.9,
-                    "Photon": 0.88,
-                    "DY": 0.96,
-                    "Zinv": 0.96,
-                    "Top": 1.23,
-              }
-
-              #Root_Files_30Nov_Full2013_Parked_ISRRW_fixedCode
-              # sf_dict = {
-              #       "WJets": 0.91,
-              #       "Photon": 1.07,
-              #       "DY": 0.98,
-              #       "Zinv": 0.98,
-              #       "Top": 1.23,
-              # }
-
-              sf_dict = {
-                    "WJets": 0.92,
-                    "Photon": 0.96,
-                    "DY": 0.96,
-                    "Zinv": 0.96,
-                    "Top": 1.23,
-              }
 
               try: err_stat = pow(float(dict[entry]["Error"])/dict[entry]["Yield"] ,2)
               except ZeroDivisionError : pass
