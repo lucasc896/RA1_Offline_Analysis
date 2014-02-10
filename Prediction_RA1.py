@@ -698,7 +698,6 @@ if __name__=="__main__":
 
   if args.d:
     print" ==================  \n In DEBUG mode \n ====================  \n"
-    settings["AlphaTSlices"] = ["0.55_20","0.01_10"]
     # CLOSURE_TESTS = []
     # jetmulti = "1"
     # Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category=jetmulti)
