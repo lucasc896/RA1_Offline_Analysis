@@ -43,20 +43,46 @@ def MC_Scaler(htbin,jetmult,mc_yield,sample = '',error = '',Analysis = '',btagbi
                         "875_2":0.002,  "875_3":0.005,
                         "975_2":0.002,  "975_3":0.005,
                         "1075_2":0.002, "1075_3":0.005,}
+        
+        Muon_Scale = {"150_2":0.891,"150_3":0.898,
+                      "200_2":0.891,"200_3":0.898,
+                      "275_2":0.893,"275_3":0.898,
+                      "325_2":0.895,"325_3":0.900,
+                      "375_2":0.897,"375_3":0.903,
+                      "475_2":0.898,"475_3":0.905,
+                      "575_2":0.900,"575_3":0.906,
+                      "675_2":0.901,"675_3":0.907,
+                      "775_2":0.902,"775_3":0.908,
+                      "875_2":0.904,"875_3":0.906,
+                      "975_2":0.903,"975_3":0.906,
+                      "1075_2":0.900,"1075_3":0.912,}
 
-        DiMuon_Scale = {"150":0.95,
-                        "200":0.95,
-                        "275":0.96,
-                        "325":0.96,
-                        "375":0.96,
-                        "475":0.96,
-                        "575":0.97,
-                        "675":0.97,
-                        "775":0.98,
-                        "875":0.98,
-                        "975":0.98,
-                        "1075":0.98}
-        muon_eff = 0.88
+        DiMuon_Scale = {"150_2":0.970,"150_3":0.972,
+                        "200_2":0.970,"200_3":0.972,
+                        "275_2":0.972,"275_3":0.973,
+                        "325_2":0.973,"325_3":0.973,
+                        "375_2":0.974,"375_3":0.972,
+                        "475_2":0.976,"475_3":0.973,
+                        "575_2":0.977,"575_3":0.974,
+                        "675_2":0.979,"675_3":0.977,
+                        "775_2":0.977,"775_3":0.973,
+                        "875_2":0.978,"875_3":0.978,
+                        "975_2":0.980,"975_3":0.978,
+                        "1075_2":0.977,"1075_3":0.979,}
+
+        # For 30/30 dimu selection
+        # DiMuon_Scale = {"150_2":0.989,"150_3":0.988,
+        #                 "200_2":0.989,"200_3":0.988,
+        #                 "275_2":0.989,"275_3":0.988,
+        #                 "325_2":0.989,"325_3":0.989,
+        #                 "375_2":0.989,"375_3":0.989,
+        #                 "475_2":0.989,"475_3":0.989,
+        #                 "575_2":0.989,"575_3":0.989,
+        #                 "675_2":0.990,"675_3":0.989,
+        #                 "775_2":0.989,"775_3":0.989,
+        #                 "875_2":0.990,"875_3":0.989,
+        #                 "975_2":0.990,"975_3":0.991,
+        #                 "1075_2":0.990,"1075_3":0.990,}
 
         if float(alphat_slice.split("_")[0]) == 0.6:
           # override some values for running with 0.6 alphaT cut
@@ -72,12 +98,12 @@ def MC_Scaler(htbin,jetmult,mc_yield,sample = '',error = '',Analysis = '',btagbi
 
     if sample == "Muon":
       if error:
-        return float((error*muon_eff)*math.sqrt(((mc_yield/error)*(mc_yield/error))+((0.01/muon_eff)*(0.01/muon_eff))))
-      else:return float(mc_yield*muon_eff) 
+        return float((error*Muon_Scale[scale_factor])*math.sqrt(((mc_yield/error)*(mc_yield/error))+((0.01/Muon_Scale[scale_factor])*(0.01/Muon_Scale[scale_factor]))))
+      else:return float(mc_yield*Muon_Scale[scale_factor]) 
  
     elif sample == "DiMuon":
-        if error: return float((error*DiMuon_Scale[htbin])*math.sqrt(((mc_yield/error)*(mc_yield/error))+((0.01/DiMuon_Scale[htbin])*(0.01/DiMuon_Scale[htbin]))))
-        else: return float(mc_yield*DiMuon_Scale[htbin])
+        if error: return float((error*DiMuon_Scale[scale_factor])*math.sqrt(((mc_yield/error)*(mc_yield/error))+((0.01/DiMuon_Scale[scale_factor])*(0.01/DiMuon_Scale[scale_factor]))))
+        else: return float(mc_yield*DiMuon_Scale[scale_factor])
 
     elif sample == "Had":
       if error: 
