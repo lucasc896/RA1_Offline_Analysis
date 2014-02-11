@@ -179,6 +179,26 @@ def this_run():
 		# "dy_corr": 0.97,
 		# "tt_corr": 1.22,
 
+	}
+
+	out_dict["10Feb_30SecondMu_v1"] = {
+
+		"path_name": "rootfiles/Root_Files_10Feb_Full2013_noISRRW_noSITV_fixedXS_30SecondMu",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.92,
+		"dy_corr": 0.99,
+		"tt_corr": 1.20,
+
+		# old corrections, no alphaT in muon
+		# "wj_corr": 0.92,
+		# "dy_corr": 0.97,
+		# "tt_corr": 1.22,
 
 	}
 
