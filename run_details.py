@@ -1,6 +1,6 @@
 def this_run():
 
-	selector = "18Dec_CorrFactors"
+	selector = "10Feb_30SecondMu_v1"
 
 	out_dict = {}
 
@@ -191,9 +191,9 @@ def this_run():
 		"ph_lumi": 19.12,
 
 		# new corrs from this set of files
-		"wj_corr": 0.92,
-		"dy_corr": 0.99,
-		"tt_corr": 1.20,
+		"wj_corr": 0.91,
+		"dy_corr": 0.95,
+		"tt_corr": 1.19,
 
 		# old corrections, no alphaT in muon
 		# "wj_corr": 0.92,
