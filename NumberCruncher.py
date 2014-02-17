@@ -208,10 +208,18 @@ class Number_Extractor(object):
                     err = r.Double(0.0)
                     # normal.hObj.IntegralAndError(self.btagbin[self.number],normal.hObj.GetNbinsX(),err)
                     lo_bin = normal.hObj.FindBin(lower)
-                    val = normal.hObj.IntegralAndError(lo_bin,normal.hObj.GetNbinsX(),err)
+                    if "Muon" in fi[3]:
+                      # get full distro for Muon selections
+                      val = normal.hObj.Integral(1,normal.hObj.GetNbinsX())
+                      # print lo_bin
+                    else:
+                      # use truncated alphaT for photon and had
+                      val = normal.hObj.Integral(lo_bin,normal.hObj.GetNbinsX())
+                    # if "Muon" not in  val = normal.hObj.Integral(lo_bin,normal.hObj.GetNbinsX())
+                    throwaway = normal.hObj.IntegralAndError(lo_bin,normal.hObj.GetNbinsX(),err)
                     # table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.GetBinContent(self.btagbin[self.number]) if self.number not in ["More_Than_Three_btag","Inclusive"] else normal.hObj.Integral(self.btagbin[self.number],normal.hObj.GetNbinsX())),(normal.hObj.GetBinError(self.btagbin[self.number]) if self.number not in ["More_Than_Three_btag","Inclusive"]  else err),fi[2],fi[3],lower)
                     # table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(lo_bin,normal.hObj.GetNbinsX()) if str(checkht[0:3]) in ["275","325"] else (normal.hObj.Integral())),err,fi[2],fi[3],lower)
-                    table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%(normal.hObj.Integral(lo_bin,normal.hObj.GetNbinsX()),err,fi[2],fi[3],lower)
+                    table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%(val,err,fi[2],fi[3],lower)
                     normal.a.Close()
          
          table_entries +="}"
