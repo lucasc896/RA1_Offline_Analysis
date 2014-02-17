@@ -1,6 +1,6 @@
 def this_run():
 
-	selector = "10Feb_30SecondMu_v1"
+	selector = "28Jan_globalAlphaT_v3"
 
 	out_dict = {}
 
@@ -118,9 +118,15 @@ def this_run():
 		"mu_lumi": 19.131,
 		"ph_lumi": 19.12,
 
-		"wj_corr": 0.92,
-		"dy_corr": 0.97,
-		"tt_corr": 1.22,
+		# pre trigger update
+		# "wj_corr": 0.92,
+		# "dy_corr": 0.97,
+		# "tt_corr": 1.22,
+
+		# post trigger update
+		"wj_corr": 0.91,
+		"dy_corr": 0.94,
+		"tt_corr": 1.21, #1.27 from Pure TTbar ratio
 
 	}
 
@@ -190,17 +196,49 @@ def this_run():
 		"mu_lumi": 19.131,
 		"ph_lumi": 19.12,
 
-		# new corrs from this set of files
+		# note: corrections for ttbar use le3j now
 		"wj_corr": 0.91,
 		"dy_corr": 0.95,
-		"tt_corr": 1.19,
-
-		# old corrections, no alphaT in muon
-		# "wj_corr": 0.92,
-		# "dy_corr": 0.97,
-		# "tt_corr": 1.22,
+		"tt_corr": 1.19, # taken from the overall data/MC ratio
+		# "tt_corr": 1.19, # taken from the pure ttbar ratio
 
 	}
+
+	out_dict["11Feb_30SecondMu_NewZMassCut"] = {
+
+		"path_name": "rootfiles/Root_Files_11Feb_Full2013_noISRRW_noSITV_fixedXS_30SecondMu_NewZMassCut",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.94,
+		"dy_corr": 0.95,
+		"tt_corr": 1.21,
+		# "tt_corr": 1.27, # taken from pure ttbar ratio
+
+	}
+
+
+	out_dict["13Feb_30SecondMu_NoZMassCutSingleMu"] = {
+
+		"path_name": "rootfiles/Root_Files_13Feb_Full2013_noISRRW_noSITV_fixedXS_30SecondMu_noZMassCutInSingleMu",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.94,
+		"dy_corr": 0.95,
+		"tt_corr": 1.21,
+		# "tt_corr": 1.27, # taken from pure ttbar ratio
+
+	}
+	
 
 	out_dict["tmp"] = {
 
@@ -215,7 +253,7 @@ def this_run():
 		# "dy_corr": 0.53,
 		# "tt_corr": 1.30,
 
-		#testing values from 19Dec run!!
+		# testing values from 19Dec run!!
 		"wj_corr": 0.92,
 		"dy_corr": 0.97,
 		"tt_corr": 1.22,
