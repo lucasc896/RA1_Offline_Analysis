@@ -553,7 +553,6 @@ Z2 - TTbar, DiBoson, SingleTop
 
 """
 
-
 calc_file = {
      "mchadz2":(rootDirectory+"/Had_Z2.root","Had_Z2",""),
      "mchadz0":(rootDirectory+"/Had_Z0.root","Had_Z0",""),
@@ -614,9 +613,8 @@ if __name__=="__main__":
     #Number_Extractor(settings,btag_more_than_one_normalisation,"More_Than_One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption = "MCNormalisation")
     #Number_Extractor(settings,btag_more_than_one_normalisation,"More_Than_One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="3",RunOption = "MCNormalisation")
     #Number_Extractor(settings,btag_more_than_one_normalisation,"More_Than_One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="all",RunOption = "MCNormalisation")
-
     Number_Extractor(settings,btag_two_normalisation,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="all",RunOption ="MCNormalisation")
-    #Number_Extractor(settings,btag_two_normalisation,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="3",RunOption ="MCNormalisation")
+    Number_Extractor(settings,btag_two_normalisation,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption ="MCNormalisation")
 
 
   if args.n : 
@@ -664,6 +662,8 @@ if __name__=="__main__":
         
     print" ==================  \n Making Closure Tests \n ====================  \n"
     settings["AlphaTSlices"] = ["0.55_20","0.01_10"]
+
+    # calc_file = None # hack to run closure tests with uncorrected vanilla yields
 
     if "jetcat" in args.c:
       print " ======= Making Jetcategory closure tests ========"
