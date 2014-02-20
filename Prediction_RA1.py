@@ -539,8 +539,8 @@ inclusive_samples = {
     "mcDiMuonsingt":(rootDirectory+"/Muon_SingleTop","DiMuon_","SingleTop","DiMuon"),
     "mcDiMuondiboson":(rootDirectory+"/Muon_DiBoson","DiMuon_","DiBoson","DiMuon"),
     "mcDiMuonDY":(rootDirectory+"/Muon_DY","DiMuon_","DY","DiMuon"),
-    "mcPhoton":(rootDirectory+"/Photon_MC","Photon_","Photon","Photon"),
-    "ncPhoton":(rootDirectory+"/Photon_Data"+data_run_suf,"Photon_","Data","Photon"),
+    # "mcPhoton":(rootDirectory+"/Photon_MC","Photon_","Photon","Photon"),
+    # "ncPhoton":(rootDirectory+"/Photon_Data"+data_run_suf,"Photon_","Data","Photon"),
 
     }
 
@@ -708,10 +708,10 @@ if __name__=="__main__":
     # Number_Extractor(settings,inclusive_samples,"Inclusive",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category=jetmulti) 
     # Jad_Compute(settings,CLOSURE_TESTS,Lumo = settings["Lumo"],classic="False",jetcat = "False",jet_mult = "_"+jetmulti)
     Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category="1")
-    # Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category="2")
-    # Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category="3")
-    # Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category="4")
-    # Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category="All")
+    Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category="2")
+    Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category="3")
+    Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category="4")
+    Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category="all")
   print "\n", "*"*52
   print "\tTotal Analysis time: ", time()-baseTime
   print "*"*52
