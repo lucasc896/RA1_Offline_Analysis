@@ -105,7 +105,6 @@ class Btag_Calc(object):
             # Without formula yields in place
             else:
               plot = file.Get("%s/Matched_vs_Matched_noB_vs_c_%s" % (sample_dir, self.analysis_category))
-
           if fi[2] != "Data":
             if "0x0" in str(plot):
               print ">>> Error in Btag_Calc::Make_Dict: 'plot' not found."
