@@ -71,18 +71,18 @@ def MC_Scaler(htbin,jetmult,mc_yield,sample = '',error = '',Analysis = '',btagbi
                         "1075_2":0.977,"1075_3":0.979,}
 
         # For 30/30 dimu selection
-        # DiMuon_Scale = {"150_2":0.989,"150_3":0.988,
-        #                 "200_2":0.989,"200_3":0.988,
-        #                 "275_2":0.989,"275_3":0.988,
-        #                 "325_2":0.989,"325_3":0.989,
-        #                 "375_2":0.989,"375_3":0.989,
-        #                 "475_2":0.989,"475_3":0.989,
-        #                 "575_2":0.989,"575_3":0.989,
-        #                 "675_2":0.990,"675_3":0.989,
-        #                 "775_2":0.989,"775_3":0.989,
-        #                 "875_2":0.990,"875_3":0.989,
-        #                 "975_2":0.990,"975_3":0.991,
-        #                 "1075_2":0.990,"1075_3":0.990,}
+        DiMuon_Scale = {"150_2":0.989,"150_3":0.988,
+                        "200_2":0.989,"200_3":0.988,
+                        "275_2":0.989,"275_3":0.988,
+                        "325_2":0.989,"325_3":0.989,
+                        "375_2":0.989,"375_3":0.989,
+                        "475_2":0.989,"475_3":0.989,
+                        "575_2":0.989,"575_3":0.989,
+                        "675_2":0.990,"675_3":0.989,
+                        "775_2":0.989,"775_3":0.989,
+                        "875_2":0.990,"875_3":0.989,
+                        "975_2":0.990,"975_3":0.991,
+                        "1075_2":0.990,"1075_3":0.990,}
 
         if float(alphat_slice.split("_")[0]) == 0.6:
           # override some values for running with 0.6 alphaT cut
@@ -274,11 +274,12 @@ class Number_Extractor(object):
         """
 
         dictionaries = [ self.Had_Yield_Per_Bin, self.Had_Muon_Yield_Per_Bin,self.Had_Zinv_Yield_Per_Bin,self.Muon_Yield_Per_Bin, self.Photon_Yield_Per_Bin, self.DiMuon_Yield_Per_Bin,self.DiLepton_Yield_Per_Bin, self.SSOF_Yield_Per_Bin,self.SSSF_Yield_Per_Bin, self.OSOF_Yield_Per_Bin, self.OSSF_Yield_Per_Bin]
+        initialise_sample = ["Had","Had","Had","Muon","Photon","DiMuon","DiLepton","SSOF","SSSF","OSOF","OSSF"]
 
         # List of Dictionaries for Jad's Closure Tests
         jad_dictionaries = [self.Muon_Yield_Per_Bin,self.DiMuon_Yield_Per_Bin,self.Photon_Yield_Per_Bin]
 
-        for dicto in dictionaries:
+        for num, dicto in enumerate(dictionaries):
           for key in self.bins:
             dicto[key] = dict.fromkeys(entries)
             dicto[key]['Data'] = 0
@@ -289,6 +290,7 @@ class Number_Extractor(object):
             dicto[key]['Btag'] = self.number
             dicto[key]['JetCategory'] = self.analysis_category
             dicto[key]['SITV'] = self.sitv
+            dicto[key]['SampleName'] = initialise_sample[num]
             for SM in self.process:
                 dicto[key][SM] = dict.fromkeys(yields,0) 
                 dicto[key][SM]['Process_Error'] = []
