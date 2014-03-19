@@ -87,11 +87,29 @@ def MC_Scaler(htbin,jetmult,mc_yield,sample = '',error = '',Analysis = '',btagbi
         if float(alphat_slice.split("_")[0]) == 0.6:
           # override some values for running with 0.6 alphaT cut
           print ">>> WARNING: running with aT > 0.6 trigger effs"
+          AlphaT_Scale["275_2"] = 0.939
+          AlphaT_Scale["275_3"] = 0.739
+        elif float(alphat_slice.split("_")[0]) == 0.59:
+          # override some values for running with 0.59 alphaT cut
+          print ">>> WARNING: running with aT > 0.59 trigger effs"
+          AlphaT_Scale["275_2"] = 0.937
+          AlphaT_Scale["275_3"] = 0.737
+        elif float(alphat_slice.split("_")[0]) == 0.58:
+          # override some values for running with 0.58 alphaT cut
+          print ">>> WARNING: running with aT > 0.58 trigger effs"
+          AlphaT_Scale["275_2"] = 0.934
+          AlphaT_Scale["275_3"] = 0.730
+        elif float(alphat_slice.split("_")[0]) == 0.57:
+          # override some values for running with 0.57 alphaT cut
+          print ">>> WARNING: running with aT > 0.57 trigger effs"
+          AlphaT_Scale["275_2"] = 0.931
+          AlphaT_Scale["275_3"] = 0.729
+        elif float(alphat_slice.split("_")[0]) == 0.56:
+          # override some values for running with 0.56 alphaT cut
+          print ">>> WARNING: running with aT > 0.56 trigger effs"
+          AlphaT_Scale["275_2"] = 0.921
+          AlphaT_Scale["275_3"] = 0.713
 
-          AlphaT_Scale["275_2"] = 0.94
-          AlphaT_Scale["275_3"] = 0.74
-   
-   
     scale_factor = htbin +'_'+ jetmult
     if jetmult == "all" : scale_factor = htbin +'_2'
     if mc_yield == 0: return float(mc_yield)
