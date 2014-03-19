@@ -1,6 +1,6 @@
 def this_run():
 
-	selector = "28Jan_globalAlphaT_v3"
+	selector = "05March_NotSure_Rob_ChrisCheck"
 
 	out_dict = {}
 
@@ -239,6 +239,115 @@ def this_run():
 
 	}
 	
+
+	out_dict["19Feb_30SecondMu_NoZMassCutSingleMu_30Global"] = {
+
+		"path_name": "rootfiles/Root_Files_19Feb_Full2013_noISRRW_noSITV_fixedXS_30SecondMu_noZMassCutInSingleMu_RaisedCommonMu30_IC",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.94,
+		"dy_corr": 0.97,
+		"tt_corr": 1.22,
+		# "tt_corr": 1.27, # taken from pure ttbar ratio
+
+	}
+
+	out_dict["19Feb_30SecondMu_NoZMassCutSingleMu_30Global_SITV"] = {
+
+		"path_name": "rootfiles/Root_Files_19Feb_Full2013_noISRRW_SITV_fixedXS_30SecondMu_noZMassCutInSingleMu_RaisedCommonMu30",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.94,
+		"dy_corr": 0.95,
+		"tt_corr": 1.21,
+		# "tt_corr": 1.27, # taken from pure ttbar ratio
+
+	}	
+
+	out_dict["rob_IC_test_0"] = {
+
+		"path_name": "rootfiles/rob_IC_test_v4",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# # new corrs from this set of files
+		"wj_corr": 0.94,
+		"dy_corr": 0.95,
+		"tt_corr": 1.22,
+		# "tt_corr": 1.29, # taken from pure ttbar ratio
+
+		# old corrs
+		# "wj_corr": 0.94,
+		# "dy_corr": 0.95,
+		# "tt_corr": 1.21,
+
+	}	
+
+	out_dict["03March_30SecondMu_NoZMassCutSingleMu_IC"] = {
+
+		"path_name": "rootfiles/Root_Files_03March_Full2013_noISRRW_noSITV_fixedXS_30SecondMu_noZMassCutInSingleMu_IC_RobsRun",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.94,
+		"dy_corr": 0.95,
+		"tt_corr": 1.22,
+		# "tt_corr": 1.27, # taken from pure ttbar ratio
+
+	}
+
+	
+
+	out_dict["05March_NotSure_Rob"] = {
+
+		"path_name": "rootfiles/Root_Files_05March_Full2013_notSure_IC_Rob",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.92,
+		"dy_corr": 0.93,
+		"tt_corr": 1.18,
+		# "tt_corr": 1.27, # taken from pure ttbar ratio
+
+	}
+
+	out_dict["05March_NotSure_Rob_ChrisCheck"] = {
+
+		"path_name": "rootfiles/Root_Files_05March_Full2013_notSure_IC_Rob_ChrisHadDataCheck",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.92,
+		"dy_corr": 0.93,
+		"tt_corr": 1.18,
+		# "tt_corr": 1.27, # taken from pure ttbar ratio
+
+	}
 
 	out_dict["tmp"] = {
 
