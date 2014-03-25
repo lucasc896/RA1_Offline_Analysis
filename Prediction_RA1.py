@@ -2,11 +2,11 @@
 
 import argparse
 parser = argparse.ArgumentParser(description ='Produce RA1 Results')
-parser.add_argument('-c',help= 'Make RA1 Closure Tests, Choose all, 2 or 3 or jetcat',nargs='+', type =str)
-parser.add_argument('-u',help= 'Make RA1 Tables Uncorrected Yields', nargs='+', type =str)
+parser.add_argument('-c',help= 'Make RA1 Closure Tests, Choose all, 1, 2 or 3 or jetcat',nargs='+', type=str)
+parser.add_argument('-u',help= 'Make RA1 Tables Uncorrected Yields', nargs='+', type=str)
 parser.add_argument('-m',help= 'Make RA1 MC Normalisation Tables',action="store_true")
-parser.add_argument('-r',help= 'Make RA1 Root Files, Choose all, 2 or 3',nargs='+',type=str)
-parser.add_argument('-n',help= 'Make RA1 Tables, Choose all, 2 or 3',nargs='+',type =str)
+parser.add_argument('-r',help= 'Make RA1 Root Files, Choose all, 1, 2 or 3',nargs='+',type=str)
+parser.add_argument('-n',help= 'Make RA1 Tables, Choose all, 1, 2 or 3',nargs='+',type=str)
 parser.add_argument('-t',help= 'Make Template fitting',choices = ['had','muon']) 
 parser.add_argument('-j',help= 'Set jet categories fit to default 2,3,4,>=5', nargs='+',type = str,default=["2","3","4","5"])
 parser.add_argument('-d',help= 'For debug use', action="store_true")
@@ -61,7 +61,7 @@ def Directory_Maker():
      
     print "\n Making RA1 Directories"
 
-    folder_options = {'NormalisationTables':args.m,'ClosureTests':args.c,'TexFiles':args.n,'TexFilesuncorrected':args.u,'RootFiles':args.r,'Templates':args.t,'TexFiles':args.d  }
+    folder_options = {'NormalisationTables':args.m,'ClosureTests':args.c,'TexFiles':args.n,'TexFilesuncorrected':args.u,'RootFiles':args.r,'Templates':args.t }
     folders = []
 
     for key,fi in folder_options.iteritems():
@@ -539,8 +539,8 @@ inclusive_samples = {
     "mcDiMuonsingt":(rootDirectory+"/Muon_SingleTop","DiMuon_","SingleTop","DiMuon"),
     "mcDiMuondiboson":(rootDirectory+"/Muon_DiBoson","DiMuon_","DiBoson","DiMuon"),
     "mcDiMuonDY":(rootDirectory+"/Muon_DY","DiMuon_","DY","DiMuon"),
-    # "mcPhoton":(rootDirectory+"/Photon_MC","Photon_","Photon","Photon"),
-    # "ncPhoton":(rootDirectory+"/Photon_Data"+data_run_suf,"Photon_","Data","Photon"),
+    "mcPhoton":(rootDirectory+"/Photon_MC","Photon_","Photon","Photon"),
+    "ncPhoton":(rootDirectory+"/Photon_Data"+data_run_suf,"Photon_","Data","Photon"),
 
     }
 
@@ -628,7 +628,7 @@ if __name__=="__main__":
       Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
       Number_Extractor(settings,btag_zero_samples,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
       Number_Extractor(settings,btag_one_samples,"One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
-      Number_Extractor(settings,btag_two_samples,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
+      Number_Extractor(settings,btag_two_samples,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)      
       Number_Extractor(settings,btag_three_samples,"Three_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
       Number_Extractor(settings,btag_more_than_three_samples,"More_Than_Three_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
 
