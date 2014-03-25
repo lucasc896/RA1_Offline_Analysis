@@ -58,17 +58,19 @@ class Jad_Compute(object):
 
     if self.JetCat == "True":
       print "In JetSplit mode"
-      test_1 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True", 'plot_title':"#mu + jets (2,3 Jets) #rightarrow #mu + jets (Gr4 Jets)",'scale':None,'reduce':"False",'file_name':'JetCat_muon_to_muon','spread':'False' } 
-      test_2 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#mu#mu + jets (2,3 Jets) #rightarrow #mu#mu + jets (Gr4 Jets) ",'scale':None,'reduce':"False",'file_name':'JetCat_dimuon_to_dimuon','spread':'False' }
-      test_3 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#gamma + jets (2,3 Jets) #rightarrow #gamma + jets (Gr4 Jets) ",'scale':None,'reduce':"True",'file_name':'JetCat_gamma_to_gamma','spread':'False' } 
-      test_4 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True", 'plot_title':"#mu + jets (2,3 Jets) #rightarrow #mu + jets (Gr4 Jets) (0 b-tag)",'scale':None,'reduce':"False",'file_name':'JetCat_muon_to_muon_zero_btag','spread':'False' } 
-      test_5 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#mu#mu + jets (2,3 Jets) #rightarrow #mu#mu + jets (Gr4 Jets) (0 b-tag)",'scale':None,'reduce':"False",'file_name':'JetCat_dimuon_to_dimuon_zero_btag','spread':'False' }
-      test_6 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#gamma + jets (2,3 Jets) #rightarrow #gamma + jets (Gr4 Jets) (0 b-tag) ",'scale':None,'reduce':"True",'file_name':'JetCat_gamma_to_gamma_zero_btag','spread':'False' } 
-      test_7 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True", 'plot_title':"#mu + jets (2,3 Jets) #rightarrow #mu + jets (Gr4 Jets) (1 b-tag)",'scale':None,'reduce':"False",'file_name':'JetCat_muon_to_muon_gr_one_btag','spread':'False' } 
-      test_8 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#mu#mu + jets (2,3 Jets) #rightarrow #mu#mu + jets (Gr4 Jets) (1 b-tag)",'scale':None,'reduce':"False",'file_name':'JetCat_dimuon_to_dimuon_gr_one_btag','spread':'False' }
-      test_9 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#gamma + jets (2,3 Jets) #rightarrow #gamma + jets (Gr4 Jets) (1 b-tag) ",'scale':None,'reduce':"True",'file_name':'JetCat_gamma_to_gamma_gr_one_btag','spread':'False' } 
+      test_1 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True", 'plot_title':"#mu + jets (2 Jets) #rightarrow #mu + jets (Gr4 Jets)",'scale':None,'reduce':"False",'file_name':'JetCat_eq2_ge4_muon_to_muon','spread':'False' } 
+      test_2 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#mu#mu + jets (2 Jets) #rightarrow #mu#mu + jets (Gr4 Jets) ",'scale':None,'reduce':"False",'file_name':'JetCat_eq2_ge4_dimuon_to_dimuon','spread':'False' }
+      test_3 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#gamma + jets (2 Jets) #rightarrow #gamma + jets (Gr4 Jets) ",'scale':None,'reduce':"True",'file_name':'JetCat_eq2_ge4_gamma_to_gamma','spread':'False' } 
+      
+      test_4 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True", 'plot_title':"#mu + jets (3 Jets) #rightarrow #mu + jets (Gr4 Jets)",'scale':None,'reduce':"False",'file_name':'JetCat_eq3_ge4_muon_to_muon','spread':'False' } 
+      test_5 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#mu#mu + jets (3 Jets) #rightarrow #mu#mu + jets (Gr4 Jets) ",'scale':None,'reduce':"False",'file_name':'JetCat_eq3_ge4_dimuon_to_dimuon','spread':'False' }
+      test_6 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#gamma + jets (3 Jets) #rightarrow #gamma + jets (Gr4 Jets) ",'scale':None,'reduce':"True",'file_name':'JetCat_eq3_ge4_gamma_to_gamma','spread':'False' } 
 
-      test_dicts = [test_1,test_2,test_3 ]
+      test_7 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True", 'plot_title':"#mu + jets (2 Jets) #rightarrow #mu + jets (3 Jets)",'scale':None,'reduce':"False",'file_name':'JetCat_eq2_eq3_muon_to_muon','spread':'False' } 
+      test_8 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#mu#mu + jets (2 Jets) #rightarrow #mu#mu + jets (3 Jets) ",'scale':None,'reduce':"False",'file_name':'JetCat_eq2_eq3_dimuon_to_dimuon','spread':'False' }
+      test_9 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#gamma + jets (2 Jets) #rightarrow #gamma + jets (3 Jets) ",'scale':None,'reduce':"True",'file_name':'JetCat_eq2_eq3_gamma_to_gamma','spread':'False' } 
+
+      test_dicts = [test_1,test_2,test_3,test_4,test_5,test_6,test_7,test_8,test_9, ]
 
 
     elif self.Classic == "True" :
@@ -124,49 +126,49 @@ class Jad_Compute(object):
 
         if self.JetCat == "True":
         
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "1":
             self.Fill_Dictionary(test_1,Control = "Muon", Signal = "Muon",Not_Do = 'Signal')
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "3":
             self.Fill_Dictionary(test_1,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
 
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "1":
             self.Fill_Dictionary(test_2,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Signal')
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "3":
             self.Fill_Dictionary(test_2,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
 
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "1":
             self.Fill_Dictionary(test_3,Control = "Photon", Signal = "Photon",Not_Do = 'Signal')
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "3":
             self.Fill_Dictionary(test_3,Control = "Photon", Signal = "Photon",Not_Do = 'Control')
 
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Zero_btags' and self.file[self.entry]['JetCategory'] == "2":
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
             self.Fill_Dictionary(test_4,Control = "Muon", Signal = "Muon",Not_Do = 'Signal')
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Zero_btags' and self.file[self.entry]['JetCategory'] == "3":
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "3":
             self.Fill_Dictionary(test_4,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
 
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Zero_btags' and self.file[self.entry]['JetCategory'] == "2":
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
             self.Fill_Dictionary(test_5,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Signal')
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Zero_btags' and self.file[self.entry]['JetCategory'] == "3":
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "3":
             self.Fill_Dictionary(test_5,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
 
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Zero_btags' and self.file[self.entry]['JetCategory'] == "2":
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
             self.Fill_Dictionary(test_6,Control = "Photon", Signal = "Photon",Not_Do = 'Signal')
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Zero_btags' and self.file[self.entry]['JetCategory'] == "3":
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "3":
             self.Fill_Dictionary(test_6,Control = "Photon", Signal = "Photon",Not_Do = 'Control')
 
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'More_Than_Zero_btag' and self.file[self.entry]['JetCategory'] == "2":
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "1":
             self.Fill_Dictionary(test_7,Control = "Muon", Signal = "Muon",Not_Do = 'Signal')
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'More_Than_Zero_btag' and self.file[self.entry]['JetCategory'] == "3":
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
             self.Fill_Dictionary(test_7,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
 
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'More_Than_Zero_btag' and self.file[self.entry]['JetCategory'] == "2":
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "1":
             self.Fill_Dictionary(test_8,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Signal')
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'More_Than_Zero_btag' and self.file[self.entry]['JetCategory'] == "3":
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
             self.Fill_Dictionary(test_8,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
 
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'More_Than_Zero_btag' and self.file[self.entry]['JetCategory'] == "2":
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "1":
             self.Fill_Dictionary(test_9,Control = "Photon", Signal = "Photon",Not_Do = 'Signal')
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'More_Than_Zero_btag' and self.file[self.entry]['JetCategory'] == "3":
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
             self.Fill_Dictionary(test_9,Control = "Photon", Signal = "Photon",Not_Do = 'Control')
 
         elif self.Classic == "True":
@@ -264,6 +266,7 @@ class Jad_Compute(object):
             self.Fill_Dictionary(test_69,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
 
     for test in test_dicts:
+      # this seems a bit redundant...
       if self.JetCat == "True":
         self.Make_Plots(test['MCS'],test['MCSE'],test['MCC'],test['MCCE'],test['DC'],test['DS'],test['option'],test['box'],test['plot_title'],test['scale'],test['file_name'],reduce = test['reduce'],spread = test['spread'])
       elif self.Classic == "True":
@@ -309,111 +312,115 @@ class Jad_Compute(object):
 
   def Make_Plots(self,MCS,MCSE,MCC,MCCE,DC,DS,option,box = '',plot_title='',scale='',file_name='',reduce='',spread='',dc_error='',ds_error=''):
 
-     # Reduce == true for Photon closure tests
-     if reduce == "True": hist_low = 375
-     else: hist_low = float(self.settings["bins"][0])
+    # Reduce == true for Photon closure tests
+    if reduce == "True": hist_low = 375
+    else: hist_low = float(self.settings["bins"][0])
 
-     max = 1.0
-     min = -1.0
-     if reduce == "True": 
+    max = 1.0
+    min = -1.0
+    if reduce == "True": 
       data = r.TGraphAsymmErrors(8)
       start = 3
-     else: 
+    else: 
       data = r.TGraphAsymmErrors(11)
       start = 0
      
-     for i in range(start,len(MCS)):
+    for i in range(start,len(MCS)):
         
-        j = 0
-        offset = (self.axis[i+1]-self.axis[i])/2.0
+      j = 0
+      offset = (self.axis[i+1]-self.axis[i])/2.0
 
-        #Prediction
-        try: prediction = ((MCS[i] / MCC[i]) * DC[i])
-        except ZeroDivisionError: prediction = 0.0
-        try:val = DS[i] / prediction
-        except ZeroDivisionError:val = 0.0
-        data.SetPoint(i+1,self.axis[i+j]+offset,val-1.0)
-        #Make Errors
-        if dc_error:
-           eh = dc_error[i]
-           el = dc_error[i]
-        else:
-           eh = sqrt(DC[i])
-           el = sqrt(DC[i])
-           if DC[i] < 10.: self.Poission(DC[i],eh,el)
+      #Prediction
+      try: prediction = ((MCS[i] / MCC[i]) * DC[i])
+      except ZeroDivisionError: prediction = 0.0
+      try:val = DS[i] / prediction
+      except ZeroDivisionError:val = 0.0
+      data.SetPoint(i+1,self.axis[i+j]+offset,val-1.0)
+      #Make Errors
+      if dc_error:
+        eh = dc_error[i]
+        el = dc_error[i]
+      else:
+        eh = sqrt(DC[i])
+        el = sqrt(DC[i])
+        if DC[i] < 10.: self.Poission(DC[i],eh,el)
 
-        #Total Error on prediction
-        try:errh = prediction * sqrt( ((MCSE[i] / MCS[i]) * (MCSE[i] / MCS[i])) + ((MCCE[i] / MCC[i]) * (MCCE[i] / MCC[i])) + ((eh / DC[i]) * (eh / DC[i])) )
-        except ZeroDivisionError: errh = 0
-        try: errl = prediction * sqrt( ((MCSE[i] / MCS[i]) * (MCSE[i] / MCS[i])) + ((MCCE[i] / MCC[i]) * (MCCE[i] / MCC[i])) + ((el / DC[i]) * (el / DC[i])) )
-        except ZeroDivisionError : errl = 0
-        # Add to the prediction an extra error = to its statistical error
-        ehextra = sqrt(prediction)
-        elextra = sqrt(prediction)
-        
-        if prediction < 10.: self.Poission(prediction,ehextra,elextra)
+      #Total Error on prediction
+      try:errh = prediction * sqrt( ((MCSE[i] / MCS[i]) * (MCSE[i] / MCS[i])) + ((MCCE[i] / MCC[i]) * (MCCE[i] / MCC[i])) + ((eh / DC[i]) * (eh / DC[i])) )
+      except ZeroDivisionError: errh = 0
+      try: errl = prediction * sqrt( ((MCSE[i] / MCS[i]) * (MCSE[i] / MCS[i])) + ((MCCE[i] / MCC[i]) * (MCCE[i] / MCC[i])) + ((el / DC[i]) * (el / DC[i])) )
+      except ZeroDivisionError : errl = 0
+      # Add to the prediction an extra error = to its statistical error
+      ehextra = sqrt(prediction)
+      elextra = sqrt(prediction)
+      
+      if prediction < 10.: self.Poission(prediction,ehextra,elextra)
 
-        #Add these bad boys in quadrature
-        errh = sqrt((errh*errh) + (ehextra*elextra))
-        errl = sqrt((errl*errl) + (ehextra*elextra))
+      #Add these bad boys in quadrature
+      errh = sqrt((errh*errh) + (ehextra*elextra))
+      errl = sqrt((errl*errl) + (ehextra*elextra))
 
-        # make the numerator: Nobs - Npred
-        diffobspred = DS[i] - prediction
+      # make the numerator: Nobs - Npred
+      diffobspred = DS[i] - prediction
 
-        try:errh = fabs((diffobspred / prediction) * sqrt(((errh / diffobspred)*(errh / diffobspred)) + ((errh / prediction)*(errh / prediction))))
-        except ZeroDivisionError: errh = 0
-        try:errl = fabs((diffobspred / prediction) * sqrt(((errl / diffobspred)*(errl / diffobspred)) + ((errl / prediction)*(errl / prediction))))
-        except ZeroDivisionError: errl = 0 
-        # Now set errors
-        data.SetPointEYhigh(i+1,errh)
-        data.SetPointEYlow(i+1,errl)
+      try:
+        errh = fabs((diffobspred / prediction) * sqrt(((errh / diffobspred)*(errh / diffobspred)) + ((errh / prediction)*(errh / prediction))))
+      except ZeroDivisionError:
+        errh = 0
+      try:
+        errl = fabs((diffobspred / prediction) * sqrt(((errl / diffobspred)*(errl / diffobspred)) + ((errl / prediction)*(errl / prediction))))
+      except ZeroDivisionError:
+        errl = 0 
+      # Now set errors
+      data.SetPointEYhigh(i+1,errh)
+      data.SetPointEYlow(i+1,errl)
 
 
-        #if val > 2.2 or val < -2.2:
-        #  max = fabs(val)*1.1
-        #  min = -fabs(val)*1.1
+      #if val > 2.2 or val < -2.2:
+      #  max = fabs(val)*1.1
+      #  min = -fabs(val)*1.1
  
-     data.SetTitle("")
+    data.SetTitle("")
      
-     data.GetXaxis().SetRangeUser(hist_low,float(self.settings["bins"][-1])+100.0)
-     data.GetYaxis().SetRangeUser(min,max)
-     data.GetXaxis().SetTitle("H_{T} (GeV)")
-     data.GetYaxis().SetTitle("(N_{obs} - N_{pred}) / N_{pred}")
-     data.GetYaxis().SetTitleOffset(1.1)
-     data.SetLineWidth(3)
-     data.SetMarkerStyle(20)
-     data.SetMarkerSize(1.5)
-     data.Draw("AP")
+    data.GetXaxis().SetRangeUser(hist_low,float(self.settings["bins"][-1])+100.0)
+    data.GetYaxis().SetRangeUser(min,max)
+    data.GetXaxis().SetTitle("H_{T} (GeV)")
+    data.GetYaxis().SetTitle("(N_{obs} - N_{pred}) / N_{pred}")
+    data.GetYaxis().SetTitleOffset(1.1)
+    data.SetLineWidth(3)
+    data.SetMarkerStyle(20)
+    data.SetMarkerSize(1.5)
+    data.Draw("AP")
 
-     if box == 'True':
-        pass
-        #bv = r.TBox(hist_low,-0.2,1075.,0.2)
-        #bv.SetFillColor(kGray) 
-        #bv.Draw()
-        #data.Draw("p")
-     
-     """
-     Straight lin is fitted to closure test here between all HT bins
-     """ 
-     fit = r.TF1("fit","pol0",hist_low , float(self.settings["bins"][-1])+100.0)
-     data.Fit(fit,"R")
-     fit.SetLineColor(2)
-     fit.Draw("SAME")
+    if box == 'True':
+      pass
+      #bv = r.TBox(hist_low,-0.2,1075.,0.2)
+      #bv.SetFillColor(kGray) 
+      #bv.Draw()
+      #data.Draw("p")
+   
+    """
+    Straight lin is fitted to closure test here between all HT bins
+    """ 
+    fit = r.TF1("fit","pol0",hist_low , float(self.settings["bins"][-1])+100.0)
+    data.Fit(fit,"R")
+    fit.SetLineColor(2)
+    fit.Draw("SAME")
 
       
-     tex = r.TLatex(0.12,0.84,"CMS, %s fb^{-1}, #sqrt{s} = 8 TeV" % self.Lumo )
-     tex.SetNDC()
-     tex.SetTextSize(0.04)
-     tex.Draw("SAME")
-     pt = r.TPaveText(0.12,0.90,0.5,0.95,"blNDC")
-     pt.SetBorderSize(0)
-     pt.SetFillColor(0)
-     pt.SetTextSize(0.04)
-     pt.AddText(plot_title)
-     pt.Draw("SAME")
-     self.c1.SaveAs("./ClosureTests/%s%s.png" %(file_name,self.jetmult))
-     self.c1.SaveAs("./ClosureTests/%s%s.C" %(file_name,self.jetmult))
-     #self.c1.Modified()
+    tex = r.TLatex(0.12,0.84,"CMS, %s fb^{-1}, #sqrt{s} = 8 TeV" % self.Lumo )
+    tex.SetNDC()
+    tex.SetTextSize(0.04)
+    tex.Draw("SAME")
+    pt = r.TPaveText(0.12,0.90,0.5,0.95,"blNDC")
+    pt.SetBorderSize(0)
+    pt.SetFillColor(0)
+    pt.SetTextSize(0.04)
+    pt.AddText(plot_title)
+    pt.Draw("SAME")
+    self.c1.SaveAs("./ClosureTests/%s%s.png" %(file_name,self.jetmult))
+    self.c1.SaveAs("./ClosureTests/%s%s.C" %(file_name,self.jetmult))
+    #self.c1.Modified()
 
   def Poission(self,x,errh,errl):
     poisson_eh = [ 1.15, 1.36, 1.53, 1.73, 1.98, 2.21, 2.42, 2.61, 2.80, 3.00, 3.16 ]
