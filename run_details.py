@@ -1,6 +1,6 @@
 def this_run():
 
-	selector = "18March_fineJetMulti"
+	selector = "05March_Rob_NotSure"
 
 	out_dict = {}
 
@@ -192,6 +192,29 @@ def this_run():
 		"mu_lumi": 19.131,
 		"ph_lumi": 19.12,
 
+		# le3j
+		"wj_corr": 0.92,
+		"dy_corr": 0.93,
+		"tt_corr": 1.18,
+	
+		# eq2j
+		"wj_corr": 0.97,
+		"dy_corr": 0.98,
+		# "tt_corr": 1.20, # 3j
+		# "tt_corr": 1.15, # rob
+		"tt_corr": 1.05, # 3j, 1b
+	}
+
+	out_dict["05March_Rob_NotSure"] = {
+
+		"path_name": "rootfiles/Root_Files_05March_Full2013_notSure_IC_Rob",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# le3j
 		"wj_corr": 0.92,
 		"dy_corr": 0.93,
 		"tt_corr": 1.18,
