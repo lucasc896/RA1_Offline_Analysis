@@ -20,13 +20,13 @@ This is where Trigger corrections are applied to MC.
 def MC_Scaler(htbin,jetmult,mc_yield,sample = '',error = '',Analysis = '',btagbin = ''):
 
     if Analysis == "8TeV":
-        AlphaT_Scale = {"200_1":0.816, "200_2":0.816,  "200_3":0.665,
-                        "275_1":0.901, "275_2":0.901,  "275_3":0.666,
-                        "325_1":0.988, "325_2":0.988,  "325_3":0.971,
-                        "375_1":0.994, "375_2":0.994,  "375_3":0.988,
-                        "475_1":0.99,  "475_2":0.99,   "475_3":0.99,
-                        "575_1":1.,    "575_2":1.,     "575_3":1.,
-                        "675_1":1.,    "675_2":1.,     "675_3":1.,
+        AlphaT_Scale = {"200_1":0.840, "200_2":0.750,  "200_3":0.740,
+                        "275_1":0.999, "275_2":0.880,  "275_3":0.730, #note: alphaT>0.58 values
+                        "325_1":0.990, "325_2":0.970,  "325_3":0.960,
+                        "375_1":0.990, "375_2":0.990,  "375_3":0.990,
+                        "475_1":1.,    "475_2":1.,     "475_3":1.,
+                        "575_1":1.,    "575_2":0.990,  "575_3":0.990,
+                        "675_1":1.,    "675_2":1.,     "675_3":0.980,
                         "775_1":1.,    "775_2":1.,     "775_3":1.,
                         "875_1":1.,    "875_2":1.,     "875_3":1.,
                         "975_1":1.,    "975_2":1.,     "975_3":1.,
@@ -560,41 +560,51 @@ class Number_Extractor(object):
 
   def MC_Ratio(self,dicto,*pureprocess):
 
-      eh =  [1.15, 1.36, 1.53, 1.73, 1.98, 2.21, 2.42, 2.61, 2.80, 3.00 ]
-      el =  [0.00, 1.00, 2.00, 2.14, 2.30, 2.49, 2.68, 2.86, 3.03, 3.19 ]
+    eh = [1.15, 1.36, 1.53, 1.73, 1.98, 2.21, 2.42, 2.61, 2.80, 3.00]
+    el = [0.00, 1.00, 2.00, 2.14, 2.30, 2.49, 2.68, 2.86, 3.03, 3.19]
 
-      self.Dict_For_Table = dict.fromkeys(self.bins)
-      entries = ('MCRatio','RatioError')
-      dictionaries = [self.Dict_For_Table]
- 
- 
-      for key in self.bins: 
+    self.Dict_For_Table = dict.fromkeys(self.bins)
+    entries = ('MCRatio','RatioError')
+    dictionaries = [self.Dict_For_Table]
 
-             self.Dict_For_Table[key] = dict.fromkeys(entries,0)
-             for entry in pureprocess: self.Dict_For_Table[key][entry+"Ratio"] = 0 
 
-      for bin in sorted(dicto.iterkeys()):
+    for key in self.bins: 
+      self.Dict_For_Table[key] = dict.fromkeys(entries,0)
+      for entry in pureprocess:
+        self.Dict_For_Table[key][entry+"Ratio"] = 0 
 
-         try:self.Dict_For_Table[bin]['MCRatio'] = dicto[bin]["Data"]/dicto[bin]["MCYield"]
-         except ZeroDivisionError: pass
+    for bin in sorted(dicto.iterkeys()):
+      try:
+        self.Dict_For_Table[bin]['MCRatio'] = dicto[bin]["Data"]/dicto[bin]["MCYield"]
+      except ZeroDivisionError:
+        pass
 
-         for i in pureprocess :
-            data_yield = dicto[bin]["Data"] 
-            mc_yield = dicto[bin]["MCYield"]
+      # get yields for "pure" processes
+      for i in pureprocess :
+        data_yield = dicto[bin]["Data"] 
+        mc_yield = dicto[bin]["MCYield"]
 
-            for process in self.process: 
-                if process != i: 
-                     data_yield = data_yield - dicto[bin][process]["Yield"]
-                     mc_yield = mc_yield - dicto[bin][process]["Yield"] 
-            try:self.Dict_For_Table[bin][i+"Ratio"] = data_yield/mc_yield
-            except ZeroDivisionError: self.Dict_For_Table[bin][i+"Ratio"] = 0    
+        # take full data and MC yields, and subtract every *other* yield
+        for process in self.process: 
+          if process != i: 
+            data_yield = data_yield - dicto[bin][process]["Yield"]
+            mc_yield = mc_yield - dicto[bin][process]["Yield"] 
+        try:
+          self.Dict_For_Table[bin][i+"Ratio"] = data_yield/mc_yield
+        except ZeroDivisionError:
+          self.Dict_For_Table[bin][i+"Ratio"] = 0    
 
-         try: mc_error =  dicto[bin]["SM_Stat_Error"]/dicto[bin]["MCYield"] 
-         except ZeroDivisionError: mc_error = 0
-         try :data_error =  (sqrt(dicto[bin]["Data"]) if dicto[bin]["Data"] > 9 else float(eh[int(dicto[bin]["Data"])])) /dicto[bin]["Data"] 
-         except ZeroDivisionError: data_error = 0
-        
-         self.Dict_For_Table[bin]['RatioError'] = self.Dict_For_Table[bin]['MCRatio'] * sqrt( pow(mc_error,2) + pow(data_error,2) )  
+      try:
+        mc_error =  dicto[bin]["SM_Stat_Error"]/dicto[bin]["MCYield"] 
+      except ZeroDivisionError:
+        mc_error = 0
+      
+      try:
+        data_error =  (sqrt(dicto[bin]["Data"]) if dicto[bin]["Data"] > 9 else float(eh[int(dicto[bin]["Data"])])) /dicto[bin]["Data"] 
+      except ZeroDivisionError:
+        data_error = 0
+
+      self.Dict_For_Table[bin]['RatioError'] = self.Dict_For_Table[bin]['MCRatio'] * sqrt( pow(mc_error,2) + pow(data_error,2) )  
 
 
   """
