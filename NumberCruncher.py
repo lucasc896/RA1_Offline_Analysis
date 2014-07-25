@@ -20,21 +20,34 @@ This is where Trigger corrections are applied to MC.
 def MC_Scaler(htbin,jetmult,mc_yield,sample = '',error = '',Analysis = '',btagbin = '', alphat_slice = None):
 
     if Analysis == "8TeV":
-        AlphaT_Scale = {"200_2":0.816,  "200_3":0.740,
-                        "275_2":0.901,  "275_3":0.666,
-                        "325_2":0.988,  "325_3":0.971,
-                        "375_2":0.994,  "375_3":0.988,
-                        "475_2":0.99,   "475_3":0.99, 
+        # AlphaT_Scale = {"200_2":0.816,  "200_3":0.740,
+        #                 "275_2":0.901,  "275_3":0.666,
+        #                 "325_2":0.988,  "325_3":0.971,
+        #                 "375_2":0.994,  "375_3":0.988,
+        #                 "475_2":0.99,   "475_3":0.99, 
+        #                 "575_2":1.,     "575_3":1.,
+        #                 "675_2":1.,     "675_3":1.,
+        #                 "775_2":1.,     "775_3":1.,
+        #                 "875_2":1.,     "875_3":1.,
+        #                 "975_2":1.,     "975_3":1.,
+        #                 "1075_2":1.,    "1075_3":1.,}
+
+        # taken from AN
+        AlphaT_Scale = {"200_2":0.818,  "200_3":0.789,
+                        "275_2":0.952,  "275_3":0.900,
+                        "325_2":0.978,  "325_3":0.959,
+                        "375_2":0.992,  "375_3":0.987,
+                        "475_2":0.998,  "475_3":0.996, 
                         "575_2":1.,     "575_3":1.,
                         "675_2":1.,     "675_3":1.,
                         "775_2":1.,     "775_3":1.,
                         "875_2":1.,     "875_3":1.,
                         "975_2":1.,     "975_3":1.,
                         "1075_2":1.,    "1075_3":1.,}
-                        
-        AlphaT_Error = {"200_2":0.004,  "200_3":0.033,
+
+        AlphaT_Error = {"200_2":0.004,  "200_3":0.004,
                         "275_2":0.004,  "275_3":0.013,
-                        "325_2":0.002,  "325_3":0.008,
+                        "325_2":0.003,  "325_3":0.010,
                         "375_2":0.002,  "375_3":0.006,
                         "475_2":0.002,  "475_3":0.005,
                         "575_2":0.002,  "575_3":0.005,
@@ -57,18 +70,18 @@ def MC_Scaler(htbin,jetmult,mc_yield,sample = '',error = '',Analysis = '',btagbi
                       "975_2":0.903,"975_3":0.906,
                       "1075_2":0.900,"1075_3":0.912,}
 
-        DiMuon_Scale = {"150_2":0.970,"150_3":0.972,
-                        "200_2":0.970,"200_3":0.972,
-                        "275_2":0.972,"275_3":0.973,
-                        "325_2":0.973,"325_3":0.973,
-                        "375_2":0.974,"375_3":0.972,
-                        "475_2":0.976,"475_3":0.973,
-                        "575_2":0.977,"575_3":0.974,
-                        "675_2":0.979,"675_3":0.977,
-                        "775_2":0.977,"775_3":0.973,
-                        "875_2":0.978,"875_3":0.978,
-                        "975_2":0.980,"975_3":0.978,
-                        "1075_2":0.977,"1075_3":0.979,}
+        # DiMuon_Scale = {"150_2":0.970,"150_3":0.972,
+        #                 "200_2":0.970,"200_3":0.972,
+        #                 "275_2":0.972,"275_3":0.973,
+        #                 "325_2":0.973,"325_3":0.973,
+        #                 "375_2":0.974,"375_3":0.972,
+        #                 "475_2":0.976,"475_3":0.973,
+        #                 "575_2":0.977,"575_3":0.974,
+        #                 "675_2":0.979,"675_3":0.977,
+        #                 "775_2":0.977,"775_3":0.973,
+        #                 "875_2":0.978,"875_3":0.978,
+        #                 "975_2":0.980,"975_3":0.978,
+        #                 "1075_2":0.977,"1075_3":0.979,}
 
         # For 30/30 dimu selection
         DiMuon_Scale = {"150_2":0.989,"150_3":0.988,
@@ -83,6 +96,35 @@ def MC_Scaler(htbin,jetmult,mc_yield,sample = '',error = '',Analysis = '',btagbi
                         "875_2":0.990,"875_3":0.989,
                         "975_2":0.990,"975_3":0.991,
                         "1075_2":0.990,"1075_3":0.990,}
+
+        ### NEW FROM ROB - 11JUL14 ###
+        # # 30/30 (2nd mu doesn't matter), from data
+        # Muon_Scale = {"150_2": 0.872,"150_3": 0.881,
+        #               "200_2": 0.875,"200_3": 0.881,
+        #               "275_2": 0.878,"275_3": 0.882,
+        #               "325_2": 0.879,"325_3": 0.884,
+        #               "375_2": 0.881,"375_3": 0.886,
+        #               "475_2": 0.882,"475_3": 0.888,
+        #               "575_2": 0.884,"575_3": 0.889,
+        #               "675_2": 0.885,"675_3": 0.890,
+        #               "775_2": 0.886,"775_3": 0.891,
+        #               "875_2": 0.888,"875_3": 0.890,
+        #               "975_2": 0.887,"975_3": 0.890,
+        #               "1075_2":0.884,"1075_3":0.896,}
+
+        # # 30/10, MC trigger effs, from data
+        # DiMuon_Scale = {"150_2": 0.984,"150_3": 0.984,
+        #                 "200_2": 0.985,"200_3": 0.984,
+        #                 "275_2": 0.985,"275_3": 0.984,
+        #                 "325_2": 0.986,"325_3": 0.986,
+        #                 "375_2": 0.986,"375_3": 0.985,
+        #                 "475_2": 0.986,"475_3": 0.986,
+        #                 "575_2": 0.986,"575_3": 0.986,
+        #                 "675_2": 0.987,"675_3": 0.986,
+        #                 "775_2": 0.986,"775_3": 0.986,
+        #                 "875_2": 0.987,"875_3": 0.986,
+        #                 "975_2": 0.987,"975_3": 0.988,
+        #                 "1075_2":0.987,"1075_3":0.987,}
 
         if float(alphat_slice.split("_")[0]) == 0.6:
           # override some values for running with 0.6 alphaT cut
@@ -207,9 +249,7 @@ class Number_Extractor(object):
          for key,fi in sorted(samples.iteritems()):
            i = 0
            for dir in settings['dirs']:
-              fixed_dir = dir
               for alphat in settings['AlphaTSlices']:
-                dir = fixed_dir
                 lower = float(alphat.split('_')[0])
                 higher = float(alphat.split('_')[1])
                 table_entries += "\t\"%s_%d\"  : "%(key,i)
@@ -217,11 +257,23 @@ class Number_Extractor(object):
                 table_entries += "{\"HT\":\"%s\","%(dir.split('_')[0])
                 for histName in settings['plots']:
                     histName = str(histName+self.analysis_category)
-                    # print histName
                     checkht = dir
                     dir = fi[1]+dir
                     Luminosity = self.Lumi_List[fi[3]]
-                    normal =  GetSumHist(File = ["%s.root"%fi[0]], Directories = [dir], Hist = histName, Col = r.kBlack, Norm = None if "n" == key[0] else [float(Luminosity*1000)/100.], LegendText = "nBtag")  
+
+                    if "T2cc" in fi[2]:
+                      # if T2cc being used, then add a xsec factor to Luminosity
+                      stop_prod_xsec = 5.57596 #pb for 250GeV mass stop
+                      # t2cc_nevents = 582630 #nevents for (250,240)
+                      t2cc_nevents = 581438 #nevents for (250,170)
+                      xsec_factor = float(100.*stop_prod_xsec/t2cc_nevents) # weight to 100pb-1
+                      # print xsec_factor
+                      # print Luminosity
+                      # Luminosity *= xsec_factor
+                    else:
+                      xsec_factor = 1.
+
+                    normal =  GetSumHist(File = ["%s.root"%fi[0]], Directories = [dir], Hist = histName, Col = r.kBlack, Norm = None if "n" == key[0] else [float(Luminosity*1000*xsec_factor)/100.], LegendText = "nBtag")  
                     normal.HideOverFlow()
                     err = r.Double(0.0)
                     # normal.hObj.IntegralAndError(self.btagbin[self.number],normal.hObj.GetNbinsX(),err)
@@ -259,10 +311,10 @@ class Number_Extractor(object):
       else:
         self.bins = tuple(settings["bins"])
 
-      entries = ('Data','MCYield','Tot_Error','SM_Stat_Error','TTbar','WJets','Zinv','DY','DiBoson','SingleTop','Photon','Btag','SampleName','JetCategory','AlphaT','SITV')
+      entries = ('Data','MCYield','Tot_Error','SM_Stat_Error','TTbar','WJets','Zinv','DY','DiBoson','SingleTop','Photon','Btag','SampleName','JetCategory','AlphaT','SITV','T2cc')
       yields = ('Yield','Error')
 
-      self.process = ["TTbar","WJets","Zinv","DY","DiBoson","SingleTop","Photon"]      
+      self.process = ["TTbar","WJets","Zinv","DY","DiBoson","SingleTop","Photon", "T2cc"]
       analysis_type = "%s" %("Feasibility" if self.Feasibility == "True" else "RA1")
 
       if self.Make_Closure_Tests != "True" and self.Make_Root_Stats_File != "True": 
@@ -388,7 +440,10 @@ class Number_Extractor(object):
               if dict[entry]["Category"] == "OSOF": self.OSOF_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = dict[entry]["Yield"]
 
             elif dict[entry]["Category"] == "Had" :
-               
+                  # print self.Had_Yield_Per_Bin[dict[entry]["HT"]]
+                  # dict_printer(self.Had_Yield_Per_Bin[dict[entry]["HT"]])
+                  # print dict[entry]["SampleType"]
+                  # print self.Had_Yield_Per_Bin[dict[entry]["HT"]][dict[entry]["SampleType"]].keys()
                   self.Had_Yield_Per_Bin[dict[entry]["HT"]][dict[entry]["SampleType"]]["Yield"] =  dict[entry]["Yield"]
                   self.Had_Yield_Per_Bin[dict[entry]["HT"]][ dict[entry]["SampleType"]]["Error"] = Error
                   self.Had_Yield_Per_Bin[dict[entry]["HT"]]["Tot_Error"].append(Error)
@@ -790,7 +845,8 @@ class Number_Extractor(object):
                     {"label": r'''Single $t$ Had MC''',"entryFunc": self.MakeList(dict,"SingleTop")},
                     {"label": r'''DY Had MC''',"entryFunc": self.MakeList(dict,"DY")},
                     {"label": r'''Zinv Had MC''',"entryFunc": self.MakeList(dict,"Zinv")},
-                    {"label":r'''DiBoson''', "entryFunc":self.MakeList(dict,"DiBoson"),"adddouble":True},])
+                    {"label":r'''DiBoson''', "entryFunc":self.MakeList(dict,"DiBoson"),"adddouble":True},
+                    {"label":r'''T2cc''', "entryFunc":self.MakeList(dict,"T2cc"),"adddouble":True},])
                     
       if category == "Muon_Tables": self.Latex_Table(dict,caption = "Muon Yields and MC Breakdown",
             rows = [ {"label": r'''Muon yield data''',       "entryFunc":self.MakeList(self.Muon_Yield_Per_Bin,"Data")},
@@ -1027,4 +1083,18 @@ class Number_Extractor(object):
       
       s = "\end{document}"
       self.table.write(s) 
+
+
+def dict_printer(dicto = {}, indent = 1):
+
+  # print "> Outputting dictionary format.\n"
+  
+  print "{ (%d keys)\n" % len(dicto)
+  for key in dicto:
+    print "\t"*indent, "'%s': " % key,
+    if dict == type(dicto[key]):
+      dict_printer(dicto[key], indent+1)
+    else:
+      print dicto[key]
+  print "\t"*indent, "}\n"
 
