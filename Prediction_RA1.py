@@ -4,6 +4,7 @@ import argparse
 parser = argparse.ArgumentParser(description ='Produce RA1 Results')
 parser.add_argument('-c',help= 'Make RA1 Closure Tests, Choose all, 2 or 3 or jetcat',nargs='+', type =str)
 parser.add_argument('-u',help= 'Make RA1 Tables Uncorrected Yields', nargs='+', type =str)
+parser.add_argument('-a',help= 'AlphaT threshold, used to make RA1 Tables Uncorrected Yields', nargs='+', type =str,default=[""])
 parser.add_argument('-m',help= 'Make RA1 MC Normalisation Tables',action="store_true")
 parser.add_argument('-r',help= 'Make RA1 Root Files, Choose all, 2 or 3',nargs='+',type=str)
 parser.add_argument('-n',help= 'Make RA1 Tables, Choose all, 2 or 3',nargs='+',type =str)
@@ -39,16 +40,17 @@ settings = {
   "sb_corrs":{'WJets':this_run()["wj_corr"], "Photon":this_run()["dy_corr"], "Zinv":this_run()["dy_corr"], "DY":this_run()["dy_corr"], "Top":this_run()["tt_corr"]},
   "Analysis":"8TeV", # Differentiate between 7 and 8 TeV analysis i.e. uses alphaT cut in lowest two bins if 7TeV is selected
   "MHTMET":["False", "True"][1] #turn sideband corrections on or off
-      }
 
 '''
 Set some variables for file access
 '''
 
-print "\n>> Opening directory:", this_run()["path_name"]
+path_name = "../../" + this_run()["path_name"] if not this_run()["path_name"].startswith("/") else this_run()["path_name"]
+
+print "\n>> Opening directory:", path_name
 sleep(3)
 
-rootDirectory = "../../" + this_run()["path_name"]
+rootDirectory = path_name
 rootDirectoryNorm = rootDirectory
 
 data_run_suf = ["", "_Run2012A", "_Run2012B", "_Run2012C", "_Run2012D", "_Run2012ABC", "_Run2012BC"][0]
@@ -72,6 +74,7 @@ def Directory_Maker():
           else: folders.append(key)
 
     dir_stamp = "RA1_Documents_"+strftime("%d_%b")
+    if len(args.a[0]) > 0 : dir_stamp = dir_stamp + "_" + args.a[0].replace(".","p") 
     ensure_dir(dir_stamp)
     os.chdir(dir_stamp)
     owd = os.getcwd()
@@ -634,6 +637,16 @@ if __name__=="__main__":
   if args.u:
 
     print" ==================  \n Making Tables Uncorrected Yields \n ====================  \n"
+
+    if len(args.a[0]) > 0 :
+	    print "TEST"
+	    print args.a
+	    old = settings["AlphaTSlices"][0].split("_")[0]
+	    print old
+	    print settings["AlphaTSlices"][0]
+	    settings["AlphaTSlices"][0] = settings["AlphaTSlices"][0].replace(old,args.a[0])
+	    print settings["AlphaTSlices"][0]
+	    print 
     
     for j in args.u:
       print " ========= Jet Mult %s ======== " %j
