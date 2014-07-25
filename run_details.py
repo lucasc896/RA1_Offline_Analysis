@@ -1,6 +1,7 @@
+
 def this_run():
 
-	selector = "05March_NotSure_Rob_ChrisCheck"
+	selector = "19May_fullCrossCheck_v0"
 
 	out_dict = {}
 
@@ -61,14 +62,14 @@ def this_run():
 		# "tt_corr": 1.13,
 
 		# # Run C
-		#"had_lumi": 6.795,
-		#"mu_lumi": 6.770,
-		#"ph_lumi": 6.768,
+		# "had_lumi": 6.795,
+		# "mu_lumi": 6.770,
+		# "ph_lumi": 6.768,
 
 
-		#"wj_corr": 0.93,
-		#"dy_corr": 0.99,
-		#"tt_corr": 1.31,
+		# "wj_corr": 0.93,
+		# "dy_corr": 0.99,
+		# "tt_corr": 1.31,
 
 		# # Runs D
 		# "had_lumi": 7.287,
@@ -332,6 +333,23 @@ def this_run():
 
 	}
 
+	out_dict["05March_NotSure_Rob_v2"] = {
+
+		"path_name": "rootfiles/Root_Files_March_Full2013_RobLatest_IC",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.92,
+		"dy_corr": 0.93,
+		"tt_corr": 1.19,
+		# "tt_corr": 1.27, # taken from pure ttbar ratio
+
+	}
+
 	out_dict["05March_NotSure_Rob_ChrisCheck"] = {
 
 		"path_name": "rootfiles/Root_Files_05March_Full2013_notSure_IC_Rob_ChrisHadDataCheck",
@@ -349,6 +367,379 @@ def this_run():
 
 	}
 
+
+
+	out_dict["09April_ParkedFinal_HEAD"] = {
+
+		"path_name": "rootfiles/Root_Files_09April_Full2013_ParkedFinal_HEAD_FROMROB_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+
+	out_dict["12April_NoSITVTest_HEAD_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_12April_Full2013_NoSITVTest_HEAD_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.94,
+		"dy_corr": 0.95,
+		"tt_corr": 1.21,
+
+	}
+
+	out_dict["07May_NoMHTovMET_HEAD_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_07May_Full2013_NoMHTovMET_HEAD_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.90,
+		"dy_corr": 0.92,
+		"tt_corr": 1.11,
+
+	}
+
+	out_dict["07May_NoDeadECAL_HEAD_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_07May_Full2013_NoDeadECAL_HEAD_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.93,
+		"dy_corr": 0.92,
+		"tt_corr": 1.20,
+
+	}
+
+	out_dict["07May_NoDeadECAL_HEAD_v1"] = {
+
+		"path_name": "rootfiles/Root_Files_07May_Full2013_NoDeadECAL_HEAD_v1",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.91,
+		"dy_corr": 0.93,
+		"tt_corr": 1.16,
+
+	}
+
+	out_dict["16May_AlphaTInMuon_HEAD_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_16May_Full2013_AlphaTInMuon_HEAD_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		# "wj_corr": 0.95,
+		# "dy_corr": 0.96,
+		# "tt_corr": 1.18,
+
+		# "current" head corrs
+		"wj_corr": 0.91,
+		"dy_corr": 0.93,
+		"tt_corr": 1.16,
+
+	}
+
+	out_dict["12May_NoBtagRW_HEAD_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_12May_Full2013_NoBtagSF_HEAD_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.91,
+		"dy_corr": 0.93,
+		"tt_corr": 1.16,
+
+	}
+
+	out_dict["19May_fullCrossCheck_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_19May_Full2013_HEAD_fullCrossCheck_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.91,
+		"dy_corr": 0.93,
+		"tt_corr": 1.16,
+
+		# Rob's
+		# "wj_corr": 0.91,
+		# "dy_corr": 0.95,
+		# "tt_corr": 1.16,
+
+	}
+
+	out_dict["19May_raisedAlphaT_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_19May_Full2013_HEAD_raisedAlphaT_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.91,
+		"dy_corr": 0.93,
+		"tt_corr": 1.16,
+
+	}
+
+
+	out_dict["21May_head_v1"] = {
+
+		"path_name": "rootfiles/Root_Files_21May_Full2013_HEAD_v1",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.91,
+		"dy_corr": 0.93,
+		"tt_corr": 1.16,
+
+	}
+
+	out_dict["22May_head_v2"] = {
+
+		"path_name": "rootfiles/Root_Files_22May_Full2013_HEAD_v2",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.91,
+		"dy_corr": 0.93,
+		"tt_corr": 1.16,
+
+	}
+
+	out_dict["22May_noSITV_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_22May_Full2013_noSITV_HEAD_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.94,
+		"dy_corr": 0.95,
+		"tt_corr": 1.21,
+
+	}
+
+	out_dict["25May_RunBC_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_25May_RunBC_HEAD_v0",
+		
+		# Runs B+C
+		"had_lumi": 11.207,
+		"mu_lumi": 11.172,
+		"ph_lumi": 11.170,
+
+		# new corrs from this set of files
+		"wj_corr": 0.92,
+		"dy_corr": 0.93,
+		"tt_corr": 1.14,
+
+	}
+
+	out_dict["25May_RunBC_noSITV_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_25May_RunBC_noSITV_HEAD_v0",
+		
+		# Runs B+C
+		"had_lumi": 11.207,
+		"mu_lumi": 11.172,
+		"ph_lumi": 11.170,
+
+		# new corrs from this set of files
+		"wj_corr": 0.94,
+		"dy_corr": 0.95,
+		"tt_corr": 1.21,
+
+	}
+
+	out_dict["18Jun_latestCode_noPURW_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_18Jun_Full2013_allLatest_noPURW_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.93,
+		"dy_corr": 0.95,
+		"tt_corr": 1.17,
+
+	}
+
+
+	out_dict["23Jun_latestCode_tightJetID_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_23Jun_Full2013_allLatest_tightJetID_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.91,
+		"dy_corr": 0.93,
+		"tt_corr": 1.16,
+
+	}
+
+
+
+	out_dict["23Jun_Full2013_MC_Madgraph_Photon_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_23Jun_Full2013_allLatest_MC_MadGraph_PhotonSele_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.91,
+		"dy_corr": 0.93,
+		"tt_corr": 1.16,
+
+	}
+
+
+	out_dict["23Jun_Full2013_T2cc_PUVariations_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_23Jun_Full2013_allLatest_T2cc_PUVariations_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.91,
+		"dy_corr": 0.93,
+		"tt_corr": 1.16,
+
+	}
+
+
+	out_dict["08Jul_Full2013_ISRRW_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_08Jul_Full2013_allLatest_ISRRW_v0/down",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.91,
+		"dy_corr": 0.93,
+		"tt_corr": 1.16,
+
+	}
+
+	out_dict["09Jul_Full2013_JES_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_09Jul_Full2013_allLatest_JES_v0/down",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.91,
+		"dy_corr": 0.93,
+		"tt_corr": 1.16,
+
+	}
+
+	out_dict["10Jul_Full2013_TT_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_10Jul_Full2013_allLatest_TTRW_v0/noweight",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# new corrs from this set of files
+		"wj_corr": 0.91,
+		"dy_corr": 0.93,
+		"tt_corr": 1.16,
+
+	}
+
+	out_dict["14Jul_Full2013_DYTesting"] = {
+
+		"path_name": "rootfiles/Root_Files_14Jul_Full2013_allLatest_DYTesting_v5",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final
+		"wj_corr": 0.91,
+		"dy_corr": 0.93,
+		"tt_corr": 1.16,
+
+	}
+
+
+
 	out_dict["tmp"] = {
 
 		"path_name": "rootfiles/tmp",
@@ -358,15 +749,15 @@ def this_run():
 		"mu_lumi": 19.131,
 		"ph_lumi": 19.12,
 
-		# "wj_corr": 1.01,
-		# "dy_corr": 0.53,
-		# "tt_corr": 1.30,
+		# new corrs from this set of files
+		# "wj_corr": 0.91,
+		# "dy_corr": 0.93,
+		# "tt_corr": 1.16,
 
-		# testing values from 19Dec run!!
-		"wj_corr": 0.92,
-		"dy_corr": 0.97,
-		"tt_corr": 1.22,
-
+		# from Rob
+		"wj_corr": 0.91,
+		"dy_corr": 0.93,
+		"tt_corr": 1.16,
 
 	}
 
