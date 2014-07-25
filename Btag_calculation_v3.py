@@ -102,10 +102,12 @@ class Btag_Calc(object):
             # Calculate formula yields with alphaT cut in place
             if fi[3] =="Had" or fi[3] == "Photon" or (str(lower) == "0.55" and self.Keep_AlphaT == "True") :
               plot = file.Get("%s/Matched_vs_Matched_noB_vs_c_alphaT_%s" % (sample_dir, self.analysis_category))
-            # Without formula yields in place
+              if "0x0" in str(plot):
+                print "Trying to access: %s/Matched_vs_Matched_noB_vs_c_alphaT_%s in %s.root" % (sample_dir, self.analysis_category, fi[0])
             else:
               plot = file.Get("%s/Matched_vs_Matched_noB_vs_c_%s" % (sample_dir, self.analysis_category))
-
+              if "0x0" in str(plot):
+                print "Trying to access: %s/Matched_vs_Matched_noB_vs_c_%s in %s.root" % (sample_dir, self.analysis_category, fi[0])
           if fi[2] != "Data":
             if "0x0" in str(plot):
               print ">>> Error in Btag_Calc::Make_Dict: 'plot' not found."
@@ -258,7 +260,7 @@ class Btag_Calc(object):
       if sample == "DiMuon": sample_type = "Muon"
       if sample == "Photon": Znum = ""
       if sample in ["OSSF","OSOF","SSSF","SSOF"] : sample_type = "DiLepton"
-       
+      
       btag_eff = self.Btag_Efficiencies[sample_type+Znum][htbin]['Btag_Efficiency'] # +  self.Btag_Efficiencies[sample_type+Znum][htbin]['Btag_Error']
       mistag_eff = self.Btag_Efficiencies[sample_type+Znum][htbin]['Mistag_Efficiency']  #+  self.Btag_Efficiencies[sample_type+Znum][htbin]['Mistag_Error']
       ctag_eff = self.Btag_Efficiencies[sample_type+Znum][htbin]['Ctag_Efficiency']  #+  self.Btag_Efficiencies[sample_type+Znum][htbin]['Ctag_Error']
@@ -329,6 +331,9 @@ class Btag_Calc(object):
             dir = fi[2]+bin
             if dir == subdirect.GetName():
               for subkey in [ "GenJetPt_nBgen_all", "GenJetPt_noB_nBgen_all", "GenJetPt_c_nBgen_all", "Btagged_GenJetPt_nBgen_SFb_Medium_all", "Btagged_GenJetPt_noB_nBgen_SFlight_Medium_all", "Btagged_GenJetPt_c_nBgen_SFlight_Medium_all"  ]:
+              # for subkey in [ "GenJetPt_nBgen_all", "GenJetPt_noB_nBgen_all", "GenJetPt_c_nBgen_all", "Btagged_GenJetPt_nBgen_SFb_minus_Medium_all", "Btagged_GenJetPt_noB_nBgen_SFlight_minus_Medium_all", "Btagged_GenJetPt_c_nBgen_SFlight_minus_Medium_all"  ]:
+              # for subkey in [ "GenJetPt_nBgen_all", "GenJetPt_noB_nBgen_all", "GenJetPt_c_nBgen_all", "Btagged_GenJetPt_nBgen_SFb_plus_Medium_all", "Btagged_GenJetPt_noB_nBgen_SFlight_plus_Medium_all", "Btagged_GenJetPt_c_nBgen_SFlight_plus_Medium_all"  ]:
+              # for subkey in [ "GenJetPt_nBgen_all", "GenJetPt_noB_nBgen_all", "GenJetPt_c_nBgen_all", "Btagged_GenJetPt_nBgen_Medium_all", "Btagged_GenJetPt_noB_nBgen_Medium_all", "Btagged_GenJetPt_c_nBgen_Medium_all"]:
                 #=========================================#
                 if subkey == "GenJetPt_nBgen_all":
                   err = r.Double(0.0)     
@@ -342,6 +347,7 @@ class Btag_Calc(object):
                     self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Btag_Error"] = 0
 
                 if subkey == "Btagged_GenJetPt_nBgen_SFb_Medium_all":
+                # if subkey == "Btagged_GenJetPt_nBgen_Medium_all":
                   err = r.Double(0.0)
                   bplot = file.Get(dir+"/"+subkey)
                   try:
@@ -368,6 +374,7 @@ class Btag_Calc(object):
                     self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Mistag_Error"] = 0
                 
                 if subkey == "Btagged_GenJetPt_noB_nBgen_SFlight_Medium_all":
+                # if subkey == "Btagged_GenJetPt_noB_nBgen_Medium_all":
                   aplot = file.Get(dir+"/"+subkey)
                   err = r.Double(0.0)
                   try: self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Mistag_Efficiency'] = aplot.Integral()/(self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]['Mistag_Efficiency'])
@@ -393,6 +400,7 @@ class Btag_Calc(object):
                     self.Btag_Efficiencies[fi[1]][bin.split('_')[0]]["Ctag_Error"] = 0
 
                 if subkey == "Btagged_GenJetPt_c_nBgen_SFlight_Medium_all":
+                # if subkey == "Btagged_GenJetPt_c_nBgen_Medium_all":
                   cplot = file.Get(dir+"/"+subkey)
                   err = r.Double(0.0)
                   try:
