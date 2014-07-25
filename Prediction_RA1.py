@@ -128,7 +128,7 @@ btag_more_than_three_uncorrected_samples = {
     "mcHadzinv":(rootDirectory+"/Had_Zinv","btag_morethanthree_","Zinv","Had"),
     "mcHadsingt":(rootDirectory+"/Had_SingleTop","btag_morethanthree_","SingleTop","Had"),
     "mcHadDY":(rootDirectory+"/Had_DY","btag_morethanthree_","DY","Had"),
-    # "mcSMS":(rootDirectory+"/Had_T2cc","","T2cc","Had"),
+    # "mcSMS":(rootDirectory+"/Had_T2cc","btag_morethanthree_","T2cc","Had"),
     "nMuon":(rootDirectory+"/Muon_Data"+data_run_suf,"btag_morethanthree_OneMuon_","Data","Muon"),
     "mcMuonW1":(rootDirectory+"/Muon_WJets","btag_morethanthree_OneMuon_","WJets","Muon"),
     "mcMuonttbar":(rootDirectory+"/Muon_TTbar","btag_morethanthree_OneMuon_","TTbar","Muon"),
@@ -247,7 +247,7 @@ btag_two_uncorrected_samples = {
     "mcHadsingt":(rootDirectory+"/Had_SingleTop","btag_two_","SingleTop","Had"),
     "mcHaddiboson":(rootDirectory+"/Had_DiBoson","btag_two_","DiBoson","Had"),
     "mcHadDY":(rootDirectory+"/Had_DY","btag_two_","DY","Had"),
-    # "mcSMS":(rootDirectory+"/Had_T2cc","","T2cc","Had"),
+    # "mcSMS":(rootDirectory+"/Had_T2cc","btag_two_","T2cc","Had"),
     "nMuon":(rootDirectory+"/Muon_Data"+data_run_suf,"btag_two_OneMuon_","Data","Muon"),
     "mcMuonW1":(rootDirectory+"/Muon_WJets","btag_two_OneMuon_","WJets","Muon"),
     "mcMuonttbar":(rootDirectory+"/Muon_TTbar","btag_two_OneMuon_","TTbar","Muon"),
@@ -304,7 +304,7 @@ btag_one_uncorrected_samples = {
     "mcHadsingt":(rootDirectory+"/Had_SingleTop","btag_one_","SingleTop","Had"),
     "mcHaddiboson":(rootDirectory+"/Had_DiBoson","btag_one_","DiBoson","Had"),
     "mcHadDY":(rootDirectory+"/Had_DY","btag_one_","DY","Had"),
-    # "mcSMS":(rootDirectory+"/Had_T2cc","","T2cc","Had"),
+    # "mcSMS":(rootDirectory+"/Had_T2cc","btag_one_","T2cc","Had"),
     "nMuon":(rootDirectory+"/Muon_Data"+data_run_suf,"btag_one_OneMuon_","Data","Muon"),
     "mcMuonW1":(rootDirectory+"/Muon_WJets","btag_one_OneMuon_","WJets","Muon"),
     "mcMuonttbar":(rootDirectory+"/Muon_TTbar","btag_one_OneMuon_","TTbar","Muon"),
@@ -383,7 +383,7 @@ btag_zero_uncorrected_samples = {
     "mcHadsingt":(rootDirectory+"/Had_SingleTop","btag_zero_","SingleTop","Had"),
     "mcHaddiboson":(rootDirectory+"/Had_DiBoson","btag_zero_","DiBoson","Had"),
     "mcHadDY":(rootDirectory+"/Had_DY","btag_zero_","DY","Had"),
-    # "mcSMS":(rootDirectory+"/Had_T2cc","","T2cc","Had"),
+    # "mcSMS":(rootDirectory+"/Had_T2cc","btag_zero_","T2cc","Had"),
     "nMuon":(rootDirectory+"/Muon_Data"+data_run_suf,"btag_zero_OneMuon_","Data","Muon"),
     "mcMuonW1":(rootDirectory+"/Muon_WJets","btag_zero_OneMuon_","WJets","Muon"),
     "mcMuonttbar":(rootDirectory+"/Muon_TTbar","btag_zero_OneMuon_","TTbar","Muon"),
@@ -440,7 +440,7 @@ btag_three_uncorrected_samples = {
     "mcHadsingt":(rootDirectory+"/Had_SingleTop","btag_three_","SingleTop","Had"),
     "mcHaddiboson":(rootDirectory+"/Had_DiBoson","btag_three_","DiBoson","Had"),
     "mcHadDY":(rootDirectory+"/Had_DY","btag_three_","DY","Had"),
-    # "mcSMS":(rootDirectory+"/Had_T2cc","","T2cc","Had"),
+    # "mcSMS":(rootDirectory+"/Had_T2cc","btag_three_","T2cc","Had"),
     "nMuon":(rootDirectory+"/Muon_Data"+data_run_suf,"btag_three_OneMuon_","Data","Muon"),
     "mcMuonW1":(rootDirectory+"/Muon_WJets","btag_three_OneMuon_","WJets","Muon"),
     "mcMuonttbar":(rootDirectory+"/Muon_TTbar","btag_three_OneMuon_","TTbar","Muon"),
@@ -615,7 +615,6 @@ if __name__=="__main__":
     #Number_Extractor(settings,btag_more_than_one_normalisation,"More_Than_One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="all",RunOption = "MCNormalisation")
     Number_Extractor(settings,btag_two_normalisation,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="all",RunOption ="MCNormalisation")
     Number_Extractor(settings,btag_two_normalisation,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption ="MCNormalisation")
-
 
   if args.n : 
    
