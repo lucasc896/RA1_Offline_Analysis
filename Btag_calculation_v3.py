@@ -99,12 +99,15 @@ class Btag_Calc(object):
           sample_dir = fi[1]+dir
           
           if fi[2] != "Data":
+            # MC
             # Calculate formula yields with alphaT cut in place
             if fi[3] =="Had" or fi[3] == "Photon" or (str(lower) == "0.55" and self.Keep_AlphaT == "True") :
+              # had or photon or (aT > 0.55 and keep alphaT)
               plot = file.Get("%s/Matched_vs_Matched_noB_vs_c_alphaT_%s" % (sample_dir, self.analysis_category))
               if "0x0" in str(plot):
                 print "Trying to access: %s/Matched_vs_Matched_noB_vs_c_alphaT_%s in %s.root" % (sample_dir, self.analysis_category, fi[0])
             else:
+              # Muon
               plot = file.Get("%s/Matched_vs_Matched_noB_vs_c_%s" % (sample_dir, self.analysis_category))
               if "0x0" in str(plot):
                 print "Trying to access: %s/Matched_vs_Matched_noB_vs_c_%s in %s.root" % (sample_dir, self.analysis_category, fi[0])
@@ -128,39 +131,36 @@ class Btag_Calc(object):
  
    
   def Data_Yield(self,file,dir_path,dir,lower,higher,sample_type,category):
-    
+    # need to change this as it assumes alphaT distro binning
+
     # get from AlphaT plot
     for histName in self.settings['plots']:
       histName = str(histName+self.analysis_category)
       dir = dir_path+dir
-      # print dir, histName
-      # likely no need to call GetSumHist, when only one histo is needed (and it does extra formatting) - not a big issue
+
+      # no real need to call GetSumHist here and do unecessary formatting.
       normal =  GetSumHist(File = ["%s.root"%file], Directories = [dir], Hist = histName, Col = r.kBlack, Norm = None, LegendText = "nBtag")  
       normal.HideOverFlow()
-      
+
+      lo_bin = normal.hObj.FindBin(float(lower))
+      hi_bin = normal.hObj.FindBin(float(higher))
+      err = r.Double(0.0)
+
       # check if want to consider all alphaT values
-      # CHECK WHICH IS RUN FOR TABLES, AS THIS COULD BE WHY DATA YIELDS ARE DOWN IN RECENT RUNNINGS
       if self.Keep_AlphaT == "True" and str(lower)=="0.55": 
-        err = r.Double(0.0)
-        
         if category != "Had":
-          # entire range for non-had samples
-          normal.hObj.IntegralAndError(int(float(lower)/0.01)+1,int(float(higher)/0.01),err)
+          # used if want to consider >0.55 in mu sample
+          val = normal.hObj.IntegralAndError(lo_bin, hi_bin, err)
         else:
           # only 0.55 and above for had samples
-          normal.hObj.IntegralAndError(int(float(0.55)/0.01)+1,int(float(higher)/0.01),err)
-      
-        table_string =" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(0.55)/0.01)+1,int(float(10)/0.01)) if category =="Had" else (normal.hObj.Integral(int(float(lower)/0.01)+1,int(float(higher)/0.01)))),err,sample_type,category,lower)
+          val = normal.hObj.IntegralAndError(lo_bin, normal.hObj.GetNbinsX(), err)
       else:
-
-        err = r.Double(0.0)
-
         if category == "Had":
-          normal.hObj.IntegralAndError(int(float(lower)/0.01)+1,int(float(higher)/0.01),err)
+          val = normal.hObj.IntegralAndError(lo_bin, hi_bin, err)
         else:
-          normal.hObj.IntegralAndError(1,2000,err)
-        table_string =" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(0.55)/0.01)+1,int(float(higher)/0.01)) if category =="Had" else (normal.hObj.Integral())),err,sample_type,category,lower)
-     
+          val = normal.hObj.IntegralAndError(1, normal.hObj.GetNbinsX(), err)
+
+      table_string =" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%(val, err, sample_type, category, lower)
       normal.a.Close()
     
     return table_string    
