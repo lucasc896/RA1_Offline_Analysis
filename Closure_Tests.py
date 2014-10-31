@@ -120,12 +120,30 @@ class Jad_Compute(object):
 
       test_80 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",'plot_title':"#mu + jets (0-b-tag) #rightarrow #mu + jets (2-b-tag) (no #alpha_{T})",'scale':None , 'reduce':"False",'file_name':'Btag_mu_zero_mu_two_no_alphaT_Cut','spread':"False"   }
 
+      # test_69 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",
+      #           'plot_title':"passed SITV (#mu + jets, >=0 b-tag) #rightarrow failed SITV (#mu + jets, >=0 b-tag) (no #alpha_{T})",
+      #           'scale':None , 'reduce':"False",'file_name':'SITV_Passed_to_Failed_Btag_inc_no_alphaT_Cut','spread':"False"}
       test_69 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",
-                'plot_title':"passed SITV (#mu + jets, >=1 b-tag) #rightarrow failed SITV (#mu + jets, >=1 b-tag) (no #alpha_{T})",
-                'scale':None , 'reduce':"False",'file_name':'Btag_mu_zero_mu_two_no_alphaT_Cut','spread':"False"}
+                'plot_title':"no SIT(eq0b, le3j) #rightarrow  SIT (ge1b, ge4j) (no #alpha_{T}, #mu+jets)",
+                'scale':None , 'reduce':"False",'file_name':'SITV_test1_no_alphaT_Cut','spread':"False"}
+      test_69 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",
+                'plot_title':"no SIT(eq0b, le3j) #rightarrow  no SIT (ge1b, ge4j) (no #alpha_{T}, #mu+jets)",
+                'scale':None , 'reduce':"False",'file_name':'SITV_test2_no_alphaT_Cut','spread':"False"}
+      test_69 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",
+                'plot_title':"no SIT(ge1b, ge4j) #rightarrow  SIT (ge1b, ge4j) (no #alpha_{T}, #mu+jets)",
+                'scale':None , 'reduce':"False",'file_name':'SITV_test4_no_alphaT_Cut','spread':"False"}
+
+      test_69 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",
+                'plot_title':"no SIT(eq0b, le3j) #rightarrow  SIT (eq0b, le3j) (no #alpha_{T}, #mu+jets)",
+                'scale':None , 'reduce':"False",'file_name':'SITV_test5_no_alphaT_Cut','spread':"False"}
 
       test_dicts = [test_4,test_2,test_24,test_22,test_3,test_5,test_6,test_12,test_80,test_20,test_20_b,test_21,test_23,test_26,test_49]
+      # test_dicts = [test_69]
 
+      test_mhtmet_mumu = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -3.,'box' : "False",'plot_title':"#mu#mu + jets (MHT/MET < 1.25) #rightarrow #mu#mu + jets (MHT/MET > 1.25)",'scale':None , 'reduce':"False",'file_name':'Btag_dimuon_to_dimuon_with_without_MHTMET','spread':"False"}
+      test_mhtmet_mu = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "False",'plot_title':"#mu + jets (MHT/MET < 1.25) #rightarrow #mu + jets (MHT/MET > 1.25)",'scale':None , 'reduce':"False", 'file_name':'Btag_mu_to_mu_with_without_MHTMET','spread':"False" }
+
+      # test_dicts = [test_mhtmet_mu, test_mhtmet_mumu]
 
     """
     We loop through all the dictionaries passed to closure tests from Numbercruncher here and if they fit the category we want to produce a closure test for we pass onto Fill_Dictionary. 
@@ -288,10 +306,41 @@ class Jad_Compute(object):
             self.Fill_Dictionary(test_49,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
 
           # for SITV test
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'More_Than_One_btag':
-            self.Fill_Dictionary(test_69,Control = "Muon", Signal = "Muon",Not_Do = 'Signal') 
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'More_Than_One_btag':
+          # if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['SITV'] == "Passed":
+          #   self.Fill_Dictionary(test_69,Control = "Muon", Signal = "Muon",Not_Do = 'Signal') 
+          # if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['SITV'] == "Failed":
+          #   self.Fill_Dictionary(test_69,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
+
+          # if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Zero_btags' and self.file[self.entry]['SITV'] == "Passed":
+          #   self.Fill_Dictionary(test_69,Control = "Muon", Signal = "Muon",Not_Do = 'Signal') 
+
+          # test 4
+          # if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'More_Than_Zero_btag' and self.file[self.entry]['SITV'] == "Failed":
+          #   self.Fill_Dictionary(test_69,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
+          # if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'More_Than_Zero_btag' and self.file[self.entry]['SITV'] == "Passed":
+          #   self.Fill_Dictionary(test_69,Control = "Muon", Signal = "Muon",Not_Do = 'Signal')
+
+          # test 5
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Zero_btags' and self.file[self.entry]['SITV'] == "Failed":
             self.Fill_Dictionary(test_69,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Zero_btags' and self.file[self.entry]['SITV'] == "Passed":
+            self.Fill_Dictionary(test_69,Control = "Muon", Signal = "Muon",Not_Do = 'Signal')
+
+          # MHT_MET test (using SITV flag for MHTMET differences)
+          if True:
+            if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['SITV'] == "Failed":
+              self.Fill_Dictionary(test_mhtmet_mu,Control = "Muon", Signal = "Muon",Not_Do = 'Signal',Subtract = True,AlphaT="0.55",Btag="Inclusive",SampleName = "Muon") # 0.01 - 0.55 needs subtract option
+              # self.Fill_Dictionary(test_mhtmet_mu,Control = "Muon", Signal = "Muon",Not_Do = 'Signal') 
+            if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['SITV'] == "Passed":
+              self.Fill_Dictionary(test_mhtmet_mu,Control = "Muon", Signal = "Muon",Not_Do = 'Control',Subtract = True,AlphaT="0.55",Btag="Inclusive",SampleName = "Muon")
+              # self.Fill_Dictionary(test_mhtmet_mu,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
+
+            if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['SITV'] == "Failed":
+              self.Fill_Dictionary(test_mhtmet_mumu,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Signal',Subtract = True,AlphaT="0.55",Btag="Inclusive",SampleName = "DiMuon")
+              # self.Fill_Dictionary(test_mhtmet_mumu,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Signal')
+            if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['SITV'] == "Passed":
+              self.Fill_Dictionary(test_mhtmet_mumu,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control',Subtract = True,AlphaT="0.55",Btag="Inclusive",SampleName = "DiMuon")
+              # self.Fill_Dictionary(test_mhtmet_mumu,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
 
     for test in test_dicts:
       if self.JetCat == "True":
