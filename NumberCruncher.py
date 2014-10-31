@@ -43,6 +43,34 @@ def MC_Scaler(htbin,jetmult,mc_yield,sample = '',error = '',Analysis = '',btagbi
                         "875_2":0.002,  "875_3":0.005,
                         "975_2":0.002,  "975_3":0.005,
                         "1075_2":0.002, "1075_3":0.005,}
+        
+
+        if [False, True][0]:
+          print "WARNING: 100percent signal trigger eff assumed"
+
+          AlphaT_Scale = {"200_2":1.,  "200_3":1., #"200_2":0.816,  "200_3":0.740,
+                          "275_2":1.,  "275_3":1., #"275_2":0.901,  "275_3":0.666,
+                          "325_2":1.,  "325_3":1., #"325_2":0.988,  "325_3":0.971,
+                          "375_2":1.,  "375_3":1., #"375_2":0.994,  "375_3":0.988,
+                          "475_2":1.,  "475_3":1., #"475_2":0.99,   "475_3":0.99,
+                          "575_2":1.,  "575_3":1.,
+                          "675_2":1.,  "675_3":1.,
+                          "775_2":1.,  "775_3":1.,
+                          "875_2":1.,  "875_3":1.,
+                          "975_2":1.,  "975_3":1.,
+                          "1075_2":1., "1075_3":1.,}
+
+          AlphaT_Error = {"200_2":0.00,  "200_3":0.0,
+                          "275_2":0.00,  "275_3":0.0,
+                          "325_2":0.00,  "325_3":0.0,
+                          "375_2":0.00,  "375_3":0.0,
+                          "475_2":0.00,  "475_3":0.0,
+                          "575_2":0.00,  "575_3":0.0,
+                          "675_2":0.00,  "675_3":0.0,
+                          "775_2":0.00,  "775_3":0.0,
+                          "875_2":0.00,  "875_3":0.0,
+                          "975_2":0.00,  "975_3":0.0,
+                          "1075_2":0.00, "1075_3":0.00,}
 
         # 30/30 (2nd mu doesn't matter), from data
         Muon_Scale = {"150_2": 0.872,"150_3": 0.881,
@@ -121,7 +149,7 @@ def MC_Scaler(htbin,jetmult,mc_yield,sample = '',error = '',Analysis = '',btagbi
 
 class Number_Extractor(object):
 
-  def __init__(self,sample_settings,sample_list,number,c_file = "",Triggers = "",Closure = "",Stats = "",AlphaT='',Trans_Plots = '',Calculation = '',Split_Lumi = '',Analysis_category = '',Template = '',Combine = '',Do_sys = '',Working_Point = '',Feasibility = "",RunOption = "",Sitv = "False"):
+  def __init__(self,sample_settings,sample_list,number,c_file = "",Triggers = "",Closure = "",Stats = "",AlphaT='',Trans_Plots = '',Calculation = '',Split_Lumi = '',Analysis_category = '',Template = '',Combine = '',Do_sys = '',Working_Point = '',Feasibility = "",RunOption = "",Sitv = "Passed"):
 
     from time import time
     self.baseTime = time()
@@ -173,6 +201,7 @@ class Number_Extractor(object):
       # When formula method is used (Standard RA1), samples are passed onto Btag_Calc class in btag_calculation.
       # This fills up self.return_dict, which contains all the btag effs
       # note, this is a call to the "Make_Dict" function of BtagCalc!
+      print sample_settings["AlphaTSlices"]
       self.return_dict = Btag_Calc(sample_settings,sample_list,Calculation,number,AlphaT,self.Lumi_List,self.Analysis,self.analysis_category).Make_Dict(sample_settings,sample_list,number) 
       self.Form_Vanilla = "Formula"
     else:
@@ -183,65 +212,69 @@ class Number_Extractor(object):
 
   def Create_Dictionary(self,settings,samples):
 
-         """
-         This is where dictionary is created for Uncorrected yields. 
-         We loop through all samples and all HT bins and pull out the integral of the number of btags histogram to determine the yields and error.
-         Same process is done in Btag_Calc but the yields are calculated through a formula rather than just pull the number from a histogram
-         """
-         print "In uncorrected yields"
-         # print "number:", self.number
-         # print self.btagbin[self.number]
-         table_entries = "{" 
-         for key,fi in sorted(samples.iteritems()):
-           i = 0
-           for dir in settings['dirs']:
-              for alphat in settings['AlphaTSlices']:
-                lower = float(alphat.split('_')[0])
-                higher = float(alphat.split('_')[1])
-                table_entries += "\t\"%s_%d\"  : "%(key,i)
-                i+=1
-                table_entries += "{\"HT\":\"%s\","%(dir.split('_')[0])
-                for histName in settings['plots']:
-                    histName = str(histName+self.analysis_category)
-                    checkht = dir
-                    dir = fi[1]+dir
-                    Luminosity = self.Lumi_List[fi[3]]
+    """
+    This is where dictionary is created for Uncorrected yields. 
+    We loop through all samples and all HT bins and pull out the integral of the number of btags histogram to determine the yields and error.
+    Same process is done in Btag_Calc but the yields are calculated through a formula rather than just pull the number from a histogram
+    """
+    print "In uncorrected yields"
+    # print "number:", self.number
+    # print self.btagbin[self.number]
+    table_entries = "{" 
+    for key,fi in sorted(samples.iteritems()):
+      i = 0
+      for dir in settings['dirs']:
+        for alphat in settings['AlphaTSlices']:
+          lower = float(alphat.split('_')[0])
+          higher = float(alphat.split('_')[1])
+          table_entries += "\t\"%s_%d\"  : "%(key,i)
+          i+=1
+          table_entries += "{\"HT\":\"%s\","%(dir.split('_')[0])
+          for histName in settings['plots']:
+            histName = str(histName+self.analysis_category)
+            checkht = dir
+            dir = fi[1]+dir
+            Luminosity = self.Lumi_List[fi[3]]
 
-                    if "T2cc" in fi[2]:
-                      # if T2cc being used, then add a xsec factor to Luminosity
-                      stop_prod_xsec = 5.57596 #pb for 250GeV mass stop
-                      # t2cc_nevents = 582630 #nevents for (250,240)
-                      t2cc_nevents = 581438 #nevents for (250,170)
-                      xsec_factor = float(100.*stop_prod_xsec/t2cc_nevents) # weight to 100pb-1
-                      # print xsec_factor
-                      # print Luminosity
-                      # Luminosity *= xsec_factor
-                    else:
-                      xsec_factor = 1.
+            if "T2cc" in fi[2]:
+              print "INFO: Scaling T2cc sample by xsec weight."
+              # if T2cc being used, then add a xsec factor to Luminosity
+              stop_prod_xsec = 5.57596 #pb for 250GeV mass stop
+              t2cc_nevents = 582630 #nevents for (250,240)
+              # t2cc_nevents = 581438 #nevents for (250,170)
+              # t2cc_nevents = 582301 #nevents for (250,230)
 
-                    normal =  GetSumHist(File = ["%s.root"%fi[0]], Directories = [dir], Hist = histName, Col = r.kBlack, Norm = None if "n" == key[0] else [float(Luminosity*1000*xsec_factor)/100.], LegendText = "nBtag")  
-                    normal.HideOverFlow()
-                    err = r.Double(0.0)
-                    # normal.hObj.IntegralAndError(self.btagbin[self.number],normal.hObj.GetNbinsX(),err)
-                    lo_bin = normal.hObj.FindBin(lower)
-                    if "Muon" in fi[3]:
-                      # get full distro for Muon selections
-                      val = normal.hObj.Integral(1,normal.hObj.GetNbinsX())
-                      # print lo_bin
-                    else:
-                      # use truncated alphaT for photon and had
-                      val = normal.hObj.Integral(lo_bin,normal.hObj.GetNbinsX())
-                    # if "Muon" not in  val = normal.hObj.Integral(lo_bin,normal.hObj.GetNbinsX())
-                    throwaway = normal.hObj.IntegralAndError(lo_bin,normal.hObj.GetNbinsX(),err)
-                    # table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.GetBinContent(self.btagbin[self.number]) if self.number not in ["More_Than_Three_btag","Inclusive"] else normal.hObj.Integral(self.btagbin[self.number],normal.hObj.GetNbinsX())),(normal.hObj.GetBinError(self.btagbin[self.number]) if self.number not in ["More_Than_Three_btag","Inclusive"]  else err),fi[2],fi[3],lower)
-                    # table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(lo_bin,normal.hObj.GetNbinsX()) if str(checkht[0:3]) in ["275","325"] else (normal.hObj.Integral())),err,fi[2],fi[3],lower)
-                    table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%(val,err,fi[2],fi[3],lower)
-                    normal.a.Close()
+              xsec_factor = float(100.*stop_prod_xsec/t2cc_nevents) # weight to 100pb-1
+
+              # sample_lumi = t2cc_nevent / stop_prod_xsec
+              # xsec_factor = target_lumi / sample_lumi
+            else:
+              xsec_factor = 1.
+
+            normal =  GetSumHist(File = ["%s.root"%fi[0]], Directories = [dir], Hist = histName, Col = r.kBlack, Norm = None if "n" == key[0] else [float(Luminosity*1000*xsec_factor)/100.], LegendText = "nBtag")  
+            normal.HideOverFlow()
+            err = r.Double(0.0)
+            # normal.hObj.IntegralAndError(self.btagbin[self.number],normal.hObj.GetNbinsX(),err)
+            lo_bin = normal.hObj.FindBin(lower)
+            hi_bin = normal.hObj.FindBin(higher) - 1 #minus one to get the bin before this, i.e <higher, not <=higher
+            # print lower, lo_bin, higher, hi_bin
+            if "Muon" in fi[3]:
+              # get full distro for Muon selections
+              if self.Settings['global_alphat']:
+                val = normal.hObj.IntegralAndError(lo_bin, hi_bin, err)
+              else:
+                val = normal.hObj.IntegralAndError(1, normal.hObj.GetNbinsX(), err)
+            else:
+              # use truncated alphaT for photon and had
+              val = normal.hObj.IntegralAndError(lo_bin, hi_bin, err)
+
+            table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%(val,err,fi[2],fi[3],lower)
+            normal.a.Close()
          
-         table_entries +="}"
-         # Do a literal eval to turn this string into a dictionary
-         self.return_dict = ast.literal_eval(table_entries)
-         return self.return_dict
+    table_entries +="}"
+    # Do a literal eval to turn this string into a dictionary
+    self.return_dict = ast.literal_eval(table_entries)
+    return self.return_dict
 
 
 
@@ -660,7 +693,7 @@ class Number_Extractor(object):
       trans_error = []
       self.Dict_For_Table = dict.fromkeys(self.bins)
       self.Combination_Pred_Table = dict.fromkeys(self.bins)
-      entries = ('Data_Pred','Prediction','Pred_Error','Data','Data_Error','Trans','Trans_Error')
+      entries = ('Data_Pred','Prediction','Pred_Error','Data','Data_Error','Trans','Trans_Error','Pull')
       dictionaries = [self.Dict_For_Table,self.Combination_Pred_Table]
 
       for dicto in dictionaries:
@@ -700,7 +733,12 @@ class Number_Extractor(object):
           self.Combination_Pred_Table[bin]['Data'] = comb_test[bin]["Data"]
           try:self.Combination_Pred_Table[bin]['Pred_Error'] = self.Combination_Pred_Table[bin]['Prediction']*math.sqrt(((self.Combination_Pred_Table[bin]['Data_Error']/self.Combination_Pred_Table[bin]['Data_Pred'])*(self.Combination_Pred_Table[bin]['Data_Error']/self.Combination_Pred_Table[bin]['Data_Pred'])) +((self.Combination_Pred_Table[bin]['Trans_Error']/self.Combination_Pred_Table[bin]['Trans'])*(self.Combination_Pred_Table[bin]['Trans_Error']/self.Combination_Pred_Table[bin]['Trans'])))
           except ZeroDivisionError: self.Combination_Pred_Table[bin]['Pred_Error'] = 0
-
+          try:
+            total_pred = self.Combination_Pred_Table[bin]['Prediction'] + self.Dict_For_Table[bin]['Prediction']
+            total_pred_err = sqrt(pow(self.Dict_For_Table[bin]['Pred_Error'], 2) + pow(self.Combination_Pred_Table[bin]['Pred_Error'], 2))
+            self.Combination_Pred_Table[bin]['Pull'] = float((self.Combination_Pred_Table[bin]['Data'] - total_pred) / total_pred_err)
+          except ZeroDivisionError:
+            self.Combination_Pred_Table[bin]['Pull'] = 0.
       #if make_hist : self.Translation_Plots(make_hist,trans_num ,trans_error,self.Settings)
    
 
@@ -920,19 +958,45 @@ class Number_Extractor(object):
                     {"label": r'''$\gamma +$ jet data''',       "entryFunc":self.MakeList(dict,"Data_Pred")},
                     {"label":r'''Z$\rightarrow\nu\bar{\nu}$ prediction''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error")}])
   
-      if category == "Combined_SM": self.Latex_Table(dict,caption = "Total SM Prediction (Muon + DiMuon)", 
-            rows = [{"label": r'''t$\bar{t}$ + W prediction from $\mu +$ jets''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error")},
+      if category == "Combined_SM":
+
+        my_rows = [{"label": r'''t$\bar{t}$ + W prediction from $\mu +$ jets''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error")},
                     {"label": r'''Z$\rightarrow\nu\bar{\nu}$ prediction from $\mu\mu +$ jets''', "entryFunc":self.MakeList(dict2,"Prediction","Pred_Error")},
                     {"label":r'''Total SM prediction''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error",combined=dict2)},
-                    {"label": r'''Hadronic yield from data''',  "entryFunc":self.MakeList(dict,"Data")},])
+                    {"label": r'''Hadronic yield from data''',  "entryFunc":self.MakeList(dict,"Data")},]
+
+        if self.Settings["Table_Pulls"]:
+          my_rows.append({"label": r'''Pull''', "entryFunc":self.MakeList(dict2,"Pull")})
+        else:
+          self.printList(dict2, 'Pull')
+
+        self.Latex_Table(dict,caption = "Total SM Prediction (Muon + DiMuon)", rows = my_rows)
                    
-      if category == "Combined_SM_Photon": self.Latex_Table(dict,caption = "Total SM Prediction (Muon + Photon)", 
-            rows = [{"label": r'''$t\bar{t}$ + W prediction from $\mu +$ jets''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error")},
+      if category == "Combined_SM_Photon":
+        my_rows = [{"label": r'''$t\bar{t}$ + W prediction from $\mu +$ jets''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error")},
                     {"label": r'''$Z\rightarrow\nu\bar{\nu}$ Prediction from $\gamma +$ jets''', "entryFunc":self.MakeList(dict2,"Prediction","Pred_Error")},
                     {"label":r'''Total SM prediction''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error",combined=dict2)},
-                    {"label": r'''Hadronic yield from data''',  "entryFunc":self.MakeList(dict,"Data")},])
+                    {"label": r'''Hadronic yield from data''',  "entryFunc":self.MakeList(dict,"Data")},]
+
+        if self.Settings["Table_Pulls"]:
+          my_rows.append({"label": r'''Pull''', "entryFunc":self.MakeList(dict2,"Pull")})
+        else:
+          self.printList(dict2, 'Pull')
+
+        self.Latex_Table(dict,caption = "Total SM Prediction (Muon + Photon)", rows = my_rows)
       
- 
+  def printList(self, dict = {}, key = ""):
+    if not key:
+      return
+
+    out = ""
+    for n, bin in enumerate(self.bins):
+      out += "%s: %.1f\t" % (bin, dict[bin][key])
+      if n%4 == 0 and n != 0:
+        out += "\n"
+
+    print out 
+
   def MakeList(self,dict,key,error = "",combined = ""):
       List = []
       for entry in self.bins:
