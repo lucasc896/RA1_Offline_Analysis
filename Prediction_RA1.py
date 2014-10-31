@@ -34,16 +34,17 @@ settings = {
   "dirs":["200_275","275_325","325_375","375_475","475_575","575_675","675_775","775_875","875_975","975_1075","1075"],  #HT Bins
   "bins":["200","275","325","375","475","575","675","775","875","975","1075"],  #HT Bins
   "plots":["AlphaT_",],  # Histogram that Yields are taken from
-  "AlphaTSlices":["0.55_50", "0.56_50", "0.57_50", "0.58_50", "0.59_50", "0.60_50"][:1], # AlphaT Slices, WARNING: this fucks up Formula Method!!
+  "AlphaTSlices":["0.55_50", "0.56_50", "0.57_50", "0.58_50", "0.59_50", "0.60_50", "0.53_50", "0.52_0.53", "0.53_0.55"][:1], # AlphaT Slices, WARNING: this fucks up Formula Method!!
   "Lumo":this_run()["had_lumi"], # Luminosity in fb
   "Multi_Lumi":{'Had':this_run()["had_lumi"],'Muon':this_run()["mu_lumi"],'DiMuon':this_run()["mu_lumi"],'Photon':this_run()["ph_lumi"]},  # Different Luminosity per sample, used when SplitLumi = True
   "sb_corrs":{'WJets':this_run()["wj_corr"], "Photon":this_run()["dy_corr"], "Zinv":this_run()["dy_corr"], "DY":this_run()["dy_corr"], "Top":this_run()["tt_corr"]},
   "Analysis":"8TeV", # Differentiate between 7 and 8 TeV analysis i.e. uses alphaT cut in lowest two bins if 7TeV is selected
-  "MHTMET":["False", "True"][1] #turn sideband corrections on or off
+  "MHTMET":["False", "True"][1], #turn sideband corrections on or off
+  "Table_Pulls":[False, True][0],
+  "global_alphat":[False, True][0], # uses alphaT slices in mu sele. only works for vanilla.
+}
 
-'''
-Set some variables for file access
-'''
+''' Set some variables for file access '''
 
 path_name = "../../" + this_run()["path_name"] if not this_run()["path_name"].startswith("/") else this_run()["path_name"]
 
@@ -53,7 +54,7 @@ sleep(3)
 rootDirectory = path_name
 rootDirectoryNorm = rootDirectory
 
-data_run_suf = ["", "_Run2012A", "_Run2012B", "_Run2012C", "_Run2012D", "_Run2012ABC", "_Run2012BC"][0]
+data_run_suf = ["", "_2012A", "_2012B", "_2012C", "_2012D", "_2012ABC", "_2012BC"][0]
 
 def ensure_dir(dir):
         try:
@@ -377,6 +378,35 @@ btag_zero_samples = {
 
     }
 
+btag_zero_samples_failedSITV = {
+     
+    "nHad":(rootDirectory+"/Had_Data"+data_run_suf,"btag_zero_","Data","Had"),
+    "mcHadW1":(rootDirectory+"/Had_WJets","","WJets","Had"),
+    "mcHadttbar":(rootDirectory+"/Had_TTbar","","TTbar","Had"),
+    "mcHadzinv":(rootDirectory+"/Had_Zinv","","Zinv","Had"),
+    "mcHadsingt":(rootDirectory+"/Had_SingleTop","","SingleTop","Had"),
+    "mcHaddiboson":(rootDirectory+"/Had_DiBoson","","DiBoson","Had"),
+    "mcHadDY":(rootDirectory+"/Had_DY","","DY","Had"),
+    "nMuon":(rootDirectory+"/Muon_Data"+data_run_suf,"btag_zero_OneMuon_failedSITV_","Data","Muon"),
+    "mcMuonW1":(rootDirectory+"/Muon_WJets","OneMuon_failedSITV_","WJets","Muon"),
+    "mcMuonttbar":(rootDirectory+"/Muon_TTbar","OneMuon_failedSITV_","TTbar","Muon"),
+    "mcMuonzinv":(rootDirectory+"/Muon_Zinv","OneMuon_failedSITV_","Zinv","Muon"),
+    "mcMuonsingt":(rootDirectory+"/Muon_SingleTop","OneMuon_failedSITV_","SingleTop","Muon"),
+    "mcMuondiboson":(rootDirectory+"/Muon_DiBoson","OneMuon_failedSITV_","DiBoson","Muon"),
+    "mcMuonDY":(rootDirectory+"/Muon_DY","OneMuon_failedSITV_","DY","Muon"),
+    "nDiMuon":(rootDirectory+"/Muon_Data"+data_run_suf,"btag_zero_DiMuon_","Data","DiMuon"),
+    "mcDiMuonW1":(rootDirectory+"/Muon_WJets","DiMuon_","WJets","DiMuon"),
+    "mcDiMuonttbar":(rootDirectory+"/Muon_TTbar","DiMuon_","TTbar","DiMuon"),
+    "mcDiMuonzinv":(rootDirectory+"/Muon_Zinv","DiMuon_","Zinv","DiMuon"),
+    "mcDiMuonsingt":(rootDirectory+"/Muon_SingleTop","DiMuon_","SingleTop","DiMuon"),
+    "mcDiMuondiboson":(rootDirectory+"/Muon_DiBoson","DiMuon_","DiBoson","DiMuon"),
+    "mcDiMuonDY":(rootDirectory+"/Muon_DY","DiMuon_","DY","DiMuon"),
+    "mcPhoton":(rootDirectory+"/Photon_MC","Photon_","Photon","Photon"),
+    "ncPhoton":(rootDirectory+"/Photon_Data"+data_run_suf,"btag_zero_Photon_","Data","Photon"),
+
+    }
+
+
 btag_zero_uncorrected_samples = {
      
     "nHad":(rootDirectory+"/Had_Data"+data_run_suf,"btag_zero_","Data","Had"),
@@ -491,6 +521,34 @@ btag_more_than_zero_samples = {
 
     }
 
+btag_more_than_zero_samples_failedSITV = {
+
+    "nHad":(rootDirectory+"/Had_Data"+data_run_suf,"btag_morethanzero_","Data","Had"),
+    "mcHadW1":(rootDirectory+"/Had_WJets","","WJets","Had"),
+    "mcHadttbar":(rootDirectory+"/Had_TTbar","","TTbar","Had"),
+    "mcHadzinv":(rootDirectory+"/Had_Zinv","","Zinv","Had"),
+    "mcHadsingt":(rootDirectory+"/Had_SingleTop","","SingleTop","Had"),
+    "mcHaddiboson":(rootDirectory+"/Had_DiBoson","","DiBoson","Had"),
+    "mcHadDY":(rootDirectory+"/Had_DY","","DY","Had"),
+    "nMuon":(rootDirectory+"/Muon_Data"+data_run_suf,"btag_morethanzero_OneMuon_failedSITV_","Data","Muon"),
+    "mcMuonW1":(rootDirectory+"/Muon_WJets","OneMuon_failedSITV_","WJets","Muon"),
+    "mcMuonttbar":(rootDirectory+"/Muon_TTbar","OneMuon_failedSITV_","TTbar","Muon"),
+    "mcMuonzinv":(rootDirectory+"/Muon_Zinv","OneMuon_failedSITV_","Zinv","Muon"),
+    "mcMuonsingt":(rootDirectory+"/Muon_SingleTop","OneMuon_failedSITV_","SingleTop","Muon"),
+    "mcMuondiboson":(rootDirectory+"/Muon_DiBoson","OneMuon_failedSITV_","DiBoson","Muon"),
+    "mcMuonDY":(rootDirectory+"/Muon_DY","OneMuon_failedSITV_","DY","Muon"),
+    "nDiMuon":(rootDirectory+"/Muon_Data"+data_run_suf,"btag_morethanzero_DiMuon_","Data","DiMuon"),
+    "mcDiMuonW1":(rootDirectory+"/Muon_WJets","DiMuon_","WJets","DiMuon"),
+    "mcDiMuonttbar":(rootDirectory+"/Muon_TTbar","DiMuon_","TTbar","DiMuon"),
+    "mcDiMuonzinv":(rootDirectory+"/Muon_Zinv","DiMuon_","Zinv","DiMuon"),
+    "mcDiMuonsingt":(rootDirectory+"/Muon_SingleTop","DiMuon_","SingleTop","DiMuon"),
+    "mcDiMuondiboson":(rootDirectory+"/Muon_DiBoson","DiMuon_","DiBoson","DiMuon"),
+    "mcDiMuonDY":(rootDirectory+"/Muon_DY","DiMuon_","DY","DiMuon"),
+    "mcPhoton":(rootDirectory+"/Photon_MC","Photon_","Photon","Photon"),
+    "ncPhoton":(rootDirectory+"/Photon_Data"+data_run_suf,"btag_morethanzero_Photon_","Data","Photon"),
+
+    }
+
 btag_more_than_one_samples = {
 
     "nHad":(rootDirectory+"/Had_Data"+data_run_suf,"btag_morethanone_","Data","Had"),
@@ -543,6 +601,35 @@ inclusive_samples = {
     "mcDiMuonsingt":(rootDirectory+"/Muon_SingleTop","DiMuon_","SingleTop","DiMuon"),
     "mcDiMuondiboson":(rootDirectory+"/Muon_DiBoson","DiMuon_","DiBoson","DiMuon"),
     "mcDiMuonDY":(rootDirectory+"/Muon_DY","DiMuon_","DY","DiMuon"),
+    "mcPhoton":(rootDirectory+"/Photon_MC","Photon_","Photon","Photon"),
+    "ncPhoton":(rootDirectory+"/Photon_Data"+data_run_suf,"Photon_","Data","Photon"),
+
+    }
+
+inclusive_samples_failedMHTMET = {
+     
+    "nHad":(rootDirectory+"/Had_Data"+data_run_suf,"","Data","Had"),
+    "mcHadW1":(rootDirectory+"/Had_WJets","","WJets","Had"),
+    "mcHadttbar":(rootDirectory+"/Had_TTbar","","TTbar","Had"),
+    "mcHadzinv":(rootDirectory+"/Had_Zinv","","Zinv","Had"),
+    "mcHadsingt":(rootDirectory+"/Had_SingleTop","","SingleTop","Had"),
+    "mcHaddiboson":(rootDirectory+"/Had_DiBoson","","DiBoson","Had"),
+    "mcHadDY":(rootDirectory+"/Had_DY","","DY","Had"),
+    # "mcSMS":(rootDirectory+"/Had_T2cc","","T2cc","Had"),
+    "nMuon":(rootDirectory+"/Muon_Data"+data_run_suf,"OneMuon_failed_MHT_MET_","Data","Muon"),
+    "mcMuonW1":(rootDirectory+"/Muon_WJets","OneMuon_failed_MHT_MET_","WJets","Muon"),
+    "mcMuonttbar":(rootDirectory+"/Muon_TTbar","OneMuon_failed_MHT_MET_","TTbar","Muon"),
+    "mcMuonzinv":(rootDirectory+"/Muon_Zinv","OneMuon_failed_MHT_MET_","Zinv","Muon"),
+    "mcMuonsingt":(rootDirectory+"/Muon_SingleTop","OneMuon_failed_MHT_MET_","SingleTop","Muon"),
+    "mcMuondiboson":(rootDirectory+"/Muon_DiBoson","OneMuon_failed_MHT_MET_","DiBoson","Muon"),
+    "mcMuonDY":(rootDirectory+"/Muon_DY","OneMuon_failed_MHT_MET_","DY","Muon"),
+    "nDiMuon":(rootDirectory+"/Muon_Data"+data_run_suf,"DiMuon_failed_MHT_MET_","Data","DiMuon"),
+    "mcDiMuonW1":(rootDirectory+"/Muon_WJets","DiMuon_failed_MHT_MET_","WJets","DiMuon"),
+    "mcDiMuonttbar":(rootDirectory+"/Muon_TTbar","DiMuon_failed_MHT_MET_","TTbar","DiMuon"),
+    "mcDiMuonzinv":(rootDirectory+"/Muon_Zinv","DiMuon_failed_MHT_MET_","Zinv","DiMuon"),
+    "mcDiMuonsingt":(rootDirectory+"/Muon_SingleTop","DiMuon_failed_MHT_MET_","SingleTop","DiMuon"),
+    "mcDiMuondiboson":(rootDirectory+"/Muon_DiBoson","DiMuon_failed_MHT_MET_","DiBoson","DiMuon"),
+    "mcDiMuonDY":(rootDirectory+"/Muon_DY","DiMuon_failed_MHT_MET_","DY","DiMuon"),
     "mcPhoton":(rootDirectory+"/Photon_MC","Photon_","Photon","Photon"),
     "ncPhoton":(rootDirectory+"/Photon_Data"+data_run_suf,"Photon_","Data","Photon"),
 
@@ -622,7 +709,22 @@ if __name__=="__main__":
   if args.n : 
    
     print" ==================  \n Making Tables Formula Yields \n ====================  \n"
-   
+
+    # dict_list = [inclusive_samples, btag_zero_samples, btag_one_samples, btag_two_samples, btag_three_samples, btag_more_than_three_samples, calc_file]
+    # for d in dict_list:
+    #     poppers = []
+    #     for key in d:
+    #         if "mcHad" not in key:
+    #             poppers.append(key)
+    #     for p in poppers:
+    #         d.pop(p)
+
+    # for sample_set in [inclusive_samples, btag_zero_samples, btag_one_samples, btag_two_samples, btag_three_samples, btag_more_than_three_samples]:
+    #     for sample in sample_set:
+    #         # if "Muon" in sample and "DiMuon" not in sample:
+    #         if "Photon" not in sample:
+    #             sample_set[sample] = (sample_set[sample][0], sample_set[sample][1]+"failedSITV_", sample_set[sample][2], sample_set[sample][3])
+
     for j in args.n:
       print " ========= Jet Mult %s ======== " %j
       Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
@@ -638,15 +740,13 @@ if __name__=="__main__":
 
     print" ==================  \n Making Tables Uncorrected Yields \n ====================  \n"
 
-    if len(args.a[0]) > 0 :
-	    print "TEST"
-	    print args.a
-	    old = settings["AlphaTSlices"][0].split("_")[0]
-	    print old
-	    print settings["AlphaTSlices"][0]
-	    settings["AlphaTSlices"][0] = settings["AlphaTSlices"][0].replace(old,args.a[0])
-	    print settings["AlphaTSlices"][0]
-	    print 
+    # for i in [inclusive_samples, btag_zero_uncorrected_samples, btag_one_uncorrected_samples, btag_two_uncorrected_samples, btag_three_uncorrected_samples, btag_more_than_three_uncorrected_samples]:
+    #     poppers = []
+    #     for key in i:
+    #         if "SMS" not in key:
+    #             poppers.append(key)
+    #     for pkey in poppers:
+    #         i.pop(pkey)
     
     for j in args.u:
       print " ========= Jet Mult %s ======== " %j
@@ -686,14 +786,32 @@ if __name__=="__main__":
       Jad_Compute(settings,CLOSURE_TESTS,classic ="False",Lumo = settings["Lumo"],jetcat = "True")
 
     if "sitv" in args.c:
-      print " ======= Making SITV closure tests ========"
-      CLOSURE_TESTS = []
-      Number_Extractor(settings,btag_more_than_one_samples,"Inclusive",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="2")
-      Number_Extractor(settings,btag_more_than_one_samples,"Inclusive",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="3")
-      Number_Extractor(settings,btag_more_than_one_samples,"Inclusive",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="all")
-      print CLOSURE_TESTS
-      exit()
-      Jad_Compute(settings,CLOSURE_TESTS,classic ="False",Lumo = settings["Lumo"],jetcat = "False", sitv = "True")
+        print " ======= Making SITV closure tests ========"
+        # for j in ['2', '3', 'all']:
+        #   CLOSURE_TESTS = []
+        #   Number_Extractor(settings,inclusive_samples,"Inclusive",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category=j)
+        #   Number_Extractor(settings,inclusive_samples_failedSITV,"Inclusive",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category=j, Sitv = "Failed")
+
+        #   Jad_Compute(settings,CLOSURE_TESTS,classic ="False",Lumo = settings["Lumo"],jetcat = "False", jet_mult = "_%s"%j)
+        CLOSURE_TESTS = []
+        # Number_Extractor(settings,btag_zero_samples,"Zero_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="2")
+        
+        # test 4
+        # Number_Extractor(settings,btag_more_than_zero_samples_failedSITV,"More_Than_Zero_btag",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="3", Sitv = "Failed")
+        # Number_Extractor(settings,btag_more_than_zero_samples,"More_Than_Zero_btag",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="3")
+
+        # test 5
+        # Number_Extractor(settings,btag_zero_samples_failedSITV,"Zero_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="2", Sitv = "Failed")
+        # Number_Extractor(settings,btag_zero_samples,"Zero_btags",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="2")
+
+        # Jad_Compute(settings,CLOSURE_TESTS,classic ="False",Lumo = settings["Lumo"],jetcat = "False", jet_mult = "_3")
+
+
+    # for sample_set in [inclusive_samples, btag_zero_samples, btag_one_samples, btag_two_samples, btag_three_samples, btag_more_than_three_samples, btag_more_than_zero_samples, btag_more_than_one_samples]:
+    #     for sample in sample_set:
+    #         # if "Muon" in sample and "DiMuon" not in sample:
+    #         if "Muon" in sample:
+    #             sample_set[sample] = (sample_set[sample][0], sample_set[sample][1]+"failed_MHT_MET_", sample_set[sample][2], sample_set[sample][3])
 
     for j in args.c:
       if "jetcat" in args.c : continue
