@@ -208,8 +208,8 @@ class Btag_Calc(object):
 
 
   """
-  def Make_Prediction(self, plot, sample, category, btag_number, htbin, alphaT):  
-     
+  def Make_Prediction(self, plot, sample, category, btag_number, htbin, alphaT):
+    
     def bcombo(b, s, charm, e, m, c, hist):
 
       Nb = b;
@@ -272,7 +272,7 @@ class Btag_Calc(object):
             if j + k + l == entry: # require that they make up the desired total tags
               temp_yield += bcombo(j,k,l,btag_eff,mistag_eff,ctag_eff,plot)[0]
               temp_yield_error += bcombo(j,k,l,btag_eff,mistag_eff,ctag_eff,plot)[1]
-       
+
     yield_pred = temp_yield
     error_pred = sqrt(temp_yield_error)
     Luminosity = self.lumi_dict[sample]
