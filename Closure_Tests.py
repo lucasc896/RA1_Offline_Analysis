@@ -123,21 +123,22 @@ class Jad_Compute(object):
       # test_69 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",
       #           'plot_title':"passed SITV (#mu + jets, >=0 b-tag) #rightarrow failed SITV (#mu + jets, >=0 b-tag) (no #alpha_{T})",
       #           'scale':None , 'reduce':"False",'file_name':'SITV_Passed_to_Failed_Btag_inc_no_alphaT_Cut','spread':"False"}
-      test_69 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",
-                'plot_title':"no SIT(eq0b, le3j) #rightarrow  SIT (ge1b, ge4j) (no #alpha_{T}, #mu+jets)",
-                'scale':None , 'reduce':"False",'file_name':'SITV_test1_no_alphaT_Cut','spread':"False"}
-      test_69 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",
-                'plot_title':"no SIT(eq0b, le3j) #rightarrow  no SIT (ge1b, ge4j) (no #alpha_{T}, #mu+jets)",
-                'scale':None , 'reduce':"False",'file_name':'SITV_test2_no_alphaT_Cut','spread':"False"}
-      test_69 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",
-                'plot_title':"no SIT(ge1b, ge4j) #rightarrow  SIT (ge1b, ge4j) (no #alpha_{T}, #mu+jets)",
-                'scale':None , 'reduce':"False",'file_name':'SITV_test4_no_alphaT_Cut','spread':"False"}
+      # test_69 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",
+      #           'plot_title':"no SIT(eq0b, le3j) #rightarrow  SIT (ge1b, ge4j) (no #alpha_{T}, #mu+jets)",
+      #           'scale':None , 'reduce':"False",'file_name':'SITV_test1_no_alphaT_Cut','spread':"False"}
+      # test_69 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",
+      #           'plot_title':"no SIT(eq0b, le3j) #rightarrow  no SIT (ge1b, ge4j) (no #alpha_{T}, #mu+jets)",
+      #           'scale':None , 'reduce':"False",'file_name':'SITV_test2_no_alphaT_Cut','spread':"False"}
+      # test_69 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",
+      #           'plot_title':"no SIT(ge1b, ge4j) #rightarrow  SIT (ge1b, ge4j) (no #alpha_{T}, #mu+jets)",
+      #           'scale':None , 'reduce':"False",'file_name':'SITV_test4_no_alphaT_Cut','spread':"False"}
 
       test_69 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",
                 'plot_title':"no SIT(eq0b, le3j) #rightarrow  SIT (eq0b, le3j) (no #alpha_{T}, #mu+jets)",
                 'scale':None , 'reduce':"False",'file_name':'SITV_test5_no_alphaT_Cut','spread':"False"}
 
       test_dicts = [test_4,test_2,test_24,test_22,test_3,test_5,test_6,test_12,test_80,test_20,test_20_b,test_21,test_23,test_26,test_49]
+      # test_dicts = [test_4, test_3]
       # test_dicts = [test_69]
 
       test_mhtmet_mumu = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -3.,'box' : "False",'plot_title':"#mu#mu + jets (MHT/MET < 1.25) #rightarrow #mu#mu + jets (MHT/MET > 1.25)",'scale':None , 'reduce':"False",'file_name':'Btag_dimuon_to_dimuon_with_without_MHTMET','spread':"False"}
@@ -217,7 +218,7 @@ class Jad_Compute(object):
 
           # every instance of aT=0.01 is where a zero alphaT cut is asked for
           # if we ran with an aT cut in muon sample, these would need to be changed (global switch)
-
+          
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive':
             self.Fill_Dictionary(test_2,Control = "Muon", Signal = "DiMuon") 
 
