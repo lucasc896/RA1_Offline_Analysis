@@ -19,7 +19,6 @@ import os,fnmatch,sys
 import glob, errno
 import array
 import math as m
-from time import strftime
 from plottingUtils import *
 from NumberCruncher import *
 from time import strftime, time, sleep
@@ -31,10 +30,10 @@ r.gROOT.SetBatch(r.kTRUE)
 baseTime = time()
 
 settings = {
-  "dirs":["200_275","275_325","325_375","375_475","475_575","575_675","675_775","775_875","875_975","975_1075","1075"],  #HT Bins
-  "bins":["200","275","325","375","475","575","675","775","875","975","1075"],  #HT Bins
+  "dirs":["200_275","275_325","325_375","375_475","475_575","575_675","675_775","775_875","875_975","975_1075","1075"][3:],  #HT Bins
+  "bins":["200","275","325","375","475","575","675","775","875","975","1075"][3:],  #HT Bins
   "plots":["AlphaT_",],  # Histogram that Yields are taken from
-  "AlphaTSlices":["0.55_50", "0.56_50", "0.57_50", "0.58_50", "0.59_50", "0.60_50", "0.53_50", "0.52_0.53", "0.53_0.55"][:1], # AlphaT Slices, WARNING: this fucks up Formula Method!!
+  "AlphaTSlices":["0.55_50", "0.56_50", "0.57_50", "0.58_50", "0.59_50", "0.60_50", "0.53_50", "0.52_0.53", "0.53_0.55", "0.7_50"][-2:-1], # AlphaT Slices, WARNING: this fucks up Formula Method!!
   "Lumo":this_run()["had_lumi"], # Luminosity in fb
   "Multi_Lumi":{'Had':this_run()["had_lumi"],'Muon':this_run()["mu_lumi"],'DiMuon':this_run()["mu_lumi"],'Photon':this_run()["ph_lumi"]},  # Different Luminosity per sample, used when SplitLumi = True
   "sb_corrs":{'WJets':this_run()["wj_corr"], "Photon":this_run()["dy_corr"], "Zinv":this_run()["dy_corr"], "DY":this_run()["dy_corr"], "Top":this_run()["tt_corr"]},
@@ -773,6 +772,7 @@ if __name__=="__main__":
   if args.c:
         
     print" ==================  \n Making Closure Tests \n ====================  \n"
+    # settings["AlphaTSlices"] = ["0.55_20","0.01_10"]
     settings["AlphaTSlices"] = ["0.55_20","0.01_10"]
 
     # calc_file = None # hack to run closure tests with uncorrected vanilla yields
@@ -835,6 +835,6 @@ if __name__=="__main__":
     Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="all")
 
   print "\n", "*"*52
-  print "\tTotal Analysis time: ", time()-baseTime
+  print "\tTotal Analysis time: ", time()-baseTime, "s"
   print "*"*52
     
