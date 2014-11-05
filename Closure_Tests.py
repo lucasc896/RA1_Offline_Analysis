@@ -157,7 +157,7 @@ class Jad_Compute(object):
       
       for self.entry in self.axis_dir:
         if self.JetCat == "True":
-        
+
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
             self.Fill_Dictionary(test_1,Control = "Muon", Signal = "Muon",Not_Do = 'Signal')
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "3":
@@ -361,7 +361,7 @@ class Jad_Compute(object):
   """
 
   def Fill_Dictionary(self,closure_dictionary,Control = '',Signal = '',Not_Do = '',Subtract = '',AlphaT = '',Btag = '',SampleName = ''):
-         
+
           subtract_mc = 0
           subtract_error = 0
           subtract_data = 0
@@ -384,7 +384,7 @@ class Jad_Compute(object):
           if Subtract == True:
             for subfile in self.dict_list:
               if subfile[self.entry]['AlphaT'] == AlphaT and subfile[self.entry]['Btag'] == Btag and subfile[self.entry]['SampleName'] == SampleName:
-                
+
                 if not self.combine_high_bins or next_entry_key == 'low_bin':
                   subtract_mc = subfile[self.entry]['MCYield']
                   subtract_error = subfile[self.entry]['SM_Stat_Error']
@@ -395,22 +395,22 @@ class Jad_Compute(object):
                   subtract_data = subfile[self.entry]['Data'] + subfile[next_entry_key]['Data']
 
           if not self.combine_high_bins or next_entry_key == 'low_bin':
-            MCC_VAL = self.file[self.entry]['MCYield'] - subtract_mc
-            MCCE_VAL = self.file[self.entry]['SM_Stat_Error'] - subtract_error
-            DC_VAL = self.file[self.entry]['Data'] - subtract_data
+            MC_VAL = self.file[self.entry]['MCYield'] - subtract_mc
+            MCE_VAL = self.file[self.entry]['SM_Stat_Error'] - subtract_error
+            D_VAL = self.file[self.entry]['Data'] - subtract_data
           else:
-            MCC_VAL = self.file[self.entry]['MCYield'] + self.file[next_entry_key]['MCYield'] -subtract_mc
-            MCCE_VAL = sqrt( pow(self.file[self.entry]['SM_Stat_Error'],2) + pow(self.file[next_entry_key]['SM_Stat_Error'],2) ) - subtract_error
-            DC_VAL = self.file[self.entry]['Data'] + self.file[next_entry_key]['Data'] - subtract_data
+            MC_VAL = self.file[self.entry]['MCYield'] + self.file[next_entry_key]['MCYield'] -subtract_mc
+            MCE_VAL = sqrt( pow(self.file[self.entry]['SM_Stat_Error'],2) + pow(self.file[next_entry_key]['SM_Stat_Error'],2) ) - subtract_error
+            D_VAL = self.file[self.entry]['Data'] + self.file[next_entry_key]['Data'] - subtract_data
 
           if self.file[self.entry]['SampleName'] == Control and Not_Do != 'Control':
-            closure_dictionary['MCC'].append(MCC_VAL)
-            closure_dictionary['MCCE'].append(MCCE_VAL)
-            closure_dictionary['DC'].append(DC_VAL)
+            closure_dictionary['MCC'].append(MC_VAL)
+            closure_dictionary['MCCE'].append(MCE_VAL)
+            closure_dictionary['DC'].append(D_VAL)
           elif self.file[self.entry]['SampleName'] == Signal and Not_Do != 'Signal':
-            closure_dictionary['MCS'].append(MCC_VAL)
-            closure_dictionary['MCSE'].append(MCCE_VAL)
-            closure_dictionary['DS'].append(DC_VAL)
+            closure_dictionary['MCS'].append(MC_VAL)
+            closure_dictionary['MCSE'].append(MCE_VAL)
+            closure_dictionary['DS'].append(D_VAL)
 
           return closure_dictionary
  
@@ -440,7 +440,6 @@ class Jad_Compute(object):
 
     j = 0
     for i in range(start,len(MCS)):
-
         # ht offset to centre point in ht-bin range
         offset = (self.axis[i+j+1]-self.axis[i+j])/2.0
 
@@ -479,7 +478,6 @@ class Jad_Compute(object):
 
         # make the numerator: Nobs - Npred
         diffobspred = DS[i] - prediction
-
         try:errh = fabs((diffobspred / prediction) * sqrt(((errh / diffobspred)*(errh / diffobspred)) + ((errh / prediction)*(errh / prediction))))
         except ZeroDivisionError: errh = 0
         try:errl = fabs((diffobspred / prediction) * sqrt(((errl / diffobspred)*(errl / diffobspred)) + ((errl / prediction)*(errl / prediction))))
@@ -550,4 +548,17 @@ class Jad_Compute(object):
     return errh,errl
       
           
+
+def dict_printer(dicto = {}, indent = 1):
+
+  # print "> Outputting dictionary format.\n"
+  
+  print "{ (%d keys)\n" % len(dicto)
+  for key in dicto:
+    print "\t"*indent, "'%s': " % key,
+    if dict == type(dicto[key]):
+      dict_printer(dicto[key], indent+1)
+    else:
+      print dicto[key]
+  print "\t"*indent, "}\n"
 
