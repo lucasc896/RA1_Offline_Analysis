@@ -772,7 +772,6 @@ if __name__=="__main__":
   if args.c:
         
     print" ==================  \n Making Closure Tests \n ====================  \n"
-    # settings["AlphaTSlices"] = ["0.55_20","0.01_10"]
     settings["AlphaTSlices"] = ["0.55_20","0.01_10"]
 
     # calc_file = None # hack to run closure tests with uncorrected vanilla yields
