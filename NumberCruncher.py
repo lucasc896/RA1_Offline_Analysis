@@ -201,7 +201,6 @@ class Number_Extractor(object):
       # When formula method is used (Standard RA1), samples are passed onto Btag_Calc class in btag_calculation.
       # This fills up self.return_dict, which contains all the btag effs
       # note, this is a call to the "Make_Dict" function of BtagCalc!
-      print sample_settings["AlphaTSlices"]
       self.return_dict = Btag_Calc(sample_settings,sample_list,Calculation,number,AlphaT,self.Lumi_List,self.Analysis,self.analysis_category).Make_Dict(sample_settings,sample_list,number) 
       self.Form_Vanilla = "Formula"
     else:
@@ -232,8 +231,7 @@ class Number_Extractor(object):
           table_entries += "{\"HT\":\"%s\","%(dir.split('_')[0])
           for histName in settings['plots']:
             histName = str(histName+self.analysis_category)
-            checkht = dir
-            dir = fi[1]+dir
+            this_dir = fi[1]+dir
             Luminosity = self.Lumi_List[fi[3]]
 
             if "T2cc" in fi[2]:
@@ -250,8 +248,7 @@ class Number_Extractor(object):
               # xsec_factor = target_lumi / sample_lumi
             else:
               xsec_factor = 1.
-
-            normal =  GetSumHist(File = ["%s.root"%fi[0]], Directories = [dir], Hist = histName, Col = r.kBlack, Norm = None if "n" == key[0] else [float(Luminosity*1000*xsec_factor)/100.], LegendText = "nBtag")  
+            normal =  GetSumHist(File = ["%s.root"%fi[0]], Directories = [this_dir], Hist = histName, Col = r.kBlack, Norm = None if "n" == key[0] else [float(Luminosity*1000*xsec_factor)/100.], LegendText = "nBtag")  
             normal.HideOverFlow()
             err = r.Double(0.0)
             # normal.hObj.IntegralAndError(self.btagbin[self.number],normal.hObj.GetNbinsX(),err)
@@ -629,7 +626,7 @@ class Number_Extractor(object):
         if self.Make_Closure_Tests == "True" :self.Jad_Output(jad_dictionaries)    
 
   def Jad_Output(self,input):
-    for file in input: 
+    for file in input:
         self.c_file.append(file)
 
 
