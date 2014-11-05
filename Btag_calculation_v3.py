@@ -147,7 +147,7 @@ class Btag_Calc(object):
       err = r.Double(0.0)
 
       # check if want to consider all alphaT values
-      if self.Keep_AlphaT == "True" and str(lower)=="0.55": 
+      if self.Keep_AlphaT == "True" and str(lower)=="0.55":
         if category != "Had":
           # used if want to consider >0.55 in mu sample
           val = normal.hObj.IntegralAndError(lo_bin, hi_bin, err)
