@@ -58,19 +58,34 @@ class Jad_Compute(object):
 
     if self.JetCat == "True":
       print "In JetSplit mode"
-      test_1 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True", 'plot_title':"#mu + jets (2 Jets) #rightarrow #mu + jets (Gr4 Jets)",'scale':None,'reduce':"False",'file_name':'JetCat_eq2_ge4_muon_to_muon','spread':'False' } 
-      test_2 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#mu#mu + jets (2 Jets) #rightarrow #mu#mu + jets (Gr4 Jets) ",'scale':None,'reduce':"False",'file_name':'JetCat_eq2_ge4_dimuon_to_dimuon','spread':'False' }
-      test_3 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#gamma + jets (2 Jets) #rightarrow #gamma + jets (Gr4 Jets) ",'scale':None,'reduce':"True",'file_name':'JetCat_eq2_ge4_gamma_to_gamma','spread':'False' } 
       
-      test_4 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True", 'plot_title':"#mu + jets (3 Jets) #rightarrow #mu + jets (Gr4 Jets)",'scale':None,'reduce':"False",'file_name':'JetCat_eq3_ge4_muon_to_muon','spread':'False' } 
-      test_5 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#mu#mu + jets (3 Jets) #rightarrow #mu#mu + jets (Gr4 Jets) ",'scale':None,'reduce':"False",'file_name':'JetCat_eq3_ge4_dimuon_to_dimuon','spread':'False' }
-      test_6 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#gamma + jets (3 Jets) #rightarrow #gamma + jets (Gr4 Jets) ",'scale':None,'reduce':"True",'file_name':'JetCat_eq3_ge4_gamma_to_gamma','spread':'False' } 
+      test_jet_mu_2_3   = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True", 'plot_title':"#mu + jets (2 Jets) #rightarrow #mu + jets (3 Jets)",'scale':None,'reduce':"False",'file_name':'JetCat_eq2_eq3_muon_to_muon','spread':'False' } 
+      test_jet_mumu_2_3 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#mu#mu + jets (2 Jets) #rightarrow #mu#mu + jets (3 Jets) ",'scale':None,'reduce':"False",'file_name':'JetCat_eq2_eq3_dimuon_to_dimuon','spread':'False' }
+      test_jet_pho_2_3  = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#gamma + jets (2 Jets) #rightarrow #gamma + jets (3 Jets) ",'scale':None,'reduce':"True",'file_name':'JetCat_eq2_eq3_gamma_to_gamma','spread':'False' } 
+      
+      test_jet_mu_2_4   = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True", 'plot_title':"#mu + jets (2 Jets) #rightarrow #mu + jets (4 Jets)",'scale':None,'reduce':"False",'file_name':'JetCat_eq2_eq4_muon_to_muon','spread':'False' } 
+      test_jet_mumu_2_4 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#mu#mu + jets (2 Jets) #rightarrow #mu#mu + jets (4 Jets) ",'scale':None,'reduce':"False",'file_name':'JetCat_eq2_eq4_dimuon_to_dimuon','spread':'False' }
+      test_jet_pho_2_4  = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#gamma + jets (2 Jets) #rightarrow #gamma + jets (4 Jets) ",'scale':None,'reduce':"True",'file_name':'JetCat_eq2_eq4_gamma_to_gamma','spread':'False' } 
 
-      test_7 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True", 'plot_title':"#mu + jets (2 Jets) #rightarrow #mu + jets (3 Jets)",'scale':None,'reduce':"False",'file_name':'JetCat_eq2_eq3_muon_to_muon','spread':'False' } 
-      test_8 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#mu#mu + jets (2 Jets) #rightarrow #mu#mu + jets (3 Jets) ",'scale':None,'reduce':"False",'file_name':'JetCat_eq2_eq3_dimuon_to_dimuon','spread':'False' }
-      test_9 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#gamma + jets (2 Jets) #rightarrow #gamma + jets (3 Jets) ",'scale':None,'reduce':"True",'file_name':'JetCat_eq2_eq3_gamma_to_gamma','spread':'False' } 
+      test_jet_mu_2_5   = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True", 'plot_title':"#mu + jets (2 Jets) #rightarrow #mu + jets (Gr5 Jets)",'scale':None,'reduce':"False",'file_name':'JetCat_eq2_ge5_muon_to_muon','spread':'False' } 
+      test_jet_mumu_2_5 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#mu#mu + jets (2 Jets) #rightarrow #mu#mu + jets (Gr5 Jets) ",'scale':None,'reduce':"False",'file_name':'JetCat_eq2_ge5_dimuon_to_dimuon','spread':'False' }
+      test_jet_pho_2_5  = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#gamma + jets (2 Jets) #rightarrow #gamma + jets (Gr5 Jets) ",'scale':None,'reduce':"True",'file_name':'JetCat_eq2_ge5_gamma_to_gamma','spread':'False' } 
+  
+      test_jet_mu_3_4   = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True", 'plot_title':"#mu + jets (3 Jets) #rightarrow #mu + jets (4 Jets)",'scale':None,'reduce':"False",'file_name':'JetCat_eq3_eq4_muon_to_muon','spread':'False' } 
+      test_jet_mumu_3_4 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#mu#mu + jets (3 Jets) #rightarrow #mu#mu + jets (4 Jets) ",'scale':None,'reduce':"False",'file_name':'JetCat_eq3_eq4_dimuon_to_dimuon','spread':'False' }
+      test_jet_pho_3_4  = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#gamma + jets (3 Jets) #rightarrow #gamma + jets (4 Jets) ",'scale':None,'reduce':"True",'file_name':'JetCat_eq3_eq4_gamma_to_gamma','spread':'False' } 
 
-      test_dicts = [test_1,test_2,test_3,test_4,test_5,test_6,test_7,test_8,test_9, ]
+      test_jet_mu_3_5   = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True", 'plot_title':"#mu + jets (3 Jets) #rightarrow #mu + jets (Gr5 Jets)",'scale':None,'reduce':"False",'file_name':'JetCat_eq3_ge5_muon_to_muon','spread':'False' } 
+      test_jet_mumu_3_5 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#mu#mu + jets (3 Jets) #rightarrow #mu#mu + jets (Gr5 Jets) ",'scale':None,'reduce':"False",'file_name':'JetCat_eq3_ge5_dimuon_to_dimuon','spread':'False' }
+      test_jet_pho_3_5  = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#gamma + jets (3 Jets) #rightarrow #gamma + jets (Gr5 Jets) ",'scale':None,'reduce':"True",'file_name':'JetCat_eq3_ge5_gamma_to_gamma','spread':'False' } 
+
+      test_jet_mu_4_5   = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True", 'plot_title':"#mu + jets (4 Jets) #rightarrow #mu + jets (Gr5 Jets)",'scale':None,'reduce':"False",'file_name':'JetCat_eq4_ge5_muon_to_muon','spread':'False' } 
+      test_jet_mumu_4_5 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#mu#mu + jets (4 Jets) #rightarrow #mu#mu + jets (Gr5 Jets) ",'scale':None,'reduce':"False",'file_name':'JetCat_eq4_ge5_dimuon_to_dimuon','spread':'False' }
+      test_jet_pho_4_5  = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#gamma + jets (4 Jets) #rightarrow #gamma + jets (Gr5 Jets) ",'scale':None,'reduce':"True",'file_name':'JetCat_eq4_ge5_gamma_to_gamma','spread':'False' } 
+
+      test_dicts = [test_jet_mu_2_3, test_jet_mumu_2_3, test_jet_pho_2_3, test_jet_mu_2_4, test_jet_mumu_2_4, test_jet_pho_2_4, test_jet_mu_2_5,
+                    test_jet_mumu_2_5,test_jet_pho_2_5, test_jet_mu_3_4, test_jet_mumu_3_4, test_jet_pho_3_4, test_jet_mu_3_5, test_jet_mumu_3_5,
+                    test_jet_pho_3_5, test_jet_mu_4_5, test_jet_mumu_4_5, test_jet_pho_4_5 ]
 
 
     elif self.Classic == "True" :
@@ -127,49 +142,94 @@ class Jad_Compute(object):
         if self.JetCat == "True":
         
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "1":
-            self.Fill_Dictionary(test_1,Control = "Muon", Signal = "Muon",Not_Do = 'Signal')
+            self.Fill_Dictionary(test_jet_mu_2_4,Control = "Muon", Signal = "Muon",Not_Do = 'Signal')
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "3":
-            self.Fill_Dictionary(test_1,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
+            self.Fill_Dictionary(test_jet_mu_2_4,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
 
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "1":
-            self.Fill_Dictionary(test_2,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Signal')
+            self.Fill_Dictionary(test_jet_mumu_2_4,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Signal')
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "3":
-            self.Fill_Dictionary(test_2,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
+            self.Fill_Dictionary(test_jet_mumu_2_4,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
 
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "1":
-            self.Fill_Dictionary(test_3,Control = "Photon", Signal = "Photon",Not_Do = 'Signal')
+            self.Fill_Dictionary(test_jet_pho_2_4,Control = "Photon", Signal = "Photon",Not_Do = 'Signal')
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "3":
-            self.Fill_Dictionary(test_3,Control = "Photon", Signal = "Photon",Not_Do = 'Control')
-
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
-            self.Fill_Dictionary(test_4,Control = "Muon", Signal = "Muon",Not_Do = 'Signal')
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "3":
-            self.Fill_Dictionary(test_4,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
-
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
-            self.Fill_Dictionary(test_5,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Signal')
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "3":
-            self.Fill_Dictionary(test_5,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
-
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
-            self.Fill_Dictionary(test_6,Control = "Photon", Signal = "Photon",Not_Do = 'Signal')
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "3":
-            self.Fill_Dictionary(test_6,Control = "Photon", Signal = "Photon",Not_Do = 'Control')
+            self.Fill_Dictionary(test_jet_pho_2_4,Control = "Photon", Signal = "Photon",Not_Do = 'Control')
 
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "1":
-            self.Fill_Dictionary(test_7,Control = "Muon", Signal = "Muon",Not_Do = 'Signal')
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
-            self.Fill_Dictionary(test_7,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
+            self.Fill_Dictionary(test_jet_mu_2_5,Control = "Muon", Signal = "Muon",Not_Do = 'Signal')
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "4":
+            self.Fill_Dictionary(test_jet_mu_2_5,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
 
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "1":
-            self.Fill_Dictionary(test_8,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Signal')
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
-            self.Fill_Dictionary(test_8,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
+            self.Fill_Dictionary(test_jet_mumu_2_5,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Signal')
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "4":
+            self.Fill_Dictionary(test_jet_mumu_2_5,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
 
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "1":
-            self.Fill_Dictionary(test_9,Control = "Photon", Signal = "Photon",Not_Do = 'Signal')
+            self.Fill_Dictionary(test_jet_pho_2_5,Control = "Photon", Signal = "Photon",Not_Do = 'Signal')
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "4":
+            self.Fill_Dictionary(test_jet_pho_2_5,Control = "Photon", Signal = "Photon",Not_Do = 'Control')
+
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
-            self.Fill_Dictionary(test_9,Control = "Photon", Signal = "Photon",Not_Do = 'Control')
+            self.Fill_Dictionary(test_jet_mu_3_4,Control = "Muon", Signal = "Muon",Not_Do = 'Signal')
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "3":
+            self.Fill_Dictionary(test_jet_mu_3_4,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
+
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
+            self.Fill_Dictionary(test_jet_mumu_3_4,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Signal')
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "3":
+            self.Fill_Dictionary(test_jet_mumu_3_4,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
+
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
+            self.Fill_Dictionary(test_jet_pho_3_4,Control = "Photon", Signal = "Photon",Not_Do = 'Signal')
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "3":
+            self.Fill_Dictionary(test_jet_pho_3_4,Control = "Photon", Signal = "Photon",Not_Do = 'Control')
+
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
+            self.Fill_Dictionary(test_jet_mu_3_5,Control = "Muon", Signal = "Muon",Not_Do = 'Signal')
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "4":
+            self.Fill_Dictionary(test_jet_mu_3_5,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
+
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
+            self.Fill_Dictionary(test_jet_mumu_3_5,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Signal')
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "4":
+            self.Fill_Dictionary(test_jet_mumu_3_5,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
+
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
+            self.Fill_Dictionary(test_jet_pho_3_5,Control = "Photon", Signal = "Photon",Not_Do = 'Signal')
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "4":
+            self.Fill_Dictionary(test_jet_pho_3_5,Control = "Photon", Signal = "Photon",Not_Do = 'Control')
+
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "3":
+            self.Fill_Dictionary(test_jet_mu_4_5,Control = "Muon", Signal = "Muon",Not_Do = 'Signal')
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "4":
+            self.Fill_Dictionary(test_jet_mu_4_5,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
+
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "3":
+            self.Fill_Dictionary(test_jet_mumu_4_5,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Signal')
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "4":
+            self.Fill_Dictionary(test_jet_mumu_4_5,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
+
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "3":
+            self.Fill_Dictionary(test_jet_pho_4_5,Control = "Photon", Signal = "Photon",Not_Do = 'Signal')
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "4":
+            self.Fill_Dictionary(test_jet_pho_4_5,Control = "Photon", Signal = "Photon",Not_Do = 'Control')
+
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "1":
+            self.Fill_Dictionary(test_jet_mu_2_3,Control = "Muon", Signal = "Muon",Not_Do = 'Signal')
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
+            self.Fill_Dictionary(test_jet_mu_2_3,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
+
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "1":
+            self.Fill_Dictionary(test_jet_mumu_2_3,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Signal')
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
+            self.Fill_Dictionary(test_jet_mumu_2_3,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
+
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "1":
+            self.Fill_Dictionary(test_jet_pho_2_3,Control = "Photon", Signal = "Photon",Not_Do = 'Signal')
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' and self.file[self.entry]['JetCategory'] == "2":
+            self.Fill_Dictionary(test_jet_pho_2_3,Control = "Photon", Signal = "Photon",Not_Do = 'Control')
 
         elif self.Classic == "True":
 
@@ -311,7 +371,7 @@ class Jad_Compute(object):
   """
 
   def Make_Plots(self,MCS,MCSE,MCC,MCCE,DC,DS,option,box = '',plot_title='',scale='',file_name='',reduce='',spread='',dc_error='',ds_error=''):
-
+    print plot_title
     # Reduce == true for Photon closure tests
     if reduce == "True": hist_low = 375
     else: hist_low = float(self.settings["bins"][0])
