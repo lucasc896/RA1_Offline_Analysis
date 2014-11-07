@@ -23,16 +23,17 @@ from plottingUtils import *
 from NumberCruncher import *
 from time import strftime, time, sleep
 from run_details import this_run
+# from make_latex_files import process_files
 
 r.gROOT.SetBatch(r.kTRUE)
 
 baseTime = time()
 
 settings = {
-  "dirs":["200_275","275_325","325_375","375_475","475_575","575_675","675_775","775_875","875_975","975_1075","1075"],  #HT Bins
-  "bins":["200","275","325","375","475","575","675","775","875","975","1075"],  #HT Bins
+  "dirs":["200_275","275_325","325_375","375_475","475_575","575_675","675_775","775_875","875_975","975_1075","1075"][3:],  #HT Bins
+  "bins":["200","275","325","375","475","575","675","775","875","975","1075"][3:],  #HT Bins
   "plots":["AlphaT_",],  # Histogram that Yields are taken from
-  "AlphaTSlices":["0.55_50", "0.56_50", "0.57_50", "0.58_50", "0.59_50", "0.60_50"][:1], # AlphaT Slices, WARNING: this fucks up Formula Method!!
+  "AlphaTSlices":["0.55_50", "0.56_50", "0.57_50", "0.58_50", "0.59_50", "0.60_50", "0.53_50"][:1], # AlphaT Slices, WARNING: this fucks up Formula Method!!
   "Lumo":this_run()["had_lumi"], # Luminosity in fb
   "Multi_Lumi":{'Had':this_run()["had_lumi"],'Muon':this_run()["mu_lumi"],'DiMuon':this_run()["mu_lumi"],'Photon':this_run()["ph_lumi"]},  # Different Luminosity per sample, used when SplitLumi = True
   "sb_corrs":{'WJets':this_run()["wj_corr"], "Photon":this_run()["dy_corr"], "Zinv":this_run()["dy_corr"], "DY":this_run()["dy_corr"], "Top":this_run()["tt_corr"]},
@@ -654,6 +655,7 @@ if __name__=="__main__":
       Number_Extractor(settings,btag_two_samples,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)      
       Number_Extractor(settings,btag_three_samples,"Three_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
       Number_Extractor(settings,btag_more_than_three_samples,"More_Than_Three_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category=j)
+      # process_files(os.getcwd() +"/TexFiles")
 
   if args.u:
 
@@ -667,6 +669,7 @@ if __name__=="__main__":
       Number_Extractor(settings,btag_two_uncorrected_samples,"Two_btags",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category=j)
       Number_Extractor(settings,btag_three_uncorrected_samples,"Three_btags",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category=j)
       Number_Extractor(settings,btag_more_than_three_uncorrected_samples,"More_Than_Three_btag",Triggers = "True",AlphaT="False",Split_Lumi = "True",Analysis_category= j)
+      # process_files(os.getcwd() +"/TexFiles")
 
   if args.r:
  
@@ -690,6 +693,7 @@ if __name__=="__main__":
       Number_Extractor(settings,inclusive_samples,"Inclusive",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="1")
       Number_Extractor(settings,inclusive_samples,"Inclusive",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="2")
       Number_Extractor(settings,inclusive_samples,"Inclusive",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="3")
+      Number_Extractor(settings,inclusive_samples,"Inclusive",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="4")
       Number_Extractor(settings,inclusive_samples,"Inclusive",c_file = CLOSURE_TESTS,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file,Split_Lumi = "True",Analysis_category="all")
       Jad_Compute(settings,CLOSURE_TESTS,classic ="False",Lumo = settings["Lumo"],jetcat = "True")
 
