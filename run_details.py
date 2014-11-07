@@ -1,6 +1,6 @@
 def this_run():
 
-	selector = "05March_Rob_NotSure"
+	selector = "06Nov_fineJetMulti_alphaT_0p53_v0"
 
 	out_dict = {}
 
@@ -239,6 +239,38 @@ def this_run():
 		"dy_corr": 0.97,
 		"tt_corr": 1.22,
 
+
+	}
+
+	out_dict["04Nov_fineJetMulti_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_04Nov_fineJetMulti_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["06Nov_fineJetMulti_alphaT_0p53_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_06Nov_fineJetMulti_alphaT_0p53_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
 
 	}
 
