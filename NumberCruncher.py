@@ -71,6 +71,12 @@ def MC_Scaler(htbin,jetmult,mc_yield,sample = '',error = '',Analysis = '',btagbi
                         "975_1":0.990,"975_2":0.990,"975_3":0.991, "975_4":0.991,
                         "1075_1":0.990,"1075_2":0.990,"1075_3":0.990,"1075_4":0.990,}   
    
+    if [False, True][1]:
+      print ">> WARNING: 100 trig!"
+      for dict in [AlphaT_Scale, Muon_Scale, DiMuon_Scale]:
+        for key in dict:
+          dict[key] = 1.0
+
     scale_factor = htbin +'_'+ jetmult
     if jetmult == "all" : scale_factor = htbin +'_2'
     if mc_yield == 0: return float(mc_yield)
@@ -157,46 +163,67 @@ class Number_Extractor(object):
 
   def Create_Dictionary(self,settings,samples):
 
-         """
-         This is where dictionary is created for Uncorrected yields. 
-         We loop through all samples and all HT bins and pull out the integral of the number of btags histogram to determine the yields and error.
-         Same process is done in Btag_Calc but the yields are calculated through a formula rather than just pull the number from a histogram
-         """
-         print "In uncorrected yields"
-         # print "number:", self.number
-         # print self.btagbin[self.number]
-         table_entries = "{" 
-         for key,fi in sorted(samples.iteritems()):
-           i = 0
-           for dir in settings['dirs']:
-              fixed_dir = dir
-              for alphat in settings['AlphaTSlices']:
-                dir = fixed_dir
-                lower = float(alphat.split('_')[0])
-                higher = float(alphat.split('_')[1])
-                table_entries += "\t\"%s_%d\"  : "%(key,i)
-                i+=1
-                table_entries += "{\"HT\":\"%s\","%(dir.split('_')[0])
-                for histName in settings['plots']:
-                    histName = str(histName+self.analysis_category)
-                    checkht = dir
-                    dir = fi[1]+dir
-                    Luminosity = self.Lumi_List[fi[3]]
-                    normal =  GetSumHist(File = ["%s.root"%fi[0]], Directories = [dir], Hist = histName, Col = r.kBlack, Norm = None if "n" == key[0] else [float(Luminosity*1000)/100.], LegendText = "nBtag")  
-                    normal.HideOverFlow()
-                    err = r.Double(0.0)
-                    # normal.hObj.IntegralAndError(self.btagbin[self.number],normal.hObj.GetNbinsX(),err)
-                    lo_bin = normal.hObj.FindBin(lower)
-                    val = normal.hObj.IntegralAndError(lo_bin,normal.hObj.GetNbinsX(),err)
-                    # table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.GetBinContent(self.btagbin[self.number]) if self.number not in ["More_Than_Three_btag","Inclusive"] else normal.hObj.Integral(self.btagbin[self.number],normal.hObj.GetNbinsX())),(normal.hObj.GetBinError(self.btagbin[self.number]) if self.number not in ["More_Than_Three_btag","Inclusive"]  else err),fi[2],fi[3],lower)
-                    # table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(lo_bin,normal.hObj.GetNbinsX()) if str(checkht[0:3]) in ["275","325"] else (normal.hObj.Integral())),err,fi[2],fi[3],lower)
-                    table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%(normal.hObj.Integral(lo_bin,normal.hObj.GetNbinsX()),err,fi[2],fi[3],lower)
-                    normal.a.Close()
-         table_entries +="}"
+    """
+    This is where dictionary is created for Uncorrected yields. 
+    We loop through all samples and all HT bins and pull out the integral of the number of btags histogram to determine the yields and error.
+    Same process is done in Btag_Calc but the yields are calculated through a formula rather than just pull the number from a histogram
+    """
+    print "In uncorrected yields"
+    # print "number:", self.number
+    # print self.btagbin[self.number]
+    table_entries = "{" 
+    for key,fi in sorted(samples.iteritems()):
+      i = 0
+      for dir in settings['dirs']:
+        for alphat in settings['AlphaTSlices']:
+          lower = float(alphat.split('_')[0])
+          higher = float(alphat.split('_')[1])
+          table_entries += "\t\"%s_%d\"  : "%(key,i)
+          i+=1
+          table_entries += "{\"HT\":\"%s\","%(dir.split('_')[0])
+          for histName in settings['plots']:
+            histName = str(histName+self.analysis_category)
+            this_dir = fi[1]+dir
+            Luminosity = self.Lumi_List[fi[3]]
 
-         # Do a literal eval to turn this string into a dictionary
-         self.return_dict = ast.literal_eval(table_entries)
-         return self.return_dict
+            if "T2cc" in fi[2]:
+              print "INFO: Scaling T2cc sample by xsec weight."
+              # if T2cc being used, then add a xsec factor to Luminosity
+              stop_prod_xsec = 5.57596 #pb for 250GeV mass stop
+              t2cc_nevents = 582630 #nevents for (250,240)
+              # t2cc_nevents = 581438 #nevents for (250,170)
+              # t2cc_nevents = 582301 #nevents for (250,230)
+
+              xsec_factor = float(100.*stop_prod_xsec/t2cc_nevents) # weight to 100pb-1
+
+              # sample_lumi = t2cc_nevent / stop_prod_xsec
+              # xsec_factor = target_lumi / sample_lumi
+            else:
+              xsec_factor = 1.
+            normal =  GetSumHist(File = ["%s.root"%fi[0]], Directories = [this_dir], Hist = histName, Col = r.kBlack, Norm = None if "n" == key[0] else [float(Luminosity*1000*xsec_factor)/100.], LegendText = "nBtag")  
+            normal.HideOverFlow()
+            err = r.Double(0.0)
+            # normal.hObj.IntegralAndError(self.btagbin[self.number],normal.hObj.GetNbinsX(),err)
+            lo_bin = normal.hObj.FindBin(lower)
+            hi_bin = normal.hObj.FindBin(higher) - 1 #minus one to get the bin before this, i.e <higher, not <=higher
+            # print lower, lo_bin, higher, hi_bin
+            if "Muon" in fi[3]:
+              # get full distro for Muon selections
+              if self.Settings['global_alphat']:
+                val = normal.hObj.IntegralAndError(lo_bin, hi_bin, err)
+              else:
+                val = normal.hObj.IntegralAndError(1, normal.hObj.GetNbinsX(), err)
+            else:
+              # use truncated alphaT for photon and had
+              val = normal.hObj.IntegralAndError(lo_bin, hi_bin, err)
+
+            table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%(val,err,fi[2],fi[3],lower)
+            normal.a.Close()
+         
+    table_entries +="}"
+    # Do a literal eval to turn this string into a dictionary
+    self.return_dict = ast.literal_eval(table_entries)
+    return self.return_dict
 
 
 
