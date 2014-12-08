@@ -1,7 +1,7 @@
 
 def this_run():
 
-	selector = "11Nov_globalAlphaT_alphaT0p55_noMHTMET_v0"
+	selector = "04Dec_aT_0p53_fullHT_v0"
 
 	out_dict = {}
 
@@ -37,8 +37,8 @@ def this_run():
 		"mu_lumi": 19.131,
 		"ph_lumi": 19.12,
 
-		# "wj_corr": 0.92,
-		# "dy_corr": 0.96,
+		"wj_corr": 0.92,
+		"dy_corr": 0.96,
 		"tt_corr": 1.23,
 
 		# # Run A
@@ -1195,4 +1195,651 @@ def this_run():
 
 	}
 
+	out_dict["12Nov_comMinBiasDPhi_gt0p3_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_12Nov_comMinBiasDPhi_gt0p3_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["13Nov_comMinBiasDPhi_gt0p3_v1"] = {
+
+		"path_name": "rootfiles/Root_Files_13Nov_comMinBiasDPhi_gt0p3_v1",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["13Nov_comMinBiasDPhi_lt0p3_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_13Nov_comMinBiasDPhi_lt0p3_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["18Nov_justMu_acceptedJetsDPhi_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_18Nov_justMu_acceptedJetsDPhi_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["18Nov_justMu_acceptedJetsDPhi_alphaT_0p53_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_18Nov_justMu_acceptedJetsDPhi_alphaT_0p53_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+		# "wj_corr": 1.,
+		# "dy_corr": 1.,
+		# "tt_corr": 1.,
+
+	}
+
+	out_dict["19Nov_alphaT0p53_globalAlphaT_v1"] = {
+
+		"path_name": "rootfiles/Root_Files_19Nov_alphaT0p53_globalAlphaT_v1",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["18Nov_alphaT0p53_noSITV_v1"] = {
+
+		"path_name": "rootfiles/Root_Files_18Nov_alphaT0p53_noSITV_v1",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["20Nov_alphaT0p53_PFMET140_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_20Nov_alphaT0p53_PFMET140_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["21Nov_alphaT0p53_PFMET140_leptonsConsidered_v1"] = {
+
+		"path_name": "rootfiles/Root_Files_21Nov_alphaT0p53_PFMET140_leptonsConsidered_v1",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["25Nov_10_30MuonInHad_aT_0p53_v1"] = {
+
+		"path_name": "rootfiles/Root_Files_25Nov_10_30MuonInHad_aT_0p53_v1",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["26Nov_20_30ElectronInHad_aT_0p53_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_26Nov_20_30ElectronInHad_aT_0p53_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["26Nov_10_30_SITInHad_aT_0p53_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_26Nov_10_30_SITInHad_aT_0p53_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["26Nov_25_50_phoInHad_aT_0p53_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_26Nov_25_50_phoInHad_aT_0p53_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["27Nov_10_30_SITInHad_dphi_gt0p3_aT_0p53_v2"] = {
+
+		"path_name": "rootfiles/Root_Files_27Nov_10_30_SITInHad_dphi_gt0p3_aT_0p53_v2",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	# anything above here is and after 06Nov is likely screwed by the finejet multi bug
+
+	out_dict["28Nov_aT_0p53_v1"] = {
+
+		"path_name": "rootfiles/Root_Files_28Nov_aT_0p53_v1",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["28Nov_aT_0p53_noSITV_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_28Nov_aT_0p53_noSITV_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["28Nov_aT_0p53_dPhi_lt0p3_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_28Nov_aT_0p53_dPhi_lt0p3_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["28Nov_aT_0p53_dPhi_gt0p3_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_28Nov_aT_0p53_dPhi_gt0p3_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["28Nov_aT_0p53_dPhiCommon_gt0p3_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_28Nov_aT_0p53_dPhiCommon_gt0p3_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["28Nov_aT_0p53_dPhiCommon_lt0p3_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_28Nov_aT_0p53_dPhiCommon_lt0p3_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["30Nov_aT_0p53_globalAlphaT_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_30Nov_aT_0p53_globalAlphaT_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["30Nov_aT_0p53_10_30_muInHad_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_30Nov_aT_0p53_10_30_muInHad_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["30Nov_aT_0p53_10_30_SITInHad_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_30Nov_aT_0p53_10_30_SITInHad_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["01Dec_aT_0p53_globalAlphaT_v1"] = {
+
+		"path_name": "rootfiles/Root_Files_01Dec_aT_0p53_globalAlphaT_v1",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["01Dec_aT_0p53_v2"] = {
+
+		"path_name": "rootfiles/Root_Files_01Dec_aT_0p53_v2",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["02Dec_aT_0p53_dPhi_lt0p3_hadOnly_globalAlphaT_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_02Dec_aT_0p53_dPhi_lt0p3_hadOnly_globalAlphaT_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["02Dec_aT_0p53_dPhi_gt0p3_hadOnly_globalAlphaT_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_02Dec_aT_0p53_dPhi_gt0p3_hadOnly_globalAlphaT_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["03Dec_aT_0p53_leadJetEta_2p5_3_v1"] = {
+
+		"path_name": "rootfiles/Root_Files_03Dec_aT_0p53_leadJetEta_2p5_3_v1",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["02Dec_aT_0p53_muon_dPhi_lt0p3_v1"] = {
+
+		"path_name": "rootfiles/Root_Files_02Dec_aT_0p53_dPhi_lt0p3_v1",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["02Dec_aT_0p53_muon_dPhi_gt0p3_v1"] = {
+
+		"path_name": "rootfiles/Root_Files_02Dec_aT_0p53_dPhi_gt0p3_v1",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["03Dec_aT_0p53_20_30_eleInHad_v1"] = {
+
+		"path_name": "rootfiles/Root_Files_03Dec_aT_0p53_20_30_eleInHad_v1",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["03Dec_aT_0p53_25_50_phoInHad_v1"] = {
+
+		"path_name": "rootfiles/Root_Files_03Dec_aT_0p53_25_50_phoInHad_v1",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["03Dec_aT_0p53_10_30_SITInHad_dPhi_lt0p3_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_03Dec_aT_0p53_10_30_SITInHad_dPhi_lt0p3_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["03Dec_aT_0p53_10_30_SITInHad_dPhi_gt0p3_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_03Dec_aT_0p53_10_30_SITInHad_dPhi_gt0p3_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["04Dec_aT_0p53_fullHT_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_04Dec_aT_0p53_fullHT_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["04Dec_aT_0p53_fullHT_dPhi_lt0p3_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_04Dec_aT_0p53_fullHT_dPhi_lt0p3_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["04Dec_aT_0p53_fullHT_dPhi_gt0p3_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_04Dec_aT_0p53_fullHT_dPhi_gt0p3_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["08Dec_aT_0p6_loloBins_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_08Dec_aT_0p6_loloBins_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["08Dec_aT_0p57_loloBins_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_08Dec_aT_0p57_loloBins_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["08Dec_aT_0p55_loloBins_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_08Dec_aT_0p55_loloBins_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
 	return out_dict[selector]
+
