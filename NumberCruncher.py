@@ -73,7 +73,7 @@ def MC_Scaler(htbin,jetmult,mc_yield,sample = '',error = '',Analysis = '',btagbi
    
     if [False, True][1]:
       print ">> WARNING: 100 trig!"
-      for dict in [AlphaT_Scale, Muon_Scale, DiMuon_Scale]:
+      for dict in [AlphaT_Scale, Muon_Scale, DiMuon_Scale][:1]:
         for key in dict:
           dict[key] = 1.0
 
