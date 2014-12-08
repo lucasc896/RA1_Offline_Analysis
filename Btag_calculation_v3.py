@@ -97,7 +97,6 @@ class Btag_Calc(object):
           i+=1
           table_entries += "{\"HT\":\"%s\","%(dir.split('_')[0])          
           sample_dir = fi[1]+dir
-          
           if fi[2] != "Data":
             # Calculate formula yields with alphaT cut in place
             if fi[3] =="Had" or fi[3] == "Photon" or (str(lower) == "0.55" and self.Keep_AlphaT == "True") :
@@ -117,7 +116,6 @@ class Btag_Calc(object):
             table_entries += self.Data_Yield(fi[0],fi[1],dir,lower,higher,fi[2],fi[3])
         
       file.Close()
-    
     table_entries += "}"
     return_dict = ast.literal_eval(table_entries)
 
