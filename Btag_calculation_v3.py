@@ -97,10 +97,10 @@ class Btag_Calc(object):
           i+=1
           table_entries += "{\"HT\":\"%s\","%(dir.split('_')[0])          
           sample_dir = fi[1]+dir
-          
+
           if fi[2] != "Data":
             # Calculate formula yields with alphaT cut in place
-            if fi[3] =="Had" or fi[3] == "Photon" or (str(lower) == "0.55" and self.Keep_AlphaT == "True") :
+            if fi[3] =="Had" or fi[3] == "Photon" or (str(lower) == "0.53" and self.Keep_AlphaT == "True") :
               plot = file.Get("%s/Matched_vs_Matched_noB_vs_c_alphaT_%s" % (sample_dir, self.analysis_category))
             # Without formula yields in place
             else:
@@ -141,12 +141,12 @@ class Btag_Calc(object):
       err = r.Double(0.0)
 
       # check if want to consider all alphaT values
-      if self.Keep_AlphaT == "True" and str(lower)=="0.55": 
+      if self.Keep_AlphaT == "True" and str(lower)=="0.53": 
         if category != "Had":
-          # used if want to consider >0.55 in mu sample
+          # used if want to consider >0.53 in mu sample
           val = normal.hObj.IntegralAndError(lo_bin, hi_bin, err)
         else:
-          # only 0.55 and above for had samples
+          # only 0.53 and above for had samples
           val = normal.hObj.IntegralAndError(lo_bin, normal.hObj.GetNbinsX(), err)
       else:
         if category == "Had":
