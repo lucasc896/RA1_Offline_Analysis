@@ -1,7 +1,7 @@
 
 def this_run():
 
-	selector = "04Dec_aT_0p53_fullHT_v0"
+	selector = "08Dec_aT_0p52_loloBins_v0"
 
 	out_dict = {}
 
@@ -1828,6 +1828,38 @@ def this_run():
 	out_dict["08Dec_aT_0p55_loloBins_v0"] = {
 
 		"path_name": "rootfiles/Root_Files_08Dec_aT_0p55_loloBins_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["08Dec_aT_0p53_loloBins_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_08Dec_aT_0p53_loloBins_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["08Dec_aT_0p52_loloBins_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_08Dec_aT_0p52_loloBins_v0",
 		
 		# All Runs
 		"had_lumi": 18.493,
