@@ -1,6 +1,6 @@
 def this_run():
 
-	selector = "11Nov_globalAlphaT_alphaT0p55_noMHTMET_v0"
+	selector = "05Dec_aT_0p53_fullHT_fineJet_dPhi_lt0p3_v0"
 
 	out_dict = {}
 
@@ -277,6 +277,54 @@ def this_run():
 	out_dict["11Nov_globalAlphaT_alphaT0p55_noMHTMET_v0"] = {
 
 		"path_name": "rootfiles/Root_Files_11Nov_globalAlphaT_alphaT0p55_noMHTMET_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["05Dec_aT_0p53_fullHT_fineJet_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_05Dec_aT_0p53_fullHT_fineJet_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["05Dec_aT_0p53_fullHT_fineJet_dPhi_gt0p3_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_05Dec_aT_0p53_fullHT_fineJet_dPhi_gt0p3_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["05Dec_aT_0p53_fullHT_fineJet_dPhi_lt0p3_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_05Dec_aT_0p53_fullHT_fineJet_dPhi_lt0p3_v0",
 		
 		# All Runs
 		"had_lumi": 18.493,
