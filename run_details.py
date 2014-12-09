@@ -1,6 +1,6 @@
 def this_run():
 
-	selector = "05Dec_aT_0p53_fullHT_fineJet_dPhi_lt0p3_v0"
+	selector = "05Dec_aT_0p53_fullHT_fineJet_dPhi_gt0p3_v0"
 
 	out_dict = {}
 
