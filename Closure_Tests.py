@@ -98,7 +98,9 @@ class Jad_Compute(object):
       test_20 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -19.,'box' : "True", 'plot_title':"#gamma + jets (0-b-tag) #rightarrow #mu#mu + jets (0-b-tag) ",'scale':None,'reduce':"True",'file_name':'Btag_gamma_zero_to_dimuon_zero_no_alphaT_Cut','spread':'True' } 
       test_20_b = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -19.,'box' : "True", 'plot_title':"#gamma + jets (>=1-b-tag) #rightarrow #mu#mu + jets (>=1-b-tag) ",'scale':None,'reduce':"True",'file_name':'Btag_gamma_greater_zero_to_dimuon_greater_zero_no_alphaT_Cut','spread':'True' } 
       test_21 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -21.,'box' : "True", 'plot_title':"#gamma + jets #rightarrow #mu#mu + jets ",'scale':None,'reduce':"True",'file_name':'Btag_gamma_to_dimuon_no_alphaT_Cut','spread':'True' }  
-      
+      test_21_1 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -19.,'box' : "True", 'plot_title':"#gamma + jets (0-b-tag) #rightarrow #mu#mu + jets (1-b-tag) ",'scale':None,'reduce':"True",'file_name':'Btag_gamma_zero_to_dimuon_one_no_alphaT_Cut','spread':'True' }
+      test_21_2 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -19.,'box' : "True", 'plot_title':"#gamma + jets (0-b-tag) #rightarrow #mu#mu + jets (2-b-tag) ",'scale':None,'reduce':"True",'file_name':'Btag_gamma_zero_to_dimuon_two_no_alphaT_Cut','spread':'True' }
+
       #mu to mumu
       test_2 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True",'plot_title':"#mu + jets (no #alpha_{T}) #rightarrow #mu#mu + jets (no #alpha_{T})" ,'scale':None , 'reduce':"False", 'file_name':'Btag_mu_to_dimuon_no_alphaT_Cut','spread':"False" } 
       test_22 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -22.,'box' : "True", 'plot_title':"#mu + jets (>=1-btag) #rightarrow #mu#mu + jets (0-btag)(no #alphaT) ",'scale':None,'reduce':"False",'file_name':'Btag_greater_zero_mu_to_dimuon_zero_no_alphaT_Cut','spread':'True' }
@@ -137,7 +139,7 @@ class Jad_Compute(object):
                 'plot_title':"no SIT(eq0b, le3j) #rightarrow  SIT (eq0b, le3j) (no #alpha_{T}, #mu+jets)",
                 'scale':None , 'reduce':"False",'file_name':'SITV_test5_no_alphaT_Cut','spread':"False"}
 
-      test_dicts = [test_4,test_2,test_24,test_22,test_3,test_5,test_6,test_12,test_80,test_20,test_20_b,test_21,test_23,test_26,test_49]
+      test_dicts = [test_4,test_2,test_24,test_22,test_3,test_5,test_6,test_12,test_80,test_20,test_20_b,test_21,test_23,test_26,test_49, test_21_1, test_21_2]
       # test_dicts = [test_4, test_3]
       # test_dicts = [test_69]
 
@@ -277,6 +279,16 @@ class Jad_Compute(object):
             self.Fill_Dictionary(test_21,Control = "Photon", Signal = "Photon",Not_Do = 'Signal') 
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive':
             self.Fill_Dictionary(test_21,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control') 
+
+          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'Inclusive':
+            self.Fill_Dictionary(test_21_1,Control = "Photon", Signal = "Photon",Not_Do = 'Signal') 
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'One_btag':
+            self.Fill_Dictionary(test_21_1,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
+
+          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'Inclusive':
+            self.Fill_Dictionary(test_21_2,Control = "Photon", Signal = "Photon",Not_Do = 'Signal') 
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Two_btags':
+            self.Fill_Dictionary(test_21_2,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
         
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'More_Than_Zero_btag':
             self.Fill_Dictionary(test_22,Control = "Muon", Signal = "Muon",Not_Do = 'Signal') 
