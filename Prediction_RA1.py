@@ -31,8 +31,8 @@ baseTime = time()
 
 settings = {
   "dirs":["200_275","275_325","325_375","375_475","475_575","575_675","675_775","775_875","875_975","975_1075","1075"],  #HT Bins
-  "bins":["200","275","325","375","475","575","675","775","875","975","1075"],  #HT Bins
-  "plots":["AlphaT_",],  # Histogram that Yields are taken from
+"bins":["200","275","325","375","475","575","675","775","875","975","1075"],  #HT Bins
+  "plots":["AlphaT_","HT_QCD_"][:1],  # Histogram that Yields are taken from
   "AlphaTSlices":["0.55_50", "0.56_50", "0.57_50", "0.58_50", "0.59_50", "0.60_50", "0.53_50", "0.53_0.55", "0.55_0.60", "0.60_0.70"][-4:-3], # AlphaT Slices, WARNING: this fucks up Formula Method!!
   "Lumo":this_run()["had_lumi"], # Luminosity in fb
   "Multi_Lumi":{'Had':this_run()["had_lumi"],'Muon':this_run()["mu_lumi"],'DiMuon':this_run()["mu_lumi"],'Photon':this_run()["ph_lumi"]},  # Different Luminosity per sample, used when SplitLumi = True
@@ -629,17 +629,18 @@ if __name__=="__main__":
     
     print" ==================  \n Making MC Clamping Normalisation Yields \n ====================  \n"
     Number_Extractor(settings,btag_zero_normalisation,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="1",RunOption = "MCNormalisation")
-    Number_Extractor(settings,btag_zero_normalisation,"Zero_btags",Triggers = "True",AlphaT="True",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="1",RunOption = "MCNormalisation")
+    # Number_Extractor(settings,btag_zero_normalisation,"Zero_btags",Triggers = "True",AlphaT="True",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="1",RunOption = "MCNormalisation")
     # Number_Extractor(settings,btag_zero_normalisation,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption = "MCNormalisation")
     # Number_Extractor(settings,btag_zero_normalisation,"Zero_btags",Triggers = "True",AlphaT="True",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption = "MCNormalisation")
     #Number_Extractor(settings,btag_zero_normalisation,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="all",RunOption = "MCNormalisation")
     #Number_Extractor(settings,btag_more_than_zero_normalisation,"More_Than_Zero_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="3",RunOption = "MCNormalisation")
-    #Number_Extractor(settings,btag_more_than_one_normalisation,"More_Than_One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption = "MCNormalisation")
-    #Number_Extractor(settings,btag_more_than_one_normalisation,"More_Than_One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="3",RunOption = "MCNormalisation")
+    
+    Number_Extractor(settings,btag_more_than_one_normalisation,"More_Than_One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption = "MCNormalisation")
+    Number_Extractor(settings,btag_more_than_one_normalisation,"More_Than_One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="1",RunOption = "MCNormalisation")
     #Number_Extractor(settings,btag_more_than_one_normalisation,"More_Than_One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="all",RunOption = "MCNormalisation")
 
-    Number_Extractor(settings,btag_one_normalisation,"One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption ="MCNormalisation")
-    Number_Extractor(settings,btag_two_normalisation,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="1",RunOption ="MCNormalisation")
+    # Number_Extractor(settings,btag_one_normalisation,"One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption ="MCNormalisation")
+    # Number_Extractor(settings,btag_two_normalisation,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="1",RunOption ="MCNormalisation")
     # Number_Extractor(settings,btag_two_normalisation,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="all",RunOption ="MCNormalisation")
     # Number_Extractor(settings,btag_two_normalisation,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file,Stats = "False",Split_Lumi = "True",Analysis_category="2",RunOption ="MCNormalisation")
 
