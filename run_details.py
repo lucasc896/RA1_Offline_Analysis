@@ -1,6 +1,6 @@
 def this_run():
 
-	selector = "05Dec_aT_0p53_fullHT_fineJet_dPhi_gt0p3_v0"
+	selector = "28Jan_fullLatestReRun_dPhi_gt0p3_v0"
 
 	out_dict = {}
 
@@ -325,6 +325,182 @@ def this_run():
 	out_dict["05Dec_aT_0p53_fullHT_fineJet_dPhi_lt0p3_v0"] = {
 
 		"path_name": "rootfiles/Root_Files_05Dec_aT_0p53_fullHT_fineJet_dPhi_lt0p3_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["21Dec_alphaT_0p53_fullHT_fixedCC_fineJetMulti_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_21Dec_alphaT_0p53_fullHT_fixedCC_fineJetMulti_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["21Dec_alphaT_0p53_fullHT_fixedCC_fineJetMulti_dPhi_lt0p3_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_21Dec_alphaT_0p53_fullHT_fixedCC_fineJetMulti_dPhi_lt0p3_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["21Dec_alphaT_0p53_fullHT_fixedCC_fineJetMulti_dPhi_gt0p3_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_21Dec_alphaT_0p53_fullHT_fixedCC_fineJetMulti_dPhi_gt0p3_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["06Jan_alphaT_0p53_fullHT_fixedCC_fineJetMulti_FROMMATT_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_06Jan_alphaT_0p53_fullHT_fixedCC_fineJetMulti_FROMMATT_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["09Jan_allLatest_bTagDPhiPlots_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_09Jan_allLatest_bTagDPhiPlots_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["09Jan_allLatest_bTagDPhiPlots_dPhi_lt0p3_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_09Jan_allLatest_bTagDPhiPlots_dPhi_lt0p3_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["13Jan_removeBadMuonEvents_dPhi_lt0p3_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_13Jan_removeBadMuonEvents_dPhi_lt0p3_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["04Dec_aT_0p53_fullHT_dPhi_gt0p3_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_04Dec_aT_0p53_fullHT_dPhi_gt0p3_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["14Jan_allLatest_thrustPlots_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_14Jan_allLatest_thrustPlots_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["14Jan_allLatest_nominalAlphaT_v0"] = {
+
+		"path_name": "rootfiles/Root_files_14Jan_allLatest_nominalAlphaT_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["28Jan_fullLatestReRun_dPhi_gt0p3_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_28Jan_fullLatestReRun_dPhi_gt0p3_v0",
 		
 		# All Runs
 		"had_lumi": 18.493,
