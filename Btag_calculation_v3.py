@@ -99,15 +99,19 @@ class Btag_Calc(object):
           sample_dir = fi[1]+dir
           if fi[2] != "Data":
             # Calculate formula yields with alphaT cut in place
-            if fi[3] =="Had" or fi[3] == "Photon" or (str(lower) == "0.55" and self.Keep_AlphaT == "True") :
-              plot = file.Get("%s/Matched_vs_Matched_noB_vs_c_alphaT_%s" % (sample_dir, self.analysis_category))
+            # if fi[3] =="Had" or fi[3] == "Photon" or (str(lower) == "0.55" and self.Keep_AlphaT == "True") :
+            if "Muon" in fi[3] and (str(lower) == "0.55" and self.Keep_AlphaT == "True"):
+              plot_name = "%s/Matched_vs_Matched_noB_vs_c_alphaT_%s" % (sample_dir, self.analysis_category)
             # Without formula yields in place
             else:
-              plot = file.Get("%s/Matched_vs_Matched_noB_vs_c_%s" % (sample_dir, self.analysis_category))
-          if fi[2] != "Data":
+              plot_name = "%s/Matched_vs_Matched_noB_vs_c_%s" % (sample_dir, self.analysis_category)
+            
+            plot = file.Get(plot_name)
+            
             if "0x0" in str(plot):
               print ">>> Error in Btag_Calc::Make_Dict: 'plot' not found."
-              exit()
+              exit(plot_name)
+
             # do funky formula method for MC (!= "Data")
             table_entries += self.Make_Prediction(plot,fi[3],fi[2],number,dir.split('_')[0],lower)
             del plot
