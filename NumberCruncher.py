@@ -106,7 +106,7 @@ def MC_Scaler(htbin,jetmult,mc_yield,sample = '',error = '',Analysis = '',btagbi
         else: return float(mc_yield*DiMuon_Scale[scale_factor])
 
     elif sample == "Had":
-      if error: 
+      if error:
         return float((error*AlphaT_Scale[scale_factor])*math.sqrt(((mc_yield/error)*(mc_yield/error))+((AlphaT_Error[scale_factor]/AlphaT_Scale[scale_factor])*(AlphaT_Error[scale_factor]/AlphaT_Scale[scale_factor]))))
       else:return float(mc_yield*AlphaT_Scale[scale_factor])
 
@@ -254,7 +254,7 @@ class Number_Extractor(object):
       else:
         self.bins = tuple(settings["bins"])
 
-      entries = ('Data','MCYield','Tot_Error','SM_Stat_Error','TTbar','WJets','Zinv','DY','DiBoson','SingleTop','Photon','Btag','SampleName','JetCategory','AlphaT','SITV')
+      entries = ('Data','DataErr','MCYield','Tot_Error','SM_Stat_Error','TTbar','WJets','Zinv','DY','DiBoson','SingleTop','Photon','Btag','SampleName','JetCategory','AlphaT','SITV')
       yields = ('Yield','Error')
 
       self.process = ["TTbar","WJets","Zinv","DY","DiBoson","SingleTop","Photon"]      
@@ -295,6 +295,7 @@ class Number_Extractor(object):
           for key in self.bins:
             dicto[key] = dict.fromkeys(entries)
             dicto[key]['Data'] = 0
+            dicto[key]['DataErr'] = 0
             dicto[key]['MCYield'] = 0
             dicto[key]['AlphaT'] = self.current_slice
             dicto[key]['SM_Stat_Error'] = 0
@@ -476,7 +477,6 @@ class Number_Extractor(object):
                
               sample[bin]["MCYield"] = MC_Scaler(bin,self.analysis_category,sample[bin]["MCYield"],sample = sample[bin]["SampleName"],Analysis = self.Analysis,btagbin = self.number )
               sample[bin]["SM_Stat_Error"] = MC_Scaler(bin,self.analysis_category,sample[bin]["SM_Stat_Error"],sample = sample[bin]["SampleName"],error = sample[bin]["MCYield"],Analysis = self.Analysis, btagbin = self.number )
-               
               for SM in self.process:
                
                 sample[bin][SM]["Yield"] = MC_Scaler(bin,self.analysis_category, sample[bin][SM]["Yield"],sample = sample[bin]["SampleName"],Analysis = self.Analysis,btagbin = self.number )
