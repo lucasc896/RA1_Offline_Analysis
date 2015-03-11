@@ -1,6 +1,6 @@
 def this_run():
 
-	selector = "28Jan_fullLatestReRun_dPhi_gt0p3_v0"
+	selector = "22Feb_lt0p3_latest_aT_0p54_v0"
 
 	out_dict = {}
 
@@ -501,6 +501,118 @@ def this_run():
 	out_dict["28Jan_fullLatestReRun_dPhi_gt0p3_v0"] = {
 
 		"path_name": "rootfiles/Root_Files_28Jan_fullLatestReRun_dPhi_gt0p3_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["19Feb_lt0p3_noDPhiCutInMu_aT_0p507_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_19Feb_lt0p3_noDPhiCutInMu_aT_0p507_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["22Feb_gt0p3_latest_aT_0p507_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_22Feb_gt0p3_latest_aT_0p507_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["22Feb_lt0p3_latest_aT_0p507_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_22Feb_lt0p3_latest_aT_0p507_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["22Feb_lt0p3_latest_aT_0p52_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_22Feb_lt0p3_latest_aT_0p52_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["22Feb_lt0p3_latest_aT_0p53_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_22Feb_lt0p3_latest_aT_0p53_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["22Feb_lt0p3_latest_aT_0p55_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_22Feb_lt0p3_latest_aT_0p55_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["22Feb_lt0p3_latest_aT_0p54_v0"] = {
+
+		"path_name": "rootfiles/Root_Files_22Feb_lt0p3_latest_aT_0p54_v0",
 		
 		# All Runs
 		"had_lumi": 18.493,
