@@ -21,8 +21,11 @@ def harvest_values(line = "", val = [], err = []):
             bin_split[-1] = bin_split[-1].rstrip("\\\\ \n")
             bin_split[-1] = bin_split[-1].rstrip(" ")
         val.append(bin_split[0])
+        print bin_split
         if len(bin_split)>1:
             err.append(bin_split[1])
+        # else:
+        #     err.append("-")
 
 def remove_whitespace(line = ""):
     outline = []
