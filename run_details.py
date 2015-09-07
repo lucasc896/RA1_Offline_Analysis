@@ -1,7 +1,8 @@
 
 def this_run():
 
-	selector = "09April_ParkedFinal_HEAD"
+	selector = "QCDKiller_GOLDEN/Root_Files_30Mar_approved0p55_dPhi_gt0p3_inHadOnly_newCC_CSCBeamHalo_hcalDeadECAL_v0"
+	# selector = "QCDKiller_GOLDEN/NOMINAL_05April_noMHTMET_v0"
 
 	out_dict = {}
 
@@ -382,6 +383,15 @@ def this_run():
 		"wj_corr": 0.93,
 		"dy_corr": 0.94,
 		"tt_corr": 1.18,
+
+		# to reproduce results here: http://clucas.web.cern.ch/clucas/RA1/Parked/Analysis/IC/GOLDEN/MySBCorrs_FullNewHadTrigEffs_DiMu3030TrigEffs_BASELINE/TexFiles/
+		# looks like these were use:
+		# "wj_corr": 0.91,
+		# "dy_corr": 0.93,
+		# "tt_corr": 1.16,
+
+		# i found these somewhere else in this file with a note saying "from rob"
+		# from checking the normalisation tables again, it looks like the 0.93, 0.94, 1.18 corrs above are right, and rob was on crack.
 
 	}
 
@@ -1828,6 +1838,277 @@ def this_run():
 	out_dict["08Dec_aT_0p55_loloBins_v0"] = {
 
 		"path_name": "rootfiles/Root_Files_08Dec_aT_0p55_loloBins_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["QCDKiller_GOLDEN/Root_Files_10Mar_approved0p55_dPhi_gt0p3_inHadOnly_v0"] = {
+
+		"path_name": "rootfiles/QCDKiller_GOLDEN/Root_Files_10Mar_approved0p55_dPhi_gt0p3_inHadOnly_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+	}
+
+	out_dict["QCDKiller_GOLDEN/Root_Files_14Mar_approved0p55_dPhi_gt0p3_inHadOny_newCC_CSCBeamHalo_v0"] = {
+
+		"path_name": "rootfiles/QCDKiller_GOLDEN/Root_Files_14Mar_approved0p55_dPhi_gt0p3_inHadOny_newCC_CSCBeamHalo_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18, # not using the 1.16 value as this appears to give a better Data/MC value
+		# "tt_corr": 1.16, # determined on 14March15 for this sample (could be due to the dPhi* cut)
+	}
+
+	out_dict["QCDKiller_GOLDEN/Root_Files_16Mar_latest_0p507_v0"] = {
+
+		"path_name": "rootfiles/QCDKiller_GOLDEN/Root_Files_16Mar_latest_0p507_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["QCDKiller_GOLDEN/Root_Files_16Mar_latest_0p53_gt0p3_v0"] = {
+
+		"path_name": "rootfiles/QCDKiller_GOLDEN/Root_Files_16Mar_latest_0p53_gt0p3_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["QCDKiller_GOLDEN/Root_Files_18Mar_approved0p55_dPhi_gt0p3_inHadOny_oldCC_CSCBeamHalo_v0"] = {
+
+		"path_name": "rootfiles/QCDKiller_GOLDEN/Root_Files_18Mar_approved0p55_dPhi_gt0p3_inHadOny_oldCC_CSCBeamHalo_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["QCDKiller_GOLDEN/Root_Files_23Mar_0p507_fullLatest_v0"] = {
+
+		"path_name": "rootfiles/QCDKiller_GOLDEN/Root_Files_23Mar_0p507_fullLatest_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["QCDKiller_GOLDEN/Root_Files_23Mar_0p52_fullLatest_v0"] = {
+
+		"path_name": "rootfiles/QCDKiller_GOLDEN/Root_Files_23Mar_0p52_fullLatest_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["QCDKiller_GOLDEN/Root_Files_23Mar_0p53_fullLatest_v0"] = {
+
+		"path_name": "rootfiles/QCDKiller_GOLDEN/Root_Files_23Mar_0p53_fullLatest_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["QCDKiller_GOLDEN/Root_Files_23Mar_0p54_fullLatest_v0"] = {
+
+		"path_name": "rootfiles/QCDKiller_GOLDEN/Root_Files_23Mar_0p54_fullLatest_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["QCDKiller_GOLDEN/Root_Files_23Mar_0p55_fullLatest_v0"] = {
+
+		"path_name": "rootfiles/QCDKiller_GOLDEN/Root_Files_23Mar_0p55_fullLatest_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["QCDKiller_GOLDEN/Root_Files_26Mar_approved0p55_newCC_CSCBeamHalo_HTupper_v0"] = {
+
+		"path_name": "rootfiles/QCDKiller_GOLDEN/Root_Files_26Mar_approved0p55_newCC_CSCBeamHalo_HTupper_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["QCDKiller_GOLDEN/Root_Files_26Mar_approved0p55_lodPhi_gt0p3_inHadOny_newCC_CSCBeamHalo_v0"] = {
+
+		"path_name": "rootfiles/QCDKiller_GOLDEN/Root_Files_26Mar_approved0p55_lodPhi_gt0p3_inHadOny_newCC_CSCBeamHalo_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["QCDKiller_GOLDEN/Root_Files_30Mar_approved0p55_dPhi_gt0p3_inHadOnly_newCC_CSCBeamHalo_hcalDeadECAL_v0"] = {
+
+		"path_name": "rootfiles/QCDKiller_GOLDEN/Root_Files_30Mar_approved0p55_dPhi_gt0p3_inHadOnly_newCC_CSCBeamHalo_hcalDeadECAL_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["QCDKiller_GOLDEN/Root_Files_31Mar_approved0p55_dPhi_gt0p3_inHadOnly_newCC_CSCBeamHalo_hcalDeadECALFive_v0"] = {
+
+		"path_name": "rootfiles/QCDKiller_GOLDEN/Root_Files_31Mar_approved0p55_dPhi_gt0p3_inHadOnly_newCC_CSCBeamHalo_hcalDeadECALFive_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["QCDKiller_GOLDEN/Root_Files_03April_0p507_fullLatest_htTrigs_v0"] = {
+
+		"path_name": "rootfiles/QCDKiller_GOLDEN/Root_Files_03April_0p507_fullLatest_htTrigs_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["QCDKiller_GOLDEN/NOMINAL_05April_noMHTMET_v0"] = {
+
+		"path_name": "rootfiles/QCDKiller_GOLDEN/NOMINAL_05April_noMHTMET_v0",
+		
+		# All Runs
+		"had_lumi": 18.493,
+		"mu_lumi": 19.131,
+		"ph_lumi": 19.12,
+
+		# taken from parked final (change if necessary)
+		"wj_corr": 0.93,
+		"dy_corr": 0.94,
+		"tt_corr": 1.18,
+
+	}
+
+	out_dict["QCDKiller_GOLDEN/Root_Files_07April_0p55_fullLatest_hadOnly_noPhi_v0"] = {
+
+		"path_name": "rootfiles/QCDKiller_GOLDEN/Root_Files_07April_0p55_fullLatest_hadOnly_noPhi_v0",
 		
 		# All Runs
 		"had_lumi": 18.493,
